@@ -15,7 +15,7 @@ class SummaryList extends Component {
         </Header>
         <List animated relaxed size="huge">
           {summaryData.map((summary) => (
-            <List.Item>
+            <List.Item id={summary.title+"Summary"}>
               <Icon name={summary.icon} size="large" verticalAlign='middle'/>
               <List.Content>
                 <List.Header>{summary.title}</List.Header>

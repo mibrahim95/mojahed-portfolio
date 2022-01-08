@@ -11,7 +11,7 @@ class Navbar extends Component {
     return (
       <Grid.Row color="grey">
           <Grid.Column width={16}>
-        <Menu text size="huge" fixed="top">
+        <Menu text size="huge">
           <Menu.Item header>Mojahed Ibrahim</Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item

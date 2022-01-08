@@ -1,33 +1,28 @@
-
-[
+{
+  "code": [
     {
-     "header":"Todo List",
-     "meta":"so great",
-     "desc": "Program the world"
+      "header": "Cousin's Supermarket Inventory",
+      "languages": [
+          "PHP", "Javascript", "HTML", "CSS","Jquery","MySQL","Heroku"
+      ],
+      "imgPath": "cousinsInv.png",
+      "desc": "The first steps to advancing the inventory system"
     },
     {
-     "header":"Calculator",
-     "meta":"so great",
-     "desc": "Act like im helping students"
-    },
+      "header": "Video Game maintance List",
+      "languages": [
+        "PHP", "Javascript", "HTML", "CSS","Jquery","MySQL","Heroku"
+    ],
+      "imgPath": "gameCheck.png",
+      "desc": "Help pinpoint nonfunctional games as well as pick out highly rated ones"
+    }
+  ],
+  "personal": [
     {
-     "header":"idk something",
-     "meta":"so great",
-     "desc": "Get Shit on"
-    },
-    {
-        "header":"Todo List",
-        "meta":"so great",
-        "desc": "Program the world"
-       },
-       {
-        "header":"Calculator",
-        "meta":"so great",
-        "desc": "Act like im helping students"
-       },
-       {
-        "header":"idk something",
-        "meta":"so great",
-        "desc": "Get Shit on"
-       }
-]
+      "header": "Modding Arcade1up",
+      "meta": "so great",
+      "imgPath": "arcadeMod.png",
+      "desc": "Personal project as a gift, adding retropie to arcade cabinet"
+    }
+  ]
+}

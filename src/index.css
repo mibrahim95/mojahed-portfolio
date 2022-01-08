@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#ProjectSummary .keyboard{
+  padding-left: 2px;
+}
+
+#ProjectSummary .content{
+  padding-left: 12px;
+}
+
+#KnowledgeSummary .lightbulb{
+  padding-left: 8.571px;
+}
+
+#KnowledgeSummary .content{
+  padding-left: 17px;
+}
