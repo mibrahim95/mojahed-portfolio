@@ -1,0 +1,33 @@
+
+[
+    {
+     "header":"Todo List",
+     "meta":"so great",
+     "desc": "Program the world"
+    },
+    {
+     "header":"Calculator",
+     "meta":"so great",
+     "desc": "Act like im helping students"
+    },
+    {
+     "header":"idk something",
+     "meta":"so great",
+     "desc": "Get Shit on"
+    },
+    {
+        "header":"Todo List",
+        "meta":"so great",
+        "desc": "Program the world"
+       },
+       {
+        "header":"Calculator",
+        "meta":"so great",
+        "desc": "Act like im helping students"
+       },
+       {
+        "header":"idk something",
+        "meta":"so great",
+        "desc": "Get Shit on"
+       }
+]

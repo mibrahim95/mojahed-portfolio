@@ -1,0 +1,22 @@
+[
+    {
+        "title":"Experience",
+        "desc": "5+ years of experience programming",
+        "icon":"terminal"
+    },
+    {
+        "title":"Education",
+        "desc": "Temple University - Bachealors of Business Admin in MIS",
+        "icon":"graduation cap"
+    },
+    {
+        "title":"Projects",
+        "desc": "Multiple projects built on my own spare time",
+        "icon":"keyboard"
+    },
+    {
+        "title":"Knowledge",
+        "desc": "Various frontend and backend programming languages",
+        "icon":"lightbulb"
+    }
+]
