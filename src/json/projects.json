@@ -6,7 +6,9 @@
           "PHP", "Javascript", "HTML", "CSS","Jquery","MySQL","Heroku"
       ],
       "imgPath": "cousinsInv.png",
-      "desc": "The first steps to advancing the inventory system"
+      "desc": "The first steps to advancing the inventory system",
+      "github":"",
+      "url":""
     },
     {
       "header": "Video Game maintance List",
@@ -14,7 +16,9 @@
         "PHP", "Javascript", "HTML", "CSS","Jquery","MySQL","Heroku"
     ],
       "imgPath": "gameCheck.png",
-      "desc": "Help pinpoint nonfunctional games as well as pick out highly rated ones"
+      "desc": "Help pinpoint nonfunctional games as well as pick out highly rated ones",
+      "github":"https://github.com/mibrahim95/romCheck",
+      "url":"https://rom-check.herokuapp.com/"
     }
   ],
   "personal": [

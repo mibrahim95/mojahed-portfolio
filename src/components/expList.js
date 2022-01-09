@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import experiences from "../json/expList.json";
 import bullets from "../json/expBullets.json";
 
-import { Grid, List } from "semantic-ui-react";
+import { Grid, List, Header } from "semantic-ui-react";
 
 class JobList extends Component {
   state = { activeBullet: bullets.t14 };
@@ -17,7 +17,7 @@ class JobList extends Component {
     return (
       <Grid.Row id="education" divided padded>
         <Grid.Column width={6} textAlign="center">
-          <List size="huge" relaxed='very' animated>
+          <List size="huge" relaxed="very" animated>
             {experiences.map((experience) => (
               <List.Item
                 id={experience.id}
@@ -33,7 +33,7 @@ class JobList extends Component {
           </List>
         </Grid.Column>
         <Grid.Column width={10} textAlign="left">
-          <List relaxed='very' bulleted size="large">
+          <List relaxed="very" bulleted size="large">
             {activeBullet.bullets.map((bullet) => (
               <List.Item key={bullet}>{bullet}</List.Item>
             ))}
