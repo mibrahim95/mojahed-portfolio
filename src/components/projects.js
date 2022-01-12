@@ -10,7 +10,7 @@ class Projects extends Component {
       <Grid.Row id="projects" color="grey">
         <Card.Group itemsPerRow={3} centered>
           {projects.code.map((project) => (
-            <Card>
+            <Card fluid>
               <Image src={project.imgPath} wrapped ui={false} />
               <Card.Content>
                 <Card.Header>{project.header}</Card.Header>

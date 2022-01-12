@@ -9,7 +9,7 @@ import { Grid, Header } from "semantic-ui-react";
 function App() {
   return (
     <div className="App">
-      <Grid padded>
+      <Grid stackable padded>
         <Navbar />
         <LandingPage />
         <Grid.Row padded>
@@ -28,6 +28,13 @@ function App() {
           </Grid.Column>
         </Grid.Row>
         <Projects />
+        <Grid.Row padded>
+          <Grid.Column width={16}>
+            <Header as="h1" dividing textAlign="left">
+              Contact Me
+            </Header>
+          </Grid.Column>
+        </Grid.Row>
         <ContactMe />
       </Grid>
     </div>

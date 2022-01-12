@@ -7,35 +7,27 @@ class ContactMe extends Component {
       <Grid.Row id="contactMe" relaxed="very">
         <Container>
           <Segment raised>
-            <Grid.Row>
-              <Grid.Column width={6} textAlign="left">
-                <Form size="big">
+            <Form size="huge">
+              <Grid>
+                <Grid.Column width={7}>
                   <Form.Field>
-                    <Form.Input
-                      label="Full Name"
-                      placeholder="Full name"
-                      width={12}
-                    />
+                    <Form.Input label="Full Name" placeholder="Full name" required />
+                    <Form.Input label="Email" placeholder="Email" required />
                   </Form.Field>
-                  <Form.Field>
-                    <Form.Input label="Email" placeholder="Email" width={12} />
-                  </Form.Field>
-                </Form>
-              </Grid.Column>
-              <Grid.Column width={10}>
-                <Form size="big">
-                  <Form.Group>
-                    <Form.TextArea
-                      width={10}
-                      rows={5}
-                      label="Message"
-                      placeholder="Please let me know your thought"
-                    />
-                    <Form.Button>Send</Form.Button>
-                  </Form.Group>
-                </Form>
-              </Grid.Column>
-            </Grid.Row>
+                </Grid.Column>
+                <Grid.Column width={7}>
+                  <Form.TextArea
+                    required
+                    rows={5}
+                    label="Message"
+                    placeholder="Please let me know your thoughts"
+                  />
+                </Grid.Column>
+                <Grid.Column width={2} verticalAlign="middle">
+                  <Form.Button size="big">Send</Form.Button>
+                </Grid.Column>
+              </Grid>
+            </Form>
           </Segment>
         </Container>
       </Grid.Row>
