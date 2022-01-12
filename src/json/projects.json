@@ -3,12 +3,12 @@
     {
       "header": "Cousin's Supermarket Inventory",
       "languages": [
-          "PHP", "Javascript", "HTML", "CSS","Jquery","MySQL","Heroku"
+          "PHP", "Javascript", "HTML", "CSS","Heroku"
       ],
       "imgPath": "cousinsInv.png",
       "desc": "The first steps to advancing the inventory system",
-      "github":"",
-      "url":""
+      "github":"https://github.com/mibrahim95/cousinsinv",
+      "url":"https://cousinsinv.herokuapp.com/"
     },
     {
       "header": "Video Game maintance List",

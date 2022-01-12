@@ -12,17 +12,17 @@ function App() {
       <Grid padded>
         <Navbar />
         <LandingPage />
-        <Grid.Row>
+        <Grid.Row padded>
           <Grid.Column width={16}>
-            <Header as="h2" dividing textAlign="left">
+            <Header as="h1" dividing textAlign="left">
               Experience
             </Header>
           </Grid.Column>
         </Grid.Row>
         <JobList />
-        <Grid.Row color="grey">
+        <Grid.Row padded color="grey">
           <Grid.Column width={16}>
-            <Header as="h2" dividing textAlign="left">
+            <Header as="h1" dividing textAlign="right">
               Projects
             </Header>
           </Grid.Column>

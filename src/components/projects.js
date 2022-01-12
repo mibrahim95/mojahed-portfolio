@@ -7,7 +7,7 @@ class Projects extends Component {
 
   render() {
     return (
-      <Grid.Row color="grey">
+      <Grid.Row id="projects" color="grey">
         <Card.Group itemsPerRow={3} centered>
           {projects.code.map((project) => (
             <Card>

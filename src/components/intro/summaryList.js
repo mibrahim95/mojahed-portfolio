@@ -13,7 +13,7 @@ class SummaryList extends Component {
           Motivated programmer with a passion for building projects and watching
           them come to life.
         </Header>
-        <List animated relaxed size="huge">
+        <List animated relaxed="very" size="huge">
           {summaryData.map((summary) => (
             <List.Item id={summary.title+"Summary"}>
               <Icon name={summary.icon} size="large" verticalAlign='middle'/>

@@ -15,9 +15,9 @@ class JobList extends Component {
     const { activeBullet } = this.state;
 
     return (
-      <Grid.Row id="education" divided padded>
+      <Grid.Row id="education" divided padded="very">
         <Grid.Column width={6} textAlign="center">
-          <List size="huge" relaxed="very" animated>
+          <List size="massive" relaxed="very" animated>
             {experiences.map((experience) => (
               <List.Item
                 id={experience.id}
@@ -33,7 +33,7 @@ class JobList extends Component {
           </List>
         </Grid.Column>
         <Grid.Column width={10} textAlign="left">
-          <List relaxed="very" bulleted size="large">
+          <List relaxed="very" bulleted size="huge">
             {activeBullet.bullets.map((bullet) => (
               <List.Item key={bullet}>{bullet}</List.Item>
             ))}
