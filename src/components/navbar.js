@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Grid } from "semantic-ui-react";
+import { Menu, Container } from "semantic-ui-react";
 
 class Navbar extends Component {
   state = { activeItem: "aboutMe" };
@@ -9,10 +9,10 @@ class Navbar extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Grid.Row color="grey">
-          <Grid.Column width={16}>
+      <Container>
         <Menu text size="huge">
           <Menu.Item header>Mojahed Ibrahim</Menu.Item>
+
           <Menu.Menu position="right">
             <Menu.Item
               name="aboutMe"
@@ -31,8 +31,7 @@ class Navbar extends Component {
             />
           </Menu.Menu>
         </Menu>
-        </Grid.Column>
-      </Grid.Row>
+      </Container>
     );
   }
 }

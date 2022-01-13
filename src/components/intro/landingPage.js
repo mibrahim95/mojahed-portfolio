@@ -5,12 +5,14 @@ import { Image, Grid } from "semantic-ui-react";
 class LandingPage extends Component {
   render() {
     return (
-          <Grid.Row columns={2} color="grey" id="aboutMe" doubling>
-            <Grid.Column width={6}>
-              <Image src="/linkedInPic.jpeg" size="large" circular />
-            </Grid.Column>
-            <SummaryList />
-          </Grid.Row>
+      <Grid stackable padded>
+        <Grid.Row columns={2} id="aboutMe" doubling>
+          <Grid.Column width={6}>
+            <Image src="/linkedInPic.jpeg" size="large" circular />
+          </Grid.Column>
+          <SummaryList />
+        </Grid.Row>
+      </Grid>
     );
   }
 }
