@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import experiences from "../json/expList.json";
 import bullets from "../json/expBullets.json";
 
-import { Grid, List, Header } from "semantic-ui-react";
+import { Grid, List, Header, Container } from "semantic-ui-react";
 
 class ExpList extends Component {
   state = { activeBullet: bullets.t14 };
@@ -15,17 +15,13 @@ class ExpList extends Component {
     const { activeBullet } = this.state;
 
     return (
-      <Grid stackable padded>
-        <Grid.Row padded color="grey">
-          <Grid.Column width={16}>
-            <Header as="h1" dividing textAlign="left">
-              Experience
-            </Header>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row id="education" divided padded="very" color="grey">
+      <div>
+        <Header as="h1" dividing textAlign="left" columns={16}>
+          Experience
+        </Header>
+        <Grid>
           <Grid.Column width={6} textAlign="center">
-            <List size="massive" relaxed="very" animated>
+            <List animated size="huge">
               {experiences.map((experience) => (
                 <List.Item
                   id={experience.id}
@@ -41,14 +37,14 @@ class ExpList extends Component {
             </List>
           </Grid.Column>
           <Grid.Column width={10} textAlign="left">
-            <List relaxed="very" bulleted size="huge">
+            <List bulleted size="big">
               {activeBullet.bullets.map((bullet) => (
                 <List.Item key={bullet}>{bullet}</List.Item>
               ))}
             </List>
           </Grid.Column>
-        </Grid.Row>
-      </Grid>
+        </Grid>
+      </div>
     );
   }
 }

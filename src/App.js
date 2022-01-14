@@ -4,16 +4,17 @@ import ExpList from "./components/expList";
 import Projects from "./components/projects";
 import Navbar from "./components/navbar";
 import ContactMe from "./components/contactMe";
-import { Grid, Header } from "semantic-ui-react";
+import {Ref} from 'semantic-ui-react';
 
 function App() {
+
   return (
     <div className="App">
-      <Navbar />
-      <LandingPage />
-      <ExpList />
-      <Projects />
-      <ContactMe />
+        <Navbar/>
+        <LandingPage />
+        <ExpList />
+        <Projects />
+        <ContactMe />
     </div>
   );
 }
