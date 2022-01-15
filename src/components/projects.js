@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import projects from "../json/projects.json";
-import {
-  Card,
-  Grid,
-  Image,
-  Button,
-  Label,
-  Icon,
-  Header,
-} from "semantic-ui-react";
+import { Card, Image, Button, Label, Icon, Header } from "semantic-ui-react";
 
 class Projects extends Component {
   handleLinkClick = (e, { urlLink }) => window.open(urlLink, "_blank");

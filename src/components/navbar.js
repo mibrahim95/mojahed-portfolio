@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Container, Grid, Dropdown, Sticky } from "semantic-ui-react";
+import { Menu, Container, Grid, Dropdown } from "semantic-ui-react";
 
 class Navbar extends Component {
   state = { activeItem: "aboutMe" };
@@ -9,35 +9,35 @@ class Navbar extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Grid>
-        <Grid.Row only="computer">
-          <Container>
-            <Menu text size="huge">
-              <Menu.Item header>Mojahed Ibrahim</Menu.Item>
+      <div>
+        <Grid only="computer">
+          <Grid.Row only="computer">
+            <Container>
+              <Menu text size="huge">
+                <Menu.Item header>Mojahed Ibrahim</Menu.Item>
 
-              <Menu.Menu position="right">
-                <Menu.Item
-                  name="aboutMe"
-                  active={activeItem === "aboutMe"}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  name="experience"
-                  active={activeItem === "experience"}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  name="projects"
-                  active={activeItem === "projects"}
-                  onClick={this.handleItemClick}
-                />
-              </Menu.Menu>
-            </Menu>
-          </Container>
-        </Grid.Row>
-        <Grid.Row only="mobile" columns={1}>
-          <Grid.Column>
-            <Menu secondary>
+                <Menu.Menu position="right">
+                  <Menu.Item
+                    name="aboutMe"
+                    active={activeItem === "aboutMe"}
+                    onClick={this.handleItemClick}
+                  />
+                  <Menu.Item
+                    name="experience"
+                    active={activeItem === "experience"}
+                    onClick={this.handleItemClick}
+                  />
+                  <Menu.Item
+                    name="projects"
+                    active={activeItem === "projects"}
+                    onClick={this.handleItemClick}
+                  />
+                </Menu.Menu>
+              </Menu>
+            </Container>
+          </Grid.Row>
+          <Grid.Row only="mobile">
+            <Menu secondary fixed="top">
               <Menu.Menu position="right">
                 <Dropdown item icon="sidebar" simple>
                   <Dropdown.Menu>
@@ -50,9 +50,9 @@ class Navbar extends Component {
                 </Dropdown>
               </Menu.Menu>
             </Menu>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+          </Grid.Row>
+        </Grid>
+      </div>
     );
   }
 }

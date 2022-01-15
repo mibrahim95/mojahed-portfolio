@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import experiences from "../json/expList.json";
 import bullets from "../json/expBullets.json";
 
-import { Grid, List, Header, Container } from "semantic-ui-react";
+import { Grid, List, Header } from "semantic-ui-react";
 
 class ExpList extends Component {
   state = { activeBullet: bullets.t14 };
