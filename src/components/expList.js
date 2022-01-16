@@ -15,7 +15,7 @@ class ExpList extends Component {
     const { activeBullet } = this.state;
 
     return (
-      <div>
+      <div id="experience">
         <Header as="h1" dividing textAlign="left" columns={16}>
           Experience
         </Header>

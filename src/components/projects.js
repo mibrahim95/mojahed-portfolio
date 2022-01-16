@@ -7,7 +7,7 @@ class Projects extends Component {
 
   render() {
     return (
-      <div>
+      <div id="projects">
         <Header as="h1" dividing textAlign="right">
           Projects
         </Header>

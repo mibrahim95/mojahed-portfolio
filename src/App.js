@@ -4,7 +4,7 @@ import ExpList from "./components/expList";
 import Projects from "./components/projects";
 import Navbar from "./components/navbar";
 import ContactMe from "./components/contactMe";
-import {Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 function App() {
   return (

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Menu, Container, Grid, Dropdown } from "semantic-ui-react";
+import { HashLink } from "react-router-hash-link";
 
 class Navbar extends Component {
   state = { activeItem: "aboutMe" };
@@ -18,18 +19,35 @@ class Navbar extends Component {
 
                 <Menu.Menu position="right">
                   <Menu.Item
+                    as={HashLink}
+                    smooth
+                    to="#aboutMe"
                     name="aboutMe"
                     active={activeItem === "aboutMe"}
                     onClick={this.handleItemClick}
                   />
                   <Menu.Item
+                    as={HashLink}
+                    smooth
+                    to="#experience"
                     name="experience"
                     active={activeItem === "experience"}
                     onClick={this.handleItemClick}
                   />
                   <Menu.Item
+                    as={HashLink}
+                    smooth
+                    to="#projects"
                     name="projects"
                     active={activeItem === "projects"}
+                    onClick={this.handleItemClick}
+                  />
+                  <Menu.Item
+                    as={HashLink}
+                    smooth
+                    to="#contactMe"
+                    name="Contact Me"
+                    active={activeItem === "Contact Me"}
                     onClick={this.handleItemClick}
                   />
                 </Menu.Menu>
@@ -39,12 +57,21 @@ class Navbar extends Component {
           <Grid.Row only="mobile">
             <Menu secondary fixed="top">
               <Menu.Menu position="right">
-                <Dropdown item icon="sidebar" simple>
+                <Dropdown item icon="sidebar">
                   <Dropdown.Menu>
                     <Dropdown.Item>
-                      <Dropdown.Item>About Me</Dropdown.Item>
-                      <Dropdown.Item>Experience</Dropdown.Item>
-                      <Dropdown.Item>Project</Dropdown.Item>
+                      <Dropdown.Item as={HashLink} smooth to="#aboutMe">
+                        About Me
+                      </Dropdown.Item>
+                      <Dropdown.Item as={HashLink} smooth to="#experience">
+                        Experience
+                      </Dropdown.Item>
+                      <Dropdown.Item as={HashLink} smooth to="#projects">
+                        Project
+                      </Dropdown.Item>
+                      <Dropdown.Item as={HashLink} smooth to="#contactMe">
+                        Contact Me
+                      </Dropdown.Item>
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
