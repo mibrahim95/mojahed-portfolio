@@ -2,6 +2,30 @@ import React, { Component } from "react";
 import { Grid, Form, Segment, Container, Header } from "semantic-ui-react";
 
 class ContactMe extends Component {
+  state = { fullName: "", email: "", msg: "" };
+
+  handleFormChange = (e, { name }) => this.setState({ [name]: e.target.value });
+
+  submitContactRequest = () => {
+    console.log(process.env);
+    let text = `Hello Mojo,${this.state.fullName} has requested to contact you with the following message: 
+      ${this.state.msg} Please reach out to him at  ${this.state.email}`;
+    fetch(
+      `https://api.telegram.org/bot${process.env.REACT_APP_TELEGRAM_BOT_KEY}/sendMessage?chat_id=${process.env.REACT_APP_CONTACTME_TELEGRAM_CHANNEL}&text=${text}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        this.setState({ fullName: "", email: "", msg: "" });
+        console.log("Success:", result);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   render() {
     return (
       <Grid padded>
@@ -22,9 +46,19 @@ class ContactMe extends Component {
                       <Form.Input
                         label="Full Name"
                         placeholder="Full name"
+                        name="fullName"
                         required
+                        onChange={this.handleFormChange}
+                        value={this.state.fullName}
                       />
-                      <Form.Input label="Email" placeholder="Email" required />
+                      <Form.Input
+                        label="Email"
+                        placeholder="Email"
+                        name="email"
+                        required
+                        onChange={this.handleFormChange}
+                        value={this.state.email}
+                      />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column computer={7} mobile={16}>
@@ -33,10 +67,19 @@ class ContactMe extends Component {
                       rows={5}
                       label="Message"
                       placeholder="Please let me know your thoughts"
+                      name="msg"
+                      onChange={this.handleFormChange}
+                      value={this.state.msg}
                     />
                   </Grid.Column>
                   <Grid.Column computer={2} mobile={16} verticalAlign="middle">
-                    <Form.Button size="big" floated="right">Send</Form.Button>
+                    <Form.Button
+                      size="big"
+                      floated="right"
+                      onClick={this.submitContactRequest}
+                    >
+                      Send
+                    </Form.Button>
                   </Grid.Column>
                 </Grid>
               </Form>
