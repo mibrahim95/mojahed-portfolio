@@ -8,7 +8,7 @@ class Projects extends Component {
   render() {
     return (
       <div id="projects">
-        <Header as="h1" dividing textAlign="right">
+        <Header as="h1" dividing textAlign="left">
           Projects
         </Header>
 
@@ -19,7 +19,7 @@ class Projects extends Component {
               <Card.Content>
                 <Card.Header>{project.header}</Card.Header>
                 <Card.Meta>
-                  <Label.Group tag size="mini">
+                  <Label.Group size="mini">
                     {project.languages.map((language) => (
                       <Label as="a">{language}</Label>
                     ))}
@@ -28,20 +28,34 @@ class Projects extends Component {
                 <Card.Description>{project.desc}</Card.Description>
               </Card.Content>
               <Card.Content extra>
-                <Button
-                  color="github"
-                  urlLink={project.github}
-                  onClick={this.handleLinkClick}
-                >
-                  <Icon name="github" /> Visit the GitHub Repo
-                </Button>
-                <Button
-                  color="blue"
-                  urlLink={project.url}
-                  onClick={this.handleLinkClick}
-                >
-                  <Icon name="external alternate" /> Visit the page
-                </Button>
+                <div>
+                  {project.github && (
+                    <Button
+                      animated
+                      color="github"
+                      urlLink={project.github}
+                      onClick={this.handleLinkClick}
+                    >
+                      <Button.Content visible>GitHub Repo</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name="github"  size="large"/>
+                      </Button.Content>
+                    </Button>
+                  )}
+                  {project.url && (
+                    <Button
+                      animated
+                      color="blue"
+                      urlLink={project.url}
+                      onClick={this.handleLinkClick}
+                    >
+                      <Button.Content visible>Visit page</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name="external alternate" /> 
+                      </Button.Content>
+                    </Button>
+                  )}
+                </div>
               </Card.Content>
             </Card>
           ))}

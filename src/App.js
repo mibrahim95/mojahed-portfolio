@@ -1,6 +1,6 @@
 import "./App.css";
 import LandingPage from "./components/intro/landingPage";
-import ExpList from "./components/expList";
+import ExpList from "./components/exp/expList";
 import Projects from "./components/projects";
 import Navbar from "./components/navbar";
 import ContactMe from "./components/contactMe";

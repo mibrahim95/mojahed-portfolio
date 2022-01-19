@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import summaryData from "../../json/summaryData.json";
-import { Grid, List, Header, Icon, Menu } from "semantic-ui-react";
+import { Grid, List, Header, Icon } from "semantic-ui-react";
 
 class SummaryList extends Component {
   render() {
@@ -15,8 +15,8 @@ class SummaryList extends Component {
         </Header>
         <List animated relaxed="very" size="huge">
           {summaryData.map((summary) => (
-            <List.Item id={summary.title+"Summary"}>
-              <Icon name={summary.icon} size="large" verticalAlign='middle'/>
+            <List.Item id={summary.title + "Summary"}>
+              <Icon name={summary.icon} size="large" verticalAlign="middle" />
               <List.Content>
                 <List.Header>{summary.title}</List.Header>
                 <List.Description>{summary.desc}</List.Description>
@@ -27,14 +27,12 @@ class SummaryList extends Component {
 
         <p>Email: MojahedIbrahim95@gmail.com</p>
         <p>Phone: 215-460-6956</p>
-        <div>
-          <Menu.Item href="https://www.linkedin.com/in/mojahed-ibrahim/" position="right" target="_blank">
-            <Icon name="linkedin" size="huge" color="blue" link />
-          </Menu.Item>
-          <Menu.Item href="https://github.com/mibrahim95" position="right" target="_blank">
-            <Icon name="github" size="huge" color="black" link/>
-          </Menu.Item>
-        </div>
+        <a href="https://www.linkedin.com/in/mojahed-ibrahim/">
+          <Icon name="linkedin" size="huge" color="blue" link />
+        </a>
+        <a href="https://github.com/mibrahim95">
+          <Icon name="github" size="huge" color="black" link />
+        </a>
       </Grid.Column>
     );
   }

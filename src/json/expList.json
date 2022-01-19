@@ -1,22 +1,50 @@
 [
   {
     "title": "Turn 14 Distribution",
-    "desc": "Web Application Developer",
-    "id": "t14"
+    "position": "Web Application Developer",
+    "desc":"Build projects to help the company grow",
+    "id": "t14",
+    "bullets": [
+      "Develop database-driven web applications for internal/external clients." ,
+      "Utilization of MySQL to develop multiple queries and reports",
+      "Work independently to develop, maintain, review, and test code to meet specifications of multiple applications"
+    ],
+    "dates":"January 2019 - Present"
   },
   {
     "title": "Temple University",
-    "desc": "Management Information Systems ITA ",
-    "id": "temple"
+    "position": "Management Information Systems ITA ",
+    "desc":"Help prepare upcoming student for their future careers",
+    "id": "temple",
+    "bullets": [
+      "Assist students with coursework in the Data-Centric Application Development course.",
+      "Support in developing an easy to learn workload for the semester.",
+      "Understanding of HTML, CSS, PHP, and SQL."
+    ],
+    "dates":"June 2018 - January 2019"
   },
   {
     "title": "Five Below",
-    "desc": "Store Operations Analyst Intern",
-    "id": "5b"
+    "position": "Store Operations Analyst Intern",
+    "desc":"Analyze employees time sheets to prepare holiday work schedules",
+    "id": "5b",
+    "bullets": [
+     "Analyzed data to build Labor reporting and Overtime Tracking report.",
+     "Created sample schedules for test locations and holiday season.",
+     "Assisted in organization of teams for the introduction of a new software."
+    ],
+    "dates":"May 2018 – August 2018"
   },
   {
     "title": "Cousin’s Supermarket",
-    "desc": "Front End Manager",
-    "id": "cousins"
+    "position": "Front End Manager",
+    "desc":"Lead a team to effectively to decrease checkout time",
+    "id": "cousins",
+    "bullets": [
+      "Provide optimal leadership and communication to ensure productivity.",
+      "Assist cashiers with daily operations",
+      "Carefully address customer concerns and complaints with accurate solutions"
+    ],
+    "dates":"September 2017 - January 2019"
   }
 ]

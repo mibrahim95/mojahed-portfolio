@@ -55,7 +55,7 @@ class Navbar extends Component {
             </Container>
           </Grid.Row>
           <Grid.Row only="mobile">
-            <Menu secondary fixed="top">
+            <Menu secondary fixed="top" size="huge">
               <Menu.Menu position="right">
                 <Dropdown item icon="sidebar">
                   <Dropdown.Menu>
