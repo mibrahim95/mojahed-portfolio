@@ -7,7 +7,6 @@ class ContactMe extends Component {
   handleFormChange = (e, { name }) => this.setState({ [name]: e.target.value });
 
   submitContactRequest = () => {
-    console.log(process.env);
     let text = `Hello Mojo,${this.state.fullName} has requested to contact you with the following message: 
       ${this.state.msg} Please reach out to him at  ${this.state.email}`;
     fetch(
