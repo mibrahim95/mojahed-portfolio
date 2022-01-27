@@ -1,27 +1,57 @@
 import React, { Component } from "react";
 import { Grid, Form, Segment, Container, Header } from "semantic-ui-react";
+import ContactResponse from "./contactResponse";
 
 class ContactMe extends Component {
-  state = { fullName: "", email: "", msg: "" };
+  state = {
+    fullName: "",
+    email: "",
+    msg: "",
+    loading: false,
+    displayresponse: false,
+    displayForm: true,
+    responseReason: "Please fill out all required fields",
+    responseHeader: "Sorry you can't do that",
+    responseSegColor: "red",
+    responseMsgColor: "negative",
+  };
 
   handleFormChange = (e, { name }) => this.setState({ [name]: e.target.value });
 
   submitContactRequest = () => {
-    let text = `Hello Mojo,${this.state.fullName} has requested to contact you with the following message: 
-      ${this.state.msg} Please reach out to him at  ${this.state.email}`;
-    fetch(
-      `https://api.telegram.org/bot${process.env.REACT_APP_TELEGRAM_BOT_KEY}/sendMessage?chat_id=${process.env.REACT_APP_CONTACTME_TELEGRAM_CHANNEL}&text=${text}`,
-      {
-        method: "GET",
-      }
-    )
+    let headers = new Headers();
+    let test = "Basic " + window.btoa("abc:123").toString("base64");
+    headers.append("Authorization", test);
+    headers.append("Content-Type", "application/json");
+
+    fetch(process.env.REACT_APP_API_HOST, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        email: this.state.email,
+        fullName: this.state.fullName,
+        msg: this.state.msg,
+      }),
+    })
       .then((response) => response.json())
       .then((result) => {
-        this.setState({ fullName: "", email: "", msg: "" });
-        console.log("Success:", result);
+        console.log(result);
+        if (result.success) {
+          this.setState({
+            displayForm: false,
+            responseHeader: "Congrats you succeeded",
+            responseSegColor: "green",
+            responseMsgColor: "positive",
+          });
+          console.log(this.state);
+        }
+        this.setState({
+          displayresponse: true,
+          responseReason: result.message,
+        });
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.log("Error:", error);
       });
   };
 
@@ -36,54 +66,71 @@ class ContactMe extends Component {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row id="contactMe" relaxed="very">
-          <Container>
-            <Segment raised>
-              <Form size="huge">
-                <Grid>
-                  <Grid.Column computer={7} mobile={16}>
-                    <Form.Field>
-                      <Form.Input
-                        label="Full Name"
-                        placeholder="Full name"
-                        name="fullName"
-                        required
+          {this.state.displayForm && (
+            <Container>
+              <Segment raised>
+                <Form size="huge">
+                  <Grid>
+                    <Grid.Column computer={7} mobile={16}>
+                      <Form.Field>
+                        <Form.Input
+                          label="Full Name"
+                          placeholder="Full name"
+                          name="fullName"
+                          required
+                          onChange={this.handleFormChange}
+                          value={this.state.fullName}
+                        />
+                        <Form.Input
+                          label="Email"
+                          placeholder="Email"
+                          name="email"
+                          required
+                          onChange={this.handleFormChange}
+                          value={this.state.email}
+                        />
+                      </Form.Field>
+                    </Grid.Column>
+                    <Grid.Column computer={7} mobile={16}>
+                      <Form.TextArea
+                        rows={5}
+                        label="Message"
+                        placeholder="Please let me know your thoughts"
+                        name="msg"
                         onChange={this.handleFormChange}
-                        value={this.state.fullName}
+                        value={this.state.msg}
                       />
-                      <Form.Input
-                        label="Email"
-                        placeholder="Email"
-                        name="email"
-                        required
-                        onChange={this.handleFormChange}
-                        value={this.state.email}
-                      />
-                    </Form.Field>
-                  </Grid.Column>
-                  <Grid.Column computer={7} mobile={16}>
-                    <Form.TextArea
-                      required
-                      rows={5}
-                      label="Message"
-                      placeholder="Please let me know your thoughts"
-                      name="msg"
-                      onChange={this.handleFormChange}
-                      value={this.state.msg}
-                    />
-                  </Grid.Column>
-                  <Grid.Column computer={2} mobile={16} verticalAlign="middle">
-                    <Form.Button
-                      size="big"
-                      floated="right"
-                      onClick={this.submitContactRequest}
+                    </Grid.Column>
+                    <Grid.Column
+                      computer={2}
+                      mobile={16}
+                      verticalAlign="middle"
                     >
-                      Send
-                    </Form.Button>
-                  </Grid.Column>
-                </Grid>
-              </Form>
-            </Segment>
-          </Container>
+                      <Form.Button
+                        size="big"
+                        floated="right"
+                        loading={this.state.loading}
+                        onClick={this.submitContactRequest}
+                      >
+                        Send
+                      </Form.Button>
+                    </Grid.Column>
+                  </Grid>
+                </Form>
+              </Segment>
+            </Container>
+          )}
+        </Grid.Row>
+
+        <Grid.Row>
+          {this.state.displayresponse && (
+            <ContactResponse
+              header={this.state.responseHeader}
+              message={this.state.responseReason}
+              segmentColor={this.state.responseSegColor}
+              messageColor={this.state.responseMsgColor}
+            />
+          )}
         </Grid.Row>
       </Grid>
     );
