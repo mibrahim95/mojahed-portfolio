@@ -11,7 +11,7 @@ class ContactMe extends Component {
     displayresponse: false,
     displayForm: true,
     responseReason: "Please fill out all required fields",
-    responseHeader: "Sorry you can't do that",
+    responseHeader: "Sorry an issue occured",
     responseSegColor: "red",
     responseMsgColor: "negative",
   };
@@ -19,9 +19,16 @@ class ContactMe extends Component {
   handleFormChange = (e, { name }) => this.setState({ [name]: e.target.value });
 
   submitContactRequest = () => {
+    this.setState({ loading: true });
     let headers = new Headers();
-    let test = "Basic " + window.btoa("abc:123").toString("base64");
-    headers.append("Authorization", test);
+
+    let userAndPass64encoded =
+      "Basic " +
+      window
+        .btoa(process.env.REACT_APP_JAVA_API_USERNAME_AND_PASS)
+        .toString("base64");
+
+    headers.append("Authorization", userAndPass64encoded);
     headers.append("Content-Type", "application/json");
 
     fetch(process.env.REACT_APP_API_HOST, {
@@ -35,24 +42,24 @@ class ContactMe extends Component {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         if (result.success) {
           this.setState({
             displayForm: false,
-            responseHeader: "Congrats you succeeded",
+            responseHeader:
+              "Thank you for reaching out " + this.state.fullName + "!",
+            responseReason: "I will reach out to you as soon as possible",
             responseSegColor: "green",
             responseMsgColor: "positive",
           });
-          console.log(this.state);
         }
-        this.setState({
-          displayresponse: true,
-          responseReason: result.message,
-        });
       })
       .catch((error) => {
-        console.log("Error:", error);
+        this.setState({ responseReason: "Please refresh and try again" });
       });
+    this.setState({
+      displayresponse: true,
+      loading: false,
+    });
   };
 
   render() {
@@ -62,6 +69,10 @@ class ContactMe extends Component {
           <Grid.Column width={16}>
             <Header as="h1" dividing textAlign="left">
               Contact Me
+              <Header.Subheader>
+                Validated and submitted to Telegram API through use of personal
+                Java API
+              </Header.Subheader>
             </Header>
           </Grid.Column>
         </Grid.Row>
