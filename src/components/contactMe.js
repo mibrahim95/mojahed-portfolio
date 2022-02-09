@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Grid, Form, Segment, Container, Header } from "semantic-ui-react";
+import {
+  Grid,
+  Form,
+  Segment,
+  Container,
+  Header,
+  Popup,
+  Icon,
+} from "semantic-ui-react";
 import ContactResponse from "./contactResponse";
 
 class ContactMe extends Component {
@@ -70,8 +78,16 @@ class ContactMe extends Component {
             <Header as="h1" dividing textAlign="left">
               Contact Me
               <Header.Subheader>
-                Validated and submitted to Telegram API through use of personal
-                Java API
+                Validated and submitted to Telegram-integration-service through
+                use of personal Java Spring Boot API
+                <Popup
+                  content="View the Github repo"
+                  trigger={
+                    <a href="https://github.com/mibrahim95/telegramApi">
+                      <Icon name="info circle" size="small" />
+                    </a>
+                  }
+                />
               </Header.Subheader>
             </Header>
           </Grid.Column>

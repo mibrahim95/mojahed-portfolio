@@ -11,7 +11,7 @@ class Navbar extends Component {
 
     return (
       <div>
-        <Grid only="computer">
+        <Grid>
           <Grid.Row only="computer">
             <Container>
               <Menu text size="huge">

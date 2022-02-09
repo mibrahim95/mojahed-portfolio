@@ -6,7 +6,7 @@ class LandingPage extends Component {
   render() {
     return (
       <Grid stackable padded id="aboutMe">
-        <Grid.Row columns={2} doubling>
+        <Grid.Row columns={2}>
           <Grid.Column width={6}>
             <Image src="/linkedInPic.jpeg" size="large" circular />
           </Grid.Column>

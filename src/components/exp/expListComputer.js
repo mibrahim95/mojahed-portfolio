@@ -5,10 +5,10 @@ class ExpListComputer extends Component {
   render() {
     return (
       <div>
-        <Grid divided padded centered only="computer">
+        <Grid divided padded centered>
           {this.props.exp.map((experience, index) =>
             index % 2 === 0 ? (
-              <Grid.Row stretched only="computer">
+              <Grid.Row key={index} stretched only="computer">
                 <Grid.Column width={6} padded='horizontally'>
                   <Segment size="large">
                     <Header as="h1" textAlign="center">
@@ -25,19 +25,19 @@ class ExpListComputer extends Component {
                   <Header as="h2">{experience.desc}</Header>
                   <List bulleted size="big" textAlign="center" relaxed="very">
                     {experience.bullets.map((bullet) => (
-                      <List.Item>{bullet}</List.Item>
+                      <List.Item key={bullet}>{bullet}</List.Item>
                     ))}
                   </List>
                 </Grid.Column>
               </Grid.Row>
 
             ) : (
-              <Grid.Row stretched only="computer">
+              <Grid.Row key={index} stretched only="computer">
                 <Grid.Column width={10} textAlign="center" padded='horizontally'> 
                   <Header as="h1">{experience.desc}</Header>
                   <List bulleted size="big" textAlign="center" relaxed="very">
                     {experience.bullets.map((bullet) => (
-                      <List.Item>{bullet}</List.Item>
+                      <List.Item key={bullet}>{bullet}</List.Item>
                     ))}
                   </List>
                 </Grid.Column>

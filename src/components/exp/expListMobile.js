@@ -5,10 +5,10 @@ class ExpListMobile extends Component {
   render() {
     return (
       <div>
-        <Grid divided padded centered only="mobile">
+        <Grid divided padded centered>
           {this.props.exp.map((experience, index) =>
             index % 2 === 0 ? (
-              <Grid.Row stretched only="mobile">
+              <Grid.Row key={index} stretched only="mobile">
                 <Grid.Column width={8} padded='horizontally'>
                   <Segment size="large">
                     <Header as="h3" textAlign="center">
@@ -24,18 +24,18 @@ class ExpListMobile extends Component {
                   <Header as="h5">{experience.desc}</Header>
                   <List bulleted size="mini" textAlign="left" padded>
                     {experience.bullets.map((bullet) => (
-                      <List.Item>{bullet}</List.Item>
+                      <List.Item key={bullet}>{bullet}</List.Item>
                     ))}
                   </List>
                 </Grid.Column>
               </Grid.Row>
             ) : (
-              <Grid.Row stretched only="mobile">
+              <Grid.Row key={index} stretched only="mobile">
                 <Grid.Column width={8} textAlign="center" padded='horizontally'> 
                   <Header as="h5">{experience.desc}</Header>
                   <List bulleted size="mini" textAlign="left" padded>
                     {experience.bullets.map((bullet) => (
-                      <List.Item>{bullet}</List.Item>
+                      <List.Item key={bullet}>{bullet}</List.Item>
                     ))}
                   </List>
                 </Grid.Column>
