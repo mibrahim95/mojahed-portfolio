@@ -48,26 +48,35 @@ class ContactMe extends Component {
         msg: this.state.msg,
       }),
     })
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.success) {
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
           this.setState({
-            displayForm: false,
-            responseHeader:
-              "Thank you for reaching out " + this.state.fullName + "!",
-            responseReason: "I will reach out to you as soon as possible",
-            responseSegColor: "green",
-            responseMsgColor: "positive",
+            responseReason: "Please fill out all required fields",
           });
+          throw new Error("Please fill out required Fields");
         }
       })
+      .then((result) => {
+        this.setState({
+          displayForm: false,
+          responseHeader:
+            "Thank you for reaching out " + this.state.fullName + "!",
+          responseReason: "I will reach out to you as soon as possible",
+          responseSegColor: "green",
+          responseMsgColor: "positive",
+          displayresponse: true,
+          loading: false,
+        });
+      })
       .catch((error) => {
-        this.setState({ responseReason: "Please refresh and try again" });
+        this.setState({
+          responseReason: "Please refresh and try again",
+          displayresponse: true,
+          loading: false,
+        });
       });
-    this.setState({
-      displayresponse: true,
-      loading: false,
-    });
   };
 
   render() {
@@ -91,6 +100,16 @@ class ContactMe extends Component {
               </Header.Subheader>
             </Header>
           </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          {this.state.displayresponse && (
+            <ContactResponse
+              header={this.state.responseHeader}
+              message={this.state.responseReason}
+              segmentColor={this.state.responseSegColor}
+              messageColor={this.state.responseMsgColor}
+            />
+          )}
         </Grid.Row>
         <Grid.Row id="contactMe" relaxed="very">
           {this.state.displayForm && (
@@ -146,17 +165,6 @@ class ContactMe extends Component {
                 </Form>
               </Segment>
             </Container>
-          )}
-        </Grid.Row>
-
-        <Grid.Row>
-          {this.state.displayresponse && (
-            <ContactResponse
-              header={this.state.responseHeader}
-              message={this.state.responseReason}
-              segmentColor={this.state.responseSegColor}
-              messageColor={this.state.responseMsgColor}
-            />
           )}
         </Grid.Row>
       </Grid>

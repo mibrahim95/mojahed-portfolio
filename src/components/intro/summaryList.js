@@ -25,8 +25,7 @@ class SummaryList extends Component {
           ))}
         </List>
 
-        <p>Email: MojahedIbrahim95@gmail.com</p>
-        <p>Phone: 215-460-6956</p>
+      
         <a href="https://www.linkedin.com/in/mojahed-ibrahim/">
           <Icon name="linkedin" size="huge" color="blue" link />
         </a>
