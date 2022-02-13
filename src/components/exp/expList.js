@@ -9,14 +9,14 @@ class ExpList extends Component {
   handleModalOpen = (e) => this.setState({ open: e });
   render() {
     return (
-      <div id="experience">
+      <div id="experience" className="mt-40">
         <Header as="h1" dividing textAlign="left" columns={16}>
           Experience
         </Header>
         <ExpListMobile exp={experiences} />
         <ExpListComputer exp={experiences} />
         <Grid centered columns={1}>
-          <Grid.Column width={14} textAlign="center">
+          <Grid.Column width={14} textAlign="center" className="mt-20">
             <Message info>
               <Message.Header>
                 Click below to view my full resume

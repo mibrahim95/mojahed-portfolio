@@ -27,3 +27,15 @@ code {
 #KnowledgeSummary .content{
   padding-left: 17px;
 }
+
+.mt-20{
+  margin-top: 20px;
+}
+
+.mb-40{
+  margin-bottom: 40px;
+}
+
+.mt-40{
+  margin-top: 40px;
+}

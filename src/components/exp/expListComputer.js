@@ -8,7 +8,7 @@ class ExpListComputer extends Component {
         <Grid divided padded centered>
           {this.props.exp.map((experience, index) =>
             index % 2 === 0 ? (
-              <Grid.Row key={index} stretched only="computer">
+              <Grid.Row key={index} stretched only="computer" className="mt-20">
                 <Grid.Column width={6} padded='horizontally'>
                   <Segment size="large">
                     <Header as="h1" textAlign="center">
@@ -32,7 +32,7 @@ class ExpListComputer extends Component {
               </Grid.Row>
 
             ) : (
-              <Grid.Row key={index} stretched only="computer">
+              <Grid.Row key={index} stretched only="computer" className="mt-20">
                 <Grid.Column width={10} textAlign="center" padded='horizontally'> 
                   <Header as="h1">{experience.desc}</Header>
                   <List bulleted size="big" textAlign="center" relaxed="very">

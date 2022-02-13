@@ -24,8 +24,6 @@ class SummaryList extends Component {
             </List.Item>
           ))}
         </List>
-
-      
         <a href="https://www.linkedin.com/in/mojahed-ibrahim/">
           <Icon name="linkedin" size="huge" color="blue" link />
         </a>
