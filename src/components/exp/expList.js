@@ -30,7 +30,7 @@ class ExpList extends Component {
                 trigger={<Button color="black">View Full Resume</Button>}
               >
                 <Modal.Content>
-                  <Image src="MojahedResume2022.png" />
+                  <Image src="MojahedResume2022.jpg" />
                 </Modal.Content>
                 <Modal.Actions>
                   <Button
