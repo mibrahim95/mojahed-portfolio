@@ -8,7 +8,7 @@ class LandingPage extends Component {
       <Grid stackable padded id="aboutMe">
         <Grid.Row columns={2}>
           <Grid.Column width={6}>
-            <Image src="/linkedInPic.jpeg" size="large" circular />
+            <Image src={process.env.PUBLIC_URL + "/linkedInPic.jpeg"} alt="Mojahed Ibrahim" size="large" circular />
           </Grid.Column>
           <SummaryList />
         </Grid.Row>

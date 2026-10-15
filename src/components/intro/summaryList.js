@@ -24,10 +24,10 @@ class SummaryList extends Component {
             </List.Item>
           ))}
         </List>
-        <a href="https://www.linkedin.com/in/mojahed-ibrahim/">
+        <a href="https://www.linkedin.com/in/mojahed-ibrahim/" aria-label="LinkedIn profile">
           <Icon name="linkedin" size="huge" color="blue" link />
         </a>
-        <a href="https://github.com/mibrahim95">
+        <a href="https://github.com/mibrahim95" aria-label="GitHub profile">
           <Icon name="github" size="huge" color="black" link />
         </a>
       </Grid.Column>

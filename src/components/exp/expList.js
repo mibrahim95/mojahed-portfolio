@@ -30,7 +30,7 @@ class ExpList extends Component {
                 trigger={<Button color="black">View Full Resume</Button>}
               >
                 <Modal.Content>
-                  <Image src="MojahedResume2022.jpg" />
+                  <Image src={process.env.PUBLIC_URL + "/MojahedResume2022.jpg"} alt="Mojahed Ibrahim resume" />
                 </Modal.Content>
                 <Modal.Actions>
                   <Button

@@ -10,6 +10,8 @@ import {
 } from "semantic-ui-react";
 import ContactResponse from "./contactResponse";
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 class ContactMe extends Component {
   state = {
     fullName: "",
@@ -18,51 +20,61 @@ class ContactMe extends Component {
     loading: false,
     displayresponse: false,
     displayForm: true,
-    responseReason: "Please fill out all required fields",
-    responseHeader: "Sorry an issue occured",
+    responseReason: "",
+    responseHeader: "",
     responseSegColor: "red",
     responseMsgColor: "negative",
   };
 
   handleFormChange = (e, { name }) => this.setState({ [name]: e.target.value });
 
+  showError = (reason) =>
+    this.setState({
+      responseHeader: "Sorry an issue occurred",
+      responseReason: reason,
+      responseSegColor: "red",
+      responseMsgColor: "negative",
+      displayresponse: true,
+      loading: false,
+    });
+
   submitContactRequest = () => {
+    const { fullName, email, msg, loading } = this.state;
+    if (loading) return;
+
+    if (!fullName.trim() || !msg.trim() || !EMAIL_REGEX.test(email.trim())) {
+      this.showError(
+        "Please provide your name, a valid email and a message"
+      );
+      return;
+    }
+
     this.setState({ loading: true });
-    let headers = new Headers();
-
-    let userAndPass64encoded =
-      "Basic " +
-      window
-        .btoa(process.env.REACT_APP_JAVA_API_USERNAME_AND_PASS)
-        .toString("base64");
-
-    headers.append("Authorization", userAndPass64encoded);
+    const headers = new Headers();
+    headers.append(
+      "Authorization",
+      "Basic " + window.btoa(process.env.REACT_APP_JAVA_API_USERNAME_AND_PASS)
+    );
     headers.append("Content-Type", "application/json");
 
     fetch(process.env.REACT_APP_API_HOST, {
       method: "POST",
-      headers: headers,
-      body: JSON.stringify({
-        email: this.state.email,
-        fullName: this.state.fullName,
-        msg: this.state.msg,
-      }),
+      headers,
+      body: JSON.stringify({ email, fullName, msg }),
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          this.setState({
-            responseReason: "Please fill out all required fields",
-          });
-          throw new Error("Please fill out required Fields");
-        }
+        if (response.ok) return response.json();
+        this.showError(
+          response.status >= 400 && response.status < 500
+            ? "Please check the form fields and try again"
+            : "The server had a problem, please try again later"
+        );
       })
       .then((result) => {
+        if (!result) return;
         this.setState({
           displayForm: false,
-          responseHeader:
-            "Thank you for reaching out " + this.state.fullName + "!",
+          responseHeader: "Thank you for reaching out " + fullName + "!",
           responseReason: "I will reach out to you as soon as possible",
           responseSegColor: "green",
           responseMsgColor: "positive",
@@ -70,19 +82,13 @@ class ContactMe extends Component {
           loading: false,
         });
       })
-      .catch((error) => {
-        this.setState({
-          responseReason: "Please refresh and try again",
-          displayresponse: true,
-          loading: false,
-        });
-      });
+      .catch(() => this.showError("Please check your connection and try again"));
   };
 
   render() {
     return (
       <Grid padded>
-        <Grid.Row padded>
+        <Grid.Row>
           <Grid.Column width={16}>
             <Header as="h1" dividing textAlign="left">
               Contact Me

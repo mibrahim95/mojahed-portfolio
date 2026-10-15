@@ -59,19 +59,17 @@ class Navbar extends Component {
               <Menu.Menu position="right">
                 <Dropdown item icon="sidebar">
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Dropdown.Item as={HashLink} smooth to="#aboutMe">
-                        About Me
-                      </Dropdown.Item>
-                      <Dropdown.Item as={HashLink} smooth to="#experience">
-                        Experience
-                      </Dropdown.Item>
-                      <Dropdown.Item as={HashLink} smooth to="#projects">
-                        Project
-                      </Dropdown.Item>
-                      <Dropdown.Item as={HashLink} smooth to="#contactMe">
-                        Contact Me
-                      </Dropdown.Item>
+                    <Dropdown.Item as={HashLink} smooth to="#aboutMe">
+                      About Me
+                    </Dropdown.Item>
+                    <Dropdown.Item as={HashLink} smooth to="#experience">
+                      Experience
+                    </Dropdown.Item>
+                    <Dropdown.Item as={HashLink} smooth to="#projects">
+                      Projects
+                    </Dropdown.Item>
+                    <Dropdown.Item as={HashLink} smooth to="#contactMe">
+                      Contact Me
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

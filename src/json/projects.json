@@ -17,7 +17,7 @@
       "url": "https://cousinsinv.herokuapp.com/"
     },
     {
-      "header": "Video Game maintance List",
+      "header": "Video Game maintenance List",
       "languages": [
         "PHP",
         "Javascript",
@@ -31,14 +31,6 @@
       "desc": "Help pinpoint nonfunctional games as well as pick out highly rated ones",
       "github": "https://github.com/mibrahim95/romCheck",
       "url": "https://rom-check.herokuapp.com/"
-    }
-  ],
-  "personal": [
-    {
-      "header": "Modding Arcade1up",
-      "meta": "so great",
-      "imgPath": "arcadeMod.png",
-      "desc": "Personal project as a gift, adding retropie to arcade cabinet"
     }
   ]
 }

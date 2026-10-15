@@ -3,8 +3,6 @@ import projects from "../json/projects.json";
 import { Card, Image, Button, Label, Icon, Header } from "semantic-ui-react";
 
 class Projects extends Component {
-  handleLinkClick = (e, { urllink }) => window.open(urllink, "_blank");
-
   render() {
     return (
       <div id="projects" className="mt-40 mb-40">
@@ -15,7 +13,7 @@ class Projects extends Component {
         <Card.Group centered>
           {projects.code.map((project) => (
             <Card key={project.header}>
-              <Image src={project.imgPath} wrapped ui={false} />
+              <Image src={project.imgPath} alt={project.header} wrapped ui={false} />
               <Card.Content>
                 <Card.Header>{project.header}</Card.Header>
                 <Card.Meta>
@@ -33,8 +31,10 @@ class Projects extends Component {
                     <Button
                       animated
                       color="github"
-                      urllink={project.github}
-                      onClick={this.handleLinkClick}
+                      as="a"
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Button.Content visible>GitHub Repo</Button.Content>
                       <Button.Content hidden>
@@ -46,8 +46,10 @@ class Projects extends Component {
                     <Button
                       animated
                       color="blue"
-                      urllink={project.url}
-                      onClick={this.handleLinkClick}
+                      as="a"
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Button.Content visible>Visit page</Button.Content>
                       <Button.Content hidden>
