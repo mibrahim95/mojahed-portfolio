@@ -4,7 +4,7 @@ import { useEffect } from "react";
 // Content is only hidden when this runs (the `js` class gates the CSS).
 export default function useReveal() {
   useEffect(() => {
-    const items = Array.from(document.querySelectorAll("[data-reveal], .shutter"));
+    const items = Array.from(document.querySelectorAll("[data-reveal]"));
     if (!("IntersectionObserver" in window)) return undefined;
     document.documentElement.classList.add("js");
     const io = new IntersectionObserver(

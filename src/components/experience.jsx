@@ -3,40 +3,53 @@ import { RESUME, external } from "../sections";
 
 function Experience() {
   return (
-    <section className="experience" id="experience" aria-labelledby="experience-title">
-      <h2 id="experience-title" data-reveal>
-        Experience
-      </h2>
-      <ol className="lineup">
-        {experiences.map((role, i) => (
-          <li key={role.id} data-reveal style={{ "--i": i + 1 }}>
-            <details open={i === 0}>
-              <summary>
-                <span className="lineup__role">{role.position.trim()}</span>
-                <span className="lineup__company">{role.title}</span>
-                <span className="lineup__kind">{role.kind}</span>
-                <span className="lineup__dates">
-                  {role.dates}
-                  <span className="lineup__toggle" aria-hidden="true" />
-                </span>
-              </summary>
-              <div className="lineup__body">
-                <p>{role.desc}</p>
-                <ul>
-                  {role.bullets.map((b) => (
-                    <li key={b}>{b}</li>
-                  ))}
-                </ul>
-              </div>
-            </details>
+    <section className="light" id="experience" aria-labelledby="experience-title">
+      <div className="wrap exp-grid">
+        <div className="exp-aside" data-reveal>
+          <h2 id="experience-title">Experience</h2>
+          <p>
+            Software engineering at Comcast, four years of web development at
+            Turn&nbsp;14, and the analyst, teaching and retail roles that came
+            before.
+          </p>
+          <a className="btn btn-light" href={RESUME} {...external}>
+            Open the full résumé
+          </a>
+        </div>
+
+        <ol className="timeline">
+          {experiences.map((job, i) => {
+            const current = /now/i.test(job.dates);
+            return (
+              <li className="job" key={job.id} data-reveal style={{ "--i": Math.min(i, 3) }}>
+                <p className="job-when">{job.dates}</p>
+                <div>
+                  <h3 className="job-company">
+                    {job.title}
+                    {current && <span className="job-now">Current</span>}
+                  </h3>
+                  <p className="job-role">{job.position.trim()}</p>
+                  {job.desc && <p className="job-desc">{job.desc}</p>}
+                  {job.bullets.length > 0 && (
+                    <ul className="job-bullets">
+                      {job.bullets.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+          <li className="job job--edu" data-reveal>
+            <p className="job-when">Education</p>
+            <div>
+              <h3 className="job-company">Temple University</h3>
+              <p className="job-role">B.B.A. in Management Information Systems</p>
+            </div>
           </li>
-        ))}
-      </ol>
-      <p className="experience-foot" data-reveal>
-        <a className="link" href={RESUME} {...external}>
-          Open the full résumé
-        </a>
-      </p>
+        </ol>
+      </div>
     </section>
   );
 }

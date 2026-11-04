@@ -1,15 +1,24 @@
 [
   {
+    "title": "Comcast",
+    "position": "Software Engineer II",
+    "desc": "",
+    "id": "comcast",
+    "kind": "Full time",
+    "bullets": [],
+    "dates": "Feb 2023 – now"
+  },
+  {
     "title": "Turn 14 Distribution",
     "position": "Web Application Developer",
-    "desc": "Build projects to help the company grow",
+    "desc": "Built projects to help the company grow",
     "id": "t14",
     "bullets": [
-      "Develop database-driven web applications for internal and external clients.",
-      "Use MySQL to develop multiple queries and reports.",
-      "Work independently to develop, maintain, review, and test code to meet the specifications of multiple applications."
+      "Developed database-driven web applications for internal and external clients.",
+      "Used MySQL to develop multiple queries and reports.",
+      "Worked independently to develop, maintain, review, and test code to meet the specifications of multiple applications."
     ],
-    "dates": "Jan 2019 – now",
+    "dates": "Jan 2019 – Feb 2023",
     "kind": "Full time"
   },
   {

@@ -99,131 +99,129 @@ function ContactMe() {
   const describe = (key, extra) => [errors[key] && `${FIELD_IDS[key]}-error`, extra].filter(Boolean).join(" ") || undefined;
 
   return (
-    <section className="contact wrap" id="contact" aria-labelledby="contact-title">
-      <div className="contact-col">
-        <h2 id="contact-title" data-reveal>
-          <span className="soft">Have a role or a project in mind?</span>
-          <span className="full">Write it here and it lands on my phone.</span>
-        </h2>
+    <section className="contact" id="contact" aria-labelledby="contact-title">
+      <div className="wrap contact-grid">
+        <div>
+          <h2 id="contact-title" data-reveal>
+            Let&rsquo;s talk.
+          </h2>
+          <p className="contact-lede" data-reveal style={{ "--i": 1 }}>
+            Have a role or a project in mind? Send it here and it lands on my
+            phone as a Telegram message, through{" "}
+            <a className="link" href={SOCIAL.api} {...external}>my own Spring Boot API</a>.
+          </p>
 
-        {status.state === "sent" ? (
-          <div className="sent" role="status">
-            <h3>Thanks, {status.name}. Your message is on my phone.</h3>
-            <p>I&rsquo;ll reply to the email address you gave me.</p>
-          </div>
-        ) : (
-          <form className="form" onSubmit={handleSubmit} noValidate aria-busy={sending} data-reveal style={{ "--i": 1 }}>
-            <div className="field" data-invalid={!!errors.msg}>
-              <label htmlFor="contact-message">Message</label>
-              <textarea
-                id="contact-message"
-                name="msg"
-                rows={6}
-                placeholder="What are you working on?"
-                value={form.msg}
-                onChange={handleChange}
-                aria-invalid={!!errors.msg}
-                aria-describedby={describe("msg", "contact-message-count")}
-                required
-              />
-              <div className="field-meta">
-                {errors.msg && <span className="field-error" id="contact-message-error">{errors.msg}</span>}
-                <span className={`field-count${msgLength > MSG_MAX ? " is-over" : ""}`} id="contact-message-count">
-                  {msgLength} of {MSG_MAX} characters
-                </span>
-              </div>
+          {status.state === "sent" ? (
+            <div className="sent" role="status">
+              <h3>Thanks, {status.name}. Your message is on my phone.</h3>
+              <p>I&rsquo;ll reply to the email address you gave me.</p>
             </div>
+          ) : (
+            <form className="form" onSubmit={handleSubmit} noValidate aria-busy={sending} data-reveal style={{ "--i": 2 }}>
+              <div className="field-row">
+                <div className="field" data-invalid={!!errors.fullName}>
+                  <label htmlFor="contact-name">Your name</label>
+                  <input
+                    id="contact-name"
+                    name="fullName"
+                    autoComplete="name"
+                    placeholder="Jane Doe"
+                    value={form.fullName}
+                    onChange={handleChange}
+                    aria-invalid={!!errors.fullName}
+                    aria-describedby={describe("fullName")}
+                    required
+                  />
+                  {errors.fullName && (
+                    <div className="field-meta">
+                      <span className="field-error" id="contact-name-error">{errors.fullName}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="field" data-invalid={!!errors.email}>
+                  <label htmlFor="contact-email">Your email</label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="jane@company.com"
+                    value={form.email}
+                    onChange={handleChange}
+                    aria-invalid={!!errors.email}
+                    aria-describedby={describe("email")}
+                    required
+                  />
+                  {errors.email && (
+                    <div className="field-meta">
+                      <span className="field-error" id="contact-email-error">{errors.email}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-            <div className="field-row">
-              <div className="field" data-invalid={!!errors.fullName}>
-                <label htmlFor="contact-name">Your name</label>
-                <input
-                  id="contact-name"
-                  name="fullName"
-                  autoComplete="name"
-                  placeholder="Jane Doe"
-                  value={form.fullName}
+              <div className="field" data-invalid={!!errors.msg}>
+                <label htmlFor="contact-message">Message</label>
+                <textarea
+                  id="contact-message"
+                  name="msg"
+                  rows={6}
+                  placeholder="What are you working on?"
+                  value={form.msg}
                   onChange={handleChange}
-                  aria-invalid={!!errors.fullName}
-                  aria-describedby={describe("fullName")}
+                  aria-invalid={!!errors.msg}
+                  aria-describedby={describe("msg", "contact-message-count")}
                   required
                 />
-                {errors.fullName && (
-                  <div className="field-meta">
-                    <span className="field-error" id="contact-name-error">{errors.fullName}</span>
-                  </div>
-                )}
+                <div className="field-meta">
+                  {errors.msg && <span className="field-error" id="contact-message-error">{errors.msg}</span>}
+                  <span className={`field-count${msgLength > MSG_MAX ? " is-over" : ""}`} id="contact-message-count">
+                    {msgLength} / {MSG_MAX}
+                  </span>
+                </div>
               </div>
-              <div className="field" data-invalid={!!errors.email}>
-                <label htmlFor="contact-email">Your email</label>
-                <input
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="jane@company.com"
-                  value={form.email}
-                  onChange={handleChange}
-                  aria-invalid={!!errors.email}
-                  aria-describedby={describe("email")}
-                  required
-                />
-                {errors.email && (
-                  <div className="field-meta">
-                    <span className="field-error" id="contact-email-error">{errors.email}</span>
-                  </div>
-                )}
+
+              <div className="hp-field" aria-hidden="true">
+                <label htmlFor="contact-website">Website</label>
+                <input id="contact-website" name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={handleChange} />
+              </div>
+
+              {status.state === "error" && (
+                <div className="notice" role="alert">
+                  <strong>{status.title}</strong>
+                  <p>{status.text}</p>
+                </div>
+              )}
+
+              <div className="form-actions">
+                <button type="submit" className="btn btn-primary" disabled={sending}>
+                  {sending ? "Sending…" : "Send message"}
+                </button>
+                <p className="form-hint">All three fields are required.</p>
+              </div>
+            </form>
+          )}
+        </div>
+
+        <figure className="phone" data-reveal style={{ "--i": 2 }}>
+          <div className="phone-screen">
+            <div className="phone-top">
+              <span className="phone-avatar" aria-hidden="true">MI</span>
+              <div>
+                <p className="phone-title">Portfolio messages</p>
+                <p className="phone-sub">bot</p>
               </div>
             </div>
-
-            <div className="hp-field" aria-hidden="true">
-              <label htmlFor="contact-website">Website</label>
-              <input id="contact-website" name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={handleChange} />
-            </div>
-
-            {status.state === "error" && (
-              <div className="notice notice--error" role="alert">
-                <strong>{status.title}</strong>
-                <p>{status.text}</p>
-              </div>
-            )}
-
-            <div className="form-actions">
-              <button type="submit" className="button" disabled={sending}>
-                {sending ? "Sending…" : "Send message"}
-              </button>
-              <p className="form-hint">All three fields are required.</p>
-            </div>
-          </form>
-        )}
-
-        <dl className="contact-details" data-reveal style={{ "--i": 2 }}>
-          <div>
-            <dt>LinkedIn</dt>
-            <dd><a className="link" href={SOCIAL.linkedin} {...external}>in/mojahed-ibrahim</a></dd>
+            <Chat
+              name={form.fullName.trim()}
+              email={form.email.trim()}
+              msg={form.msg.trim()}
+              typing={typing % 2 === 1}
+            />
           </div>
-          <div>
-            <dt>GitHub</dt>
-            <dd><a className="link" href={SOCIAL.github} {...external}>mibrahim95</a></dd>
-          </div>
-          <div>
-            <dt>How it works</dt>
-            <dd><a className="link" href={SOCIAL.api} {...external}>The Spring Boot API behind this form</a></dd>
-          </div>
-        </dl>
+          <figcaption>Live preview: the exact text my API sends, as you type.</figcaption>
+        </figure>
       </div>
-
-      <figure className="contact-preview" data-reveal style={{ "--i": 2 }}>
-        <Chat
-          name={form.fullName.trim()}
-          email={form.email.trim()}
-          msg={form.msg.trim()}
-          typing={typing % 2 === 1}
-        />
-        <figcaption>
-          This is the exact text my API sends to Telegram, updated as you type.
-        </figcaption>
-      </figure>
     </section>
   );
 }

@@ -1,6 +1,6 @@
+import Nav from "./components/nav";
 import Hero from "./components/hero";
-import About from "./components/about";
-import Work from "./components/work";
+import Projects from "./components/projects";
 import Experience from "./components/experience";
 import ContactMe from "./components/contactMe";
 import Footer from "./components/footer";
@@ -13,15 +13,13 @@ function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <div className="page">
+      <Nav />
+      <main id="main">
         <Hero />
-        <main id="main">
-          <About />
-          <Work />
-          <Experience />
-          <ContactMe />
-        </main>
-      </div>
+        <Projects />
+        <Experience />
+        <ContactMe />
+      </main>
       <Footer />
     </>
   );
