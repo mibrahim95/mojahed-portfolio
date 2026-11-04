@@ -1,4 +1,5 @@
 import experiences from "../json/expList.json";
+import about from "../json/about.json";
 import { RESUME, external } from "../sections";
 
 function Experience() {
@@ -8,9 +9,8 @@ function Experience() {
         <div className="exp-aside" data-reveal>
           <h2 id="experience-title">Experience</h2>
           <p>
-            Software engineering at Comcast, four years of web development at
-            Turn&nbsp;14, and the analyst, teaching and retail roles that came
-            before.
+            Reporting and data work at Comcast, four years of web development
+            at Turn&nbsp;14, and the tutoring and analyst roles that came before.
           </p>
           <a className="btn btn-light" href={RESUME} {...external}>
             Open the full résumé
@@ -28,7 +28,10 @@ function Experience() {
                     {job.title}
                     {current && <span className="job-now">Current</span>}
                   </h3>
-                  <p className="job-role">{job.position.trim()}</p>
+                  <p className="job-role">
+                    {job.position}
+                    {job.location && <span className="job-where"> · {job.location}</span>}
+                  </p>
                   {job.desc && <p className="job-desc">{job.desc}</p>}
                   {job.bullets.length > 0 && (
                     <ul className="job-bullets">
@@ -44,8 +47,10 @@ function Experience() {
           <li className="job job--edu" data-reveal>
             <p className="job-when">Education</p>
             <div>
-              <h3 className="job-company">Temple University</h3>
-              <p className="job-role">B.B.A. in Management Information Systems</p>
+              <h3 className="job-company">{about.education.school}</h3>
+              <p className="job-role">
+                {about.education.detail}, {about.education.year}
+              </p>
             </div>
           </li>
         </ol>

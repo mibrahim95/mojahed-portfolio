@@ -2,6 +2,7 @@ import Nav from "./components/nav";
 import Hero from "./components/hero";
 import Projects from "./components/projects";
 import Experience from "./components/experience";
+import Skills from "./components/skills";
 import ContactMe from "./components/contactMe";
 import Footer from "./components/footer";
 import useReveal from "./hooks/useReveal";
@@ -18,6 +19,7 @@ function App() {
         <Hero />
         <Projects />
         <Experience />
+        <Skills />
         <ContactMe />
       </main>
       <Footer />

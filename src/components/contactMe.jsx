@@ -1,7 +1,10 @@
 import { useState } from "react";
 import Chat from "./chat";
-import { SOCIAL, external } from "../sections";
+import about from "../json/about.json";
+import { RESUME, SOCIAL, external } from "../sections";
 
+// Optional: my Spring Boot Telegram API. When it is not configured, or it is
+// down, messages go to Netlify Forms instead (the static form in index.html).
 const API_HOST = import.meta.env.REACT_APP_API_HOST;
 
 // WARNING: every REACT_APP_* / VITE_* variable is compiled into the public
@@ -18,6 +21,42 @@ const MSG_MAX = 249;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const EMPTY_FORM = { fullName: "", email: "", msg: "", website: "" };
 const FIELD_IDS = { fullName: "contact-name", email: "contact-email", msg: "contact-message" };
+const REJECTED = {
+  state: "error",
+  title: "That message was not accepted.",
+  text: "Check that your name has at least 3 characters, your email is valid and the message is under 250 characters, then send it again.",
+};
+
+async function sendViaNetlify(data) {
+  const res = await fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ "form-name": "contact", ...data }).toString(),
+  });
+  if (!res.ok) throw new Error(`Form service responded with ${res.status}`);
+}
+
+// Returns "sent" or "rejected". Throws only when no route could take the message.
+async function sendMessage(data) {
+  if (API_HOST) {
+    let res;
+    try {
+      const headers = { "Content-Type": "application/json" };
+      if (API_BASIC_AUTH) headers.Authorization = `Basic ${btoa(API_BASIC_AUTH)}`;
+      res = await fetch(API_HOST, { method: "POST", headers, body: JSON.stringify(data) });
+    } catch {
+      res = null; // network failure: fall through to Netlify so the message is not lost
+    }
+    if (res?.ok) {
+      // The API answers 200 with { success: false } when its validation fails.
+      const body = await res.json().catch(() => ({}));
+      return body.success === false ? "rejected" : "sent";
+    }
+    if (res && res.status >= 400 && res.status < 500) return "rejected";
+  }
+  await sendViaNetlify(data);
+  return "sent";
+}
 
 function validate({ fullName, email, msg }) {
   const errors = {};
@@ -63,33 +102,19 @@ function ContactMe() {
 
     setStatus({ state: "sending" });
     try {
-      const headers = { "Content-Type": "application/json" };
-      if (API_BASIC_AUTH) headers.Authorization = `Basic ${btoa(API_BASIC_AUTH)}`;
-      const res = await fetch(API_HOST, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ fullName: name, email: form.email.trim(), msg: form.msg.trim() }),
-      });
-
-      // The API answers 200 with { success: false } when its validation fails.
-      const body = await res.json().catch(() => ({}));
-      if (res.ok && body.success !== false) {
+      const result = await sendMessage({ fullName: name, email: form.email.trim(), msg: form.msg.trim() });
+      if (result === "sent") {
         setStatus({ state: "sent", name });
         setForm(EMPTY_FORM);
-      } else if (res.ok || (res.status >= 400 && res.status < 500)) {
-        setStatus({
-          state: "error",
-          title: "That message was not accepted.",
-          text: "Check that your name has at least 3 characters, your email is valid and the message is under 250 characters, then send it again.",
-        });
       } else {
-        throw new Error(`Server responded with ${res.status}`);
+        setStatus(REJECTED);
       }
     } catch {
       setStatus({
         state: "error",
         title: "Your message could not be sent.",
-        text: "The contact service did not respond. Try again in a minute, or message me on LinkedIn.",
+        text: "The contact service did not respond. Email me directly or message me on LinkedIn.",
+        fallback: true,
       });
     }
   };
@@ -106,14 +131,23 @@ function ContactMe() {
             Let&rsquo;s talk.
           </h2>
           <p className="contact-lede" data-reveal style={{ "--i": 1 }}>
-            Have a role or a project in mind? Send it here and it lands on my
-            phone as a Telegram message, through{" "}
-            <a className="link" href={SOCIAL.api} {...external}>my own Spring Boot API</a>.
+            {API_HOST ? (
+              <>
+                Have a role or a project in mind? Send it here and it lands on my
+                phone as a Telegram message, through{" "}
+                <a className="link" href={SOCIAL.api} {...external}>my own Spring Boot API</a>.
+              </>
+            ) : (
+              <>
+                Have a role or a project in mind? Send me a note here, or email me at{" "}
+                <a className="link" href={`mailto:${about.email}`}>{about.email}</a>.
+              </>
+            )}
           </p>
 
           {status.state === "sent" ? (
             <div className="sent" role="status">
-              <h3>Thanks, {status.name}. Your message is on my phone.</h3>
+              <h3>Thanks, {status.name}. Your message is on its way to me.</h3>
               <p>I&rsquo;ll reply to the email address you gave me.</p>
             </div>
           ) : (
@@ -190,6 +224,13 @@ function ContactMe() {
                 <div className="notice" role="alert">
                   <strong>{status.title}</strong>
                   <p>{status.text}</p>
+                  {status.fallback && (
+                    <p>
+                      <a className="link" href={`mailto:${about.email}`}>{about.email}</a>
+                      {" · "}
+                      <a className="link" href={SOCIAL.linkedin} {...external}>LinkedIn</a>
+                    </p>
+                  )}
                 </div>
               )}
 
@@ -203,24 +244,35 @@ function ContactMe() {
           )}
         </div>
 
-        <figure className="phone" data-reveal style={{ "--i": 2 }}>
-          <div className="phone-screen">
-            <div className="phone-top">
-              <span className="phone-avatar" aria-hidden="true">MI</span>
-              <div>
-                <p className="phone-title">Portfolio messages</p>
-                <p className="phone-sub">bot</p>
+        {API_HOST ? (
+          <figure className="phone" data-reveal style={{ "--i": 2 }}>
+            <div className="phone-screen">
+              <div className="phone-top">
+                <span className="phone-avatar" aria-hidden="true">MI</span>
+                <div>
+                  <p className="phone-title">Portfolio messages</p>
+                  <p className="phone-sub">bot</p>
+                </div>
               </div>
+              <Chat
+                name={form.fullName.trim()}
+                email={form.email.trim()}
+                msg={form.msg.trim()}
+                typing={typing % 2 === 1}
+              />
             </div>
-            <Chat
-              name={form.fullName.trim()}
-              email={form.email.trim()}
-              msg={form.msg.trim()}
-              typing={typing % 2 === 1}
-            />
-          </div>
-          <figcaption>Live preview: the exact text my API sends, as you type.</figcaption>
-        </figure>
+            <figcaption>Live preview: the exact text my API sends, as you type.</figcaption>
+          </figure>
+        ) : (
+          <aside className="contact-alt" data-reveal style={{ "--i": 2 }} aria-label="Other ways to reach me">
+            <ul>
+              <li><span>Email</span><a className="link" href={`mailto:${about.email}`}>{about.email}</a></li>
+              <li><span>LinkedIn</span><a className="link" href={SOCIAL.linkedin} {...external}>in/mojahed-ibrahim</a></li>
+              <li><span>GitHub</span><a className="link" href={SOCIAL.github} {...external}>mibrahim95</a></li>
+              <li><span>Résumé</span><a className="link" href={RESUME} {...external}>PDF, 2 pages</a></li>
+            </ul>
+          </aside>
+        )}
       </div>
     </section>
   );

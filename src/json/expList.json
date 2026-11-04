@@ -1,63 +1,63 @@
 [
   {
     "title": "Comcast",
-    "position": "Software Engineer II",
-    "desc": "",
+    "position": "Software Engineer 2",
+    "location": "Philadelphia, PA",
+    "desc": "Daily reports that business teams rely on, built in Oracle PL/SQL, Java and CloverDX and run over hundreds of thousands to millions of records.",
     "id": "comcast",
     "kind": "Full time",
-    "bullets": [],
+    "bullets": [
+      "Cut more than 6 hours from total daily reporting time by adding parallel processing (parallel PL/SQL and CloverDX graphs) to four or five report families.",
+      "Rewrote a slow query, added indexes and changed its joins, which cut that report's runtime by over 80%. Brought a separate recurring report down from four or five hours to about one.",
+      "Support about 15 recurring reports. Built two of them end to end and drove the design of about five more.",
+      "Write and maintain Oracle PL/SQL packages, procedures and migration scripts behind an internal fulfillment-accuracy reporting system.",
+      "Automated an API import of another team's data into the reporting database, with retries for rate limits and other failures.",
+      "Built report-failure alerts over Slack, Teams and email, including an end-of-day alert when a report fails to publish. Moved the Slack alerts to OAuth.",
+      "Upgraded CloverDX from 6.3.1 to 7.4.2 and updated the reports and graphs that depend on it.",
+      "Build Java data-ingestion pipelines that move data between internal systems.",
+      "Review teammates' code and mentor new contractors on the team."
+    ],
     "dates": "Feb 2023 – now"
   },
   {
     "title": "Turn 14 Distribution",
     "position": "Web Application Developer",
-    "desc": "Built projects to help the company grow",
+    "location": "Horsham, PA",
+    "desc": "Four years on the company's B2B e-commerce platform and warehouse management system, from the PHP pages down to the MySQL schema.",
     "id": "t14",
+    "kind": "Full time",
     "bullets": [
-      "Developed database-driven web applications for internal and external clients.",
-      "Used MySQL to develop multiple queries and reports.",
-      "Worked independently to develop, maintain, review, and test code to meet the specifications of multiple applications."
+      "Built and maintained database-driven web applications in PHP, MySQL and JavaScript/jQuery for internal teams and external B2B clients.",
+      "Designed and tuned a MySQL schema of 1,000+ tables averaging 700K+ rows each, and set up replication for read scaling.",
+      "Wrote queries and reports against high-volume tables for internal teams and B2B clients.",
+      "Refactored 10,000+ lines of legacy code across many files to make it easier to maintain and faster to run.",
+      "Worked independently to develop, review and test code for several production applications."
     ],
-    "dates": "Jan 2019 – Feb 2023",
-    "kind": "Full time"
+    "dates": "Jan 2019 – Feb 2023"
   },
   {
     "title": "Temple University",
-    "position": "Management Information Systems ITA",
-    "desc": "Helped prepare upcoming students for their future careers",
+    "position": "MIS Information Technology Assistant",
+    "location": "Philadelphia, PA",
+    "desc": "",
     "id": "temple",
+    "kind": "Part time",
     "bullets": [
-      "Assisted students with coursework in the Data-Centric Application Development course.",
-      "Supported the development of an easy-to-learn workload for the semester.",
-      "Applied an understanding of HTML, CSS, PHP, and SQL."
+      "Tutored students in SQL, PHP, HTML and CSS for the Data-Centric Application Development course."
     ],
-    "dates": "Jun 2018 – Jan 2019",
-    "kind": "Teaching assistant"
+    "dates": "Jun 2018 – Jan 2019"
   },
   {
     "title": "Five Below",
     "position": "Store Operations Analyst Intern",
-    "desc": "Analyzed employee time sheets to prepare holiday work schedules",
+    "location": "Philadelphia, PA",
+    "desc": "",
     "id": "5b",
+    "kind": "Internship",
     "bullets": [
-      "Analyzed data to build labor and overtime tracking reports.",
-      "Created sample schedules for test locations and the holiday season.",
-      "Assisted in organizing teams for the introduction of new software."
+      "Built weekly and monthly labor and overtime reports in Excel that showed store operations where overtime was piling up.",
+      "Created sample schedules for test locations and for the holiday season."
     ],
-    "dates": "May 2018 – Aug 2018",
-    "kind": "Internship"
-  },
-  {
-    "title": "Cousin’s Supermarket",
-    "position": "Front End Manager",
-    "desc": "Led a team to decrease checkout time",
-    "id": "cousins",
-    "bullets": [
-      "Provided leadership and communication to keep the team productive.",
-      "Assisted cashiers with daily operations.",
-      "Addressed customer concerns and complaints with accurate solutions."
-    ],
-    "dates": "Sep 2017 – Jan 2019",
-    "kind": "Retail management"
+    "dates": "May 2018 – Aug 2018"
   }
 ]

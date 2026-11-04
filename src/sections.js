@@ -5,6 +5,6 @@ export const SOCIAL = {
   api: "https://github.com/mibrahim95/telegramApi",
 };
 
-export const RESUME = "/MojahedResume2022.jpg";
+export const RESUME = "/MojahedIbrahimResume.pdf";
 
 export const external = { target: "_blank", rel: "noopener noreferrer" };

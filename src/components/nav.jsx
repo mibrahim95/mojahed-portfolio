@@ -11,6 +11,7 @@ function Nav() {
         <nav className="nav-links" aria-label="Main">
           <a className="nav-section" href="#projects">Projects</a>
           <a className="nav-section" href="#experience">Experience</a>
+          <a className="nav-section" href="#skills">Skills</a>
           <a className="nav-section" href="#contact">Contact</a>
           <a className="btn btn-ghost" href={RESUME} {...external}>Résumé</a>
         </nav>

@@ -5,19 +5,19 @@
     "year": "2019–2023",
     "languages": [
       "PHP",
+      "MySQL",
       "JavaScript",
       "jQuery",
-      "MySQL",
       "HTML",
       "CSS"
     ],
     "imgPath": "/turn14.webp",
-    "desc": "Pages, features and improvements across the company’s web applications, with the MySQL queries and reports behind them.",
+    "desc": "My day job for four years. I built pages and features for the company's B2B e-commerce site and its warehouse management system, and owned much of the MySQL underneath: a 1,000+ table schema, replication, and the queries and reports for internal teams and B2B clients.",
     "github": "",
     "url": "https://turn14.com/"
   },
   {
-    "header": "Telegram Integration API",
+    "header": "Telegram contact API",
     "kind": "Java service",
     "year": "2022",
     "languages": [
@@ -27,12 +27,12 @@
       "Telegram Bot API"
     ],
     "imgPath": "",
-    "desc": "A Spring Boot API that validates contact-form submissions from this site and forwards them to my phone as Telegram messages.",
+    "desc": "A Spring Boot REST API that checks contact-form submissions (name length, email format, message size) and forwards the valid ones to my phone as Telegram messages. It ran this site's contact form while the API was hosted on Heroku.",
     "github": "https://github.com/mibrahim95/telegramApi",
     "url": ""
   },
   {
-    "header": "Cousin’s Supermarket Inventory",
+    "header": "Cousin's Supermarket inventory",
     "kind": "Inventory lookup",
     "year": "2022",
     "languages": [
@@ -42,23 +42,23 @@
       "CSS"
     ],
     "imgPath": "/cousinsInv.webp",
-    "desc": "The first step in advancing the store’s inventory system: a searchable product list with prices and UPCs.",
+    "desc": "A searchable product list with prices and UPCs for a local supermarket, the first step toward a real inventory system. It cut customer price-check wait time by about 20%.",
     "github": "https://github.com/mibrahim95/cousinsinv",
     "url": ""
   },
   {
-    "header": "Video Game Maintenance List",
+    "header": "Video game maintenance list",
     "kind": "ROM tracker",
     "year": "2020",
     "languages": [
       "PHP",
+      "MySQL",
       "JavaScript",
-      "jQuery",
-      "MySQL"
+      "jQuery"
     ],
     "imgPath": "/gameCheck.webp",
-    "desc": "Tracks which games in a collection work and which do not, and picks out the highly rated ones.",
-    "github": "https://github.com/mibrahim95/romCheck",
+    "desc": "Tracks which games in a large collection work and which don't, and picks out the highly rated ones.",
+    "github": "",
     "url": ""
   },
   {
@@ -70,7 +70,7 @@
       "Hardware"
     ],
     "imgPath": "/arcadeMod.webp",
-    "desc": "A personal project and a gift: an Arcade1Up cabinet modded to run RetroPie.",
+    "desc": "A personal project and a gift: an Arcade1Up cabinet modded to run RetroPie, so it plays a full game library instead of only the games it shipped with.",
     "github": "",
     "url": ""
   },
@@ -81,10 +81,11 @@
     "languages": [
       "React",
       "Vite",
-      "CSS"
+      "CSS",
+      "Netlify"
     ],
     "imgPath": "/portfolioPreview.webp",
-    "desc": "The site you are reading, wired to my own contact API.",
+    "desc": "The site you're on. Started in 2022 on Create React App and Semantic UI, rebuilt in 2026 on Vite with hand-written CSS.",
     "github": "https://github.com/mibrahim95/mojahed-portfolio",
     "url": ""
   }

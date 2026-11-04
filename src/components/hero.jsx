@@ -1,12 +1,6 @@
+import about from "../json/about.json";
 import { SOCIAL, external } from "../sections";
 import { ArrowRight } from "./icons";
-
-const FACTS = [
-  { label: "Now", value: "Software Engineer II at Comcast" },
-  { label: "Before", value: "Web Application Developer at Turn 14 Distribution, 2019–2023" },
-  { label: "Studied", value: "B.B.A. in Management Information Systems, Temple University" },
-  { label: "Works with", value: "PHP, JavaScript, MySQL, Java, Spring Boot, React" },
-];
 
 function Hero() {
   return (
@@ -17,17 +11,14 @@ function Hero() {
             <p className="hero-role" data-load style={{ "--d": "0ms" }}>
               <span className="badge-now">Now</span>
               <span>
-                <strong>Software Engineer II</strong> at Comcast
+                <strong>{about.role}</strong> at {about.company}
               </span>
             </p>
             <h1 id="hero-title" data-load style={{ "--d": "80ms" }}>
-              <span className="hi">Hi, I&rsquo;m Mojahed.</span> <span className="grad">I build data&#8209;driven web apps.</span>
+              <span className="hi">Hi, I&rsquo;m Mojahed.</span> <span className="grad">{about.headline}</span>
             </h1>
             <p className="hero-lede" data-load style={{ "--d": "160ms" }}>
-              Software engineer at Comcast since 2023. Before that I spent four
-              years at Turn&nbsp;14 Distribution building PHP and MySQL tools for
-              internal and external clients. On my own time I write Java services,
-              and I once turned an arcade cabinet into a RetroPie machine.
+              {about.lede}
             </p>
             <div className="hero-actions" data-load style={{ "--d": "240ms" }}>
               <a className="btn btn-primary" href="#projects">
@@ -65,7 +56,7 @@ function Hero() {
         </div>
 
         <dl className="facts" data-load style={{ "--d": "320ms" }}>
-          {FACTS.map((f) => (
+          {about.facts.map((f) => (
             <div className="fact" key={f.label}>
               <dt>{f.label}</dt>
               <dd>{f.value}</dd>
