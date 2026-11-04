@@ -1,28 +1,24 @@
 import { useEffect } from "react";
 
-// Fades elements marked with data-reveal into view the first time they
-// scroll on screen. CSS only hides them when motion is allowed and JS runs.
+// Section parts and pictures enter once, as they scroll into view.
+// Content is only hidden when this runs (the `js` class gates the CSS).
 export default function useReveal() {
   useEffect(() => {
-    const root = document.documentElement;
-    const items = Array.from(document.querySelectorAll("[data-reveal]"));
-    if (!("IntersectionObserver" in window)) {
-      items.forEach((el) => el.classList.add("is-visible"));
-      return undefined;
-    }
-    root.classList.add("js");
-    const observer = new IntersectionObserver(
+    const items = Array.from(document.querySelectorAll("[data-reveal], .shutter"));
+    if (!("IntersectionObserver" in window)) return undefined;
+    document.documentElement.classList.add("js");
+    const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
+            entry.target.classList.add("is-in");
+            io.unobserve(entry.target);
           }
-        });
+        }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.1 }
     );
-    items.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    items.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 }

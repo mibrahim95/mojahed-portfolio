@@ -1,11 +1,10 @@
-import Navbar from "./components/navbar";
 import Hero from "./components/hero";
+import About from "./components/about";
+import Work from "./components/work";
 import Experience from "./components/experience";
-import Projects from "./components/projects";
 import ContactMe from "./components/contactMe";
 import Footer from "./components/footer";
 import useReveal from "./hooks/useReveal";
-import { SECTIONS } from "./sections";
 
 function App() {
   useReveal();
@@ -14,13 +13,15 @@ function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Navbar sections={SECTIONS} />
-      <main id="main">
+      <div className="page">
         <Hero />
-        <Experience />
-        <Projects />
-        <ContactMe />
-      </main>
+        <main id="main">
+          <About />
+          <Work />
+          <Experience />
+          <ContactMe />
+        </main>
+      </div>
       <Footer />
     </>
   );

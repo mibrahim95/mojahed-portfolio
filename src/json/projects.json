@@ -1,73 +1,52 @@
 [
   {
     "header": "Turn 14 Distribution",
-    "languages": [
-      "PHP",
-      "JavaScript",
-      "HTML",
-      "CSS",
-      "jQuery",
-      "MySQL"
-    ],
+    "kind": "Production web apps",
+    "year": "2019–now",
+    "languages": ["PHP", "JavaScript", "jQuery", "MySQL", "HTML", "CSS"],
     "imgPath": "/turn14.webp",
-    "desc": "Work on a multitude of pages, features, and improvements to help the company grow.",
+    "desc": "Pages, features and improvements across the company’s web applications, with the MySQL queries and reports behind them.",
     "github": "",
-    "url": "https://turn14.com/",
-    "featured": true
+    "url": "https://turn14.com/"
   },
   {
     "header": "Telegram Integration API",
-    "languages": [
-      "Java",
-      "Spring Boot",
-      "REST",
-      "Telegram Bot API"
-    ],
+    "kind": "Java service",
+    "year": "2022",
+    "languages": ["Java", "Spring Boot", "REST", "Telegram Bot API"],
     "imgPath": "",
-    "desc": "Spring Boot API that validates contact-form submissions from this site and forwards them to Telegram.",
+    "desc": "A Spring Boot API that validates contact-form submissions from this site and forwards them to my phone as Telegram messages.",
     "github": "https://github.com/mibrahim95/telegramApi",
     "url": ""
   },
   {
-    "header": "This Portfolio",
-    "languages": [
-      "React",
-      "Vite",
-      "CSS"
-    ],
-    "imgPath": "/portfolioPreview.webp",
-    "desc": "The site you are on: a hand-built, responsive single-page portfolio with light and dark themes, wired to my own contact API.",
-    "github": "https://github.com/mibrahim95/mojahed-portfolio",
-    "url": ""
-  },
-  {
-    "header": "Cousin's Supermarket Inventory",
-    "languages": [
-      "PHP",
-      "JavaScript",
-      "HTML",
-      "CSS",
-      "Heroku"
-    ],
+    "header": "Cousin’s Supermarket Inventory",
+    "kind": "Inventory lookup",
+    "year": "2022",
+    "languages": ["PHP", "JavaScript", "HTML", "CSS"],
     "imgPath": "/cousinsInv.webp",
-    "desc": "The first steps to advancing the inventory system.",
+    "desc": "The first step in advancing the store’s inventory system: a searchable product list with prices and UPCs.",
     "github": "https://github.com/mibrahim95/cousinsinv",
     "url": ""
   },
   {
     "header": "Video Game Maintenance List",
-    "languages": [
-      "PHP",
-      "JavaScript",
-      "HTML",
-      "CSS",
-      "jQuery",
-      "MySQL",
-      "Heroku"
-    ],
+    "kind": "ROM tracker",
+    "year": "2020",
+    "languages": ["PHP", "JavaScript", "jQuery", "MySQL"],
     "imgPath": "/gameCheck.webp",
-    "desc": "Help pinpoint nonfunctional games as well as pick out highly rated ones.",
+    "desc": "Tracks which games in a collection work and which do not, and picks out the highly rated ones.",
     "github": "https://github.com/mibrahim95/romCheck",
+    "url": ""
+  },
+  {
+    "header": "This portfolio",
+    "kind": "React site",
+    "year": "2022–2026",
+    "languages": ["React", "Vite", "CSS"],
+    "imgPath": "/portfolioPreview.webp",
+    "desc": "The site you are reading, wired to my own contact API.",
+    "github": "https://github.com/mibrahim95/mojahed-portfolio",
     "url": ""
   }
 ]

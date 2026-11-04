@@ -8,8 +8,10 @@ portfolio with my experience, projects, résumé, and a contact form.
 ## Tech stack
 
 - [React 18](https://react.dev/) + [Vite](https://vite.dev/)
-- Hand-written CSS (no UI kit): OKLCH colour tokens, light and dark themes
-- Fonts: Instrument Serif, Geist and Geist Mono, self-hosted via Fontsource
+- Hand-written CSS (no UI kit). Art direction dealt with [taste-skill](https://github.com/leonxlnx/taste-skill)
+  ("Type and nothing else": Anton + Work Sans, rose grey / ink / green), checked with its inspector and
+  [impeccable](https://github.com/pbakaus/impeccable)'s craft floor
+- Fonts self-hosted via Fontsource
 - Contact form posts to my own Java Spring Boot API
   ([telegramApi](https://github.com/mibrahim95/telegramApi)), which validates the
   message and forwards it to Telegram
@@ -52,4 +54,5 @@ All page content lives in JSON, so most updates need no code changes:
 - `src/json/expList.json` — work experience
 - `src/json/projects.json` — project cards (`imgPath`, `github` and `url` are optional)
 
-Images live in `public/`. Keep screenshots around 800px wide and in WebP format.
+Images live in `public/`. Keep screenshots around 800px wide (4:3 works best) and in WebP format.
+Found pictures and their licences are recorded in `public/assets/credits.json`.

@@ -1,7 +1,6 @@
 import { useState } from "react";
-import SectionHeader from "./sectionHeader";
-import { ArrowUpRight, GitHub, LinkedIn, Send } from "./icons";
-import { SOCIAL } from "../sections";
+import Chat from "./chat";
+import { SOCIAL, external } from "../sections";
 
 const API_HOST = import.meta.env.REACT_APP_API_HOST;
 
@@ -11,43 +10,37 @@ const API_HOST = import.meta.env.REACT_APP_API_HOST;
 // on it for protection (use rate limiting / CAPTCHA / origin checks there).
 const API_BASIC_AUTH = import.meta.env.REACT_APP_JAVA_API_USERNAME_AND_PASS;
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Same limits the Spring Boot validator applies (telegramApi Validator.java):
+// name 3–99 characters, message under 250 characters, a valid email.
+const NAME_MIN = 3;
+const NAME_MAX = 99;
+const MSG_MAX = 249;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const EMPTY_FORM = { fullName: "", email: "", msg: "", website: "" };
+const FIELD_IDS = { fullName: "contact-name", email: "contact-email", msg: "contact-message" };
 
 function validate({ fullName, email, msg }) {
   const errors = {};
-  if (!fullName.trim()) errors.fullName = "Please enter your name.";
-  if (!EMAIL_PATTERN.test(email.trim()))
-    errors.email = "Please enter a valid email address.";
-  if (!msg.trim()) errors.msg = "Please enter a message.";
+  const name = fullName.trim();
+  if (!name) errors.fullName = "Please enter your name.";
+  else if (name.length < NAME_MIN) errors.fullName = `Please enter at least ${NAME_MIN} characters.`;
+  else if (name.length > NAME_MAX) errors.fullName = `Please keep your name under ${NAME_MAX + 1} characters.`;
+  if (!EMAIL_PATTERN.test(email.trim())) errors.email = "Please enter a valid email address, like jane@company.com.";
+  if (!msg.trim()) errors.msg = "Please write a short message.";
+  else if (msg.trim().length > MSG_MAX) errors.msg = `Please shorten your message to ${MSG_MAX} characters.`;
   return errors;
-}
-
-function Field({ id, label, error, children }) {
-  return (
-    <div className={`field${id === "contact-message" ? " full" : ""}`} data-invalid={!!error}>
-      <label htmlFor={id}>
-        {label} <span className="req" aria-hidden="true">*</span>
-      </label>
-      {children}
-      {error && (
-        <span className="field-error" id={`${id}-error`}>
-          {error}
-        </span>
-      )}
-    </div>
-  );
 }
 
 function ContactMe() {
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState(null);
+  const [status, setStatus] = useState({ state: "idle" });
+  const [typing, setTyping] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+    setTyping((n) => n + 1);
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
@@ -55,175 +48,182 @@ function ContactMe() {
     e.preventDefault();
     const found = validate(form);
     setErrors(found);
-    if (Object.keys(found).length > 0) {
-      const first = { fullName: "contact-name", email: "contact-email", msg: "contact-message" };
-      document.getElementById(first[Object.keys(found)[0]])?.focus();
+    const firstInvalid = Object.keys(FIELD_IDS).find((k) => found[k]);
+    if (firstInvalid) {
+      document.getElementById(FIELD_IDS[firstInvalid])?.focus();
       return;
     }
 
     const name = form.fullName.trim();
-    const success = {
-      success: true,
-      header: `Thanks for reaching out, ${name}!`,
-      message: "Your message is on its way. I'll get back to you as soon as possible.",
-    };
-
-    // Honeypot: real visitors never see the "website" field.
     if (form.website) {
-      setResponse(success);
+      // Honeypot filled in: a bot. Pretend it worked and send nothing.
+      setStatus({ state: "sent", name });
       return;
     }
 
-    setLoading(true);
-    setResponse(null);
+    setStatus({ state: "sending" });
     try {
       const headers = { "Content-Type": "application/json" };
       if (API_BASIC_AUTH) headers.Authorization = `Basic ${btoa(API_BASIC_AUTH)}`;
-
       const res = await fetch(API_HOST, {
         method: "POST",
         headers,
-        body: JSON.stringify({
-          fullName: name,
-          email: form.email.trim(),
-          msg: form.msg.trim(),
-        }),
+        body: JSON.stringify({ fullName: name, email: form.email.trim(), msg: form.msg.trim() }),
       });
 
-      if (res.ok) {
-        setResponse(success);
+      // The API answers 200 with { success: false } when its validation fails.
+      const body = await res.json().catch(() => ({}));
+      if (res.ok && body.success !== false) {
+        setStatus({ state: "sent", name });
         setForm(EMPTY_FORM);
-      } else if (res.status >= 400 && res.status < 500) {
-        setResponse({
-          success: false,
-          header: "Please check your details",
-          message: "Make sure all fields are filled in and your email address is valid.",
+      } else if (res.ok || (res.status >= 400 && res.status < 500)) {
+        setStatus({
+          state: "error",
+          title: "That message was not accepted.",
+          text: "Check that your name has at least 3 characters, your email is valid and the message is under 250 characters, then send it again.",
         });
       } else {
         throw new Error(`Server responded with ${res.status}`);
       }
     } catch {
-      setResponse({
-        success: false,
-        header: "Sorry, your message could not be sent",
-        message: "Something went wrong on my end. Please try again in a moment, or reach me on LinkedIn.",
+      setStatus({
+        state: "error",
+        title: "Your message could not be sent.",
+        text: "The contact service did not respond. Try again in a minute, or message me on LinkedIn.",
       });
-    } finally {
-      setLoading(false);
     }
   };
 
-  const describedBy = (key, id) => (errors[key] ? `${id}-error` : undefined);
+  const sending = status.state === "sending";
+  const msgLength = form.msg.trim().length;
+  const describe = (key, extra) => [errors[key] && `${FIELD_IDS[key]}-error`, extra].filter(Boolean).join(" ") || undefined;
 
   return (
-    <section id="contactMe" className="section contact" aria-labelledby="contact-title">
-      <div className="wrap">
-        <SectionHeader index="04" title="Contact" id="contact-title" />
+    <section className="contact wrap" id="contact" aria-labelledby="contact-title">
+      <div className="contact-col">
+        <h2 id="contact-title" data-reveal>
+          <span className="soft">Have a role or a project in mind?</span>
+          <span className="full">Write it here and it lands on my phone.</span>
+        </h2>
 
-        <div className="contact-grid">
-          <div className="contact-aside" data-reveal>
-            <p className="contact-title">
-              Have a role or a project in mind? <em>Let&rsquo;s talk.</em>
-            </p>
-            <p className="contact-copy">
-              Messages from this form are validated and delivered straight to my
-              phone through my own Java Spring Boot API.{" "}
-              <a className="text-link" href="https://github.com/mibrahim95/telegramApi" target="_blank" rel="noopener noreferrer">
-                See how it works <ArrowUpRight />
-              </a>
-            </p>
-            <div className="socials">
-              <a className="icon-link" href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <LinkedIn />
-              </a>
-              <a className="icon-link" href={SOCIAL.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <GitHub />
-              </a>
-            </div>
+        {status.state === "sent" ? (
+          <div className="sent" role="status">
+            <h3>Thanks, {status.name}. Your message is on my phone.</h3>
+            <p>I&rsquo;ll reply to the email address you gave me.</p>
           </div>
-
-          <div data-reveal style={{ "--reveal-delay": "100ms" }} aria-live="polite">
-            {response?.success ? (
-              <div className="sent" role="status">
-                <span className="eyebrow">Message sent</span>
-                <h3>{response.header}</h3>
-                <p>{response.message}</p>
+        ) : (
+          <form className="form" onSubmit={handleSubmit} noValidate aria-busy={sending} data-reveal style={{ "--i": 1 }}>
+            <div className="field" data-invalid={!!errors.msg}>
+              <label htmlFor="contact-message">Message</label>
+              <textarea
+                id="contact-message"
+                name="msg"
+                rows={6}
+                placeholder="What are you working on?"
+                value={form.msg}
+                onChange={handleChange}
+                aria-invalid={!!errors.msg}
+                aria-describedby={describe("msg", "contact-message-count")}
+                required
+              />
+              <div className="field-meta">
+                {errors.msg && <span className="field-error" id="contact-message-error">{errors.msg}</span>}
+                <span className={`field-count${msgLength > MSG_MAX ? " is-over" : ""}`} id="contact-message-count">
+                  {msgLength} of {MSG_MAX} characters
+                </span>
               </div>
-            ) : (
-              <form className="form" onSubmit={handleSubmit} noValidate aria-busy={loading}>
-                {response && (
-                  <div className="notice" role="alert">
-                    <div>
-                      <strong>{response.header}</strong>
-                      <p>{response.message}</p>
-                    </div>
+            </div>
+
+            <div className="field-row">
+              <div className="field" data-invalid={!!errors.fullName}>
+                <label htmlFor="contact-name">Your name</label>
+                <input
+                  id="contact-name"
+                  name="fullName"
+                  autoComplete="name"
+                  placeholder="Jane Doe"
+                  value={form.fullName}
+                  onChange={handleChange}
+                  aria-invalid={!!errors.fullName}
+                  aria-describedby={describe("fullName")}
+                  required
+                />
+                {errors.fullName && (
+                  <div className="field-meta">
+                    <span className="field-error" id="contact-name-error">{errors.fullName}</span>
                   </div>
                 )}
+              </div>
+              <div className="field" data-invalid={!!errors.email}>
+                <label htmlFor="contact-email">Your email</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="jane@company.com"
+                  value={form.email}
+                  onChange={handleChange}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={describe("email")}
+                  required
+                />
+                {errors.email && (
+                  <div className="field-meta">
+                    <span className="field-error" id="contact-email-error">{errors.email}</span>
+                  </div>
+                )}
+              </div>
+            </div>
 
-                <Field id="contact-name" label="Full name" error={errors.fullName}>
-                  <input
-                    id="contact-name"
-                    name="fullName"
-                    autoComplete="name"
-                    placeholder="Jane Doe"
-                    required
-                    value={form.fullName}
-                    onChange={handleChange}
-                    aria-invalid={!!errors.fullName}
-                    aria-describedby={describedBy("fullName", "contact-name")}
-                  />
-                </Field>
-                <Field id="contact-email" label="Email" error={errors.email}>
-                  <input
-                    id="contact-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="jane@company.com"
-                    required
-                    value={form.email}
-                    onChange={handleChange}
-                    aria-invalid={!!errors.email}
-                    aria-describedby={describedBy("email", "contact-email")}
-                  />
-                </Field>
-                <Field id="contact-message" label="Message" error={errors.msg}>
-                  <textarea
-                    id="contact-message"
-                    name="msg"
-                    rows={6}
-                    placeholder="What are you working on?"
-                    required
-                    value={form.msg}
-                    onChange={handleChange}
-                    aria-invalid={!!errors.msg}
-                    aria-describedby={describedBy("msg", "contact-message")}
-                  />
-                </Field>
+            <div className="hp-field" aria-hidden="true">
+              <label htmlFor="contact-website">Website</label>
+              <input id="contact-website" name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={handleChange} />
+            </div>
 
-                <div className="hp-field" aria-hidden="true">
-                  <label htmlFor="contact-website">Website</label>
-                  <input
-                    id="contact-website"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={form.website}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="form-footer">
-                  <p className="form-note">All fields are required.</p>
-                  <button type="submit" className="btn btn-primary" disabled={loading}>
-                    {loading ? "Sending…" : "Send message"} <Send />
-                  </button>
-                </div>
-              </form>
+            {status.state === "error" && (
+              <div className="notice notice--error" role="alert">
+                <strong>{status.title}</strong>
+                <p>{status.text}</p>
+              </div>
             )}
+
+            <div className="form-actions">
+              <button type="submit" className="button" disabled={sending}>
+                {sending ? "Sending…" : "Send message"}
+              </button>
+              <p className="form-hint">All three fields are required.</p>
+            </div>
+          </form>
+        )}
+
+        <dl className="contact-details" data-reveal style={{ "--i": 2 }}>
+          <div>
+            <dt>LinkedIn</dt>
+            <dd><a className="link" href={SOCIAL.linkedin} {...external}>in/mojahed-ibrahim</a></dd>
           </div>
-        </div>
+          <div>
+            <dt>GitHub</dt>
+            <dd><a className="link" href={SOCIAL.github} {...external}>mibrahim95</a></dd>
+          </div>
+          <div>
+            <dt>How it works</dt>
+            <dd><a className="link" href={SOCIAL.api} {...external}>The Spring Boot API behind this form</a></dd>
+          </div>
+        </dl>
       </div>
+
+      <figure className="contact-preview" data-reveal style={{ "--i": 2 }}>
+        <Chat
+          name={form.fullName.trim()}
+          email={form.email.trim()}
+          msg={form.msg.trim()}
+          typing={typing % 2 === 1}
+        />
+        <figcaption>
+          This is the exact text my API sends to Telegram, updated as you type.
+        </figcaption>
+      </figure>
     </section>
   );
 }

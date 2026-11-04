@@ -9,7 +9,8 @@
       "Use MySQL to develop multiple queries and reports.",
       "Work independently to develop, maintain, review, and test code to meet the specifications of multiple applications."
     ],
-    "dates": "Jan 2019 - Present"
+    "dates": "Jan 2019 – now",
+    "kind": "Full time"
   },
   {
     "title": "Temple University",
@@ -21,7 +22,8 @@
       "Supported the development of an easy-to-learn workload for the semester.",
       "Applied an understanding of HTML, CSS, PHP, and SQL."
     ],
-    "dates": "Jun 2018 - Jan 2019"
+    "dates": "Jun 2018 – Jan 2019",
+    "kind": "Teaching assistant"
   },
   {
     "title": "Five Below",
@@ -33,7 +35,8 @@
       "Created sample schedules for test locations and the holiday season.",
       "Assisted in organizing teams for the introduction of new software."
     ],
-    "dates": "May 2018 - Aug 2018"
+    "dates": "May 2018 – Aug 2018",
+    "kind": "Internship"
   },
   {
     "title": "Cousin’s Supermarket",
@@ -45,6 +48,7 @@
       "Assisted cashiers with daily operations.",
       "Addressed customer concerns and complaints with accurate solutions."
     ],
-    "dates": "Sep 2017 - Jan 2019"
+    "dates": "Sep 2017 – Jan 2019",
+    "kind": "Retail management"
   }
 ]
