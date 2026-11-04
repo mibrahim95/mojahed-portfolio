@@ -2,49 +2,49 @@
   {
     "title": "Turn 14 Distribution",
     "position": "Web Application Developer",
-    "desc":"Build projects to help the company grow",
+    "desc": "Build projects to help the company grow",
     "id": "t14",
     "bullets": [
-      "Develop database-driven web applications for internal/external clients." ,
-      "Utilization of MySQL to develop multiple queries and reports",
-      "Work independently to develop, maintain, review, and test code to meet specifications of multiple applications"
+      "Develop database-driven web applications for internal and external clients.",
+      "Use MySQL to develop multiple queries and reports.",
+      "Work independently to develop, maintain, review, and test code to meet the specifications of multiple applications."
     ],
-    "dates":"Jan 2019 - Present"
+    "dates": "Jan 2019 - Present"
   },
   {
     "title": "Temple University",
-    "position": "Management Information Systems ITA ",
-    "desc":"Help prepare upcoming student for their future careers",
+    "position": "Management Information Systems ITA",
+    "desc": "Helped prepare upcoming students for their future careers",
     "id": "temple",
     "bullets": [
-      "Assist students with coursework in the Data-Centric Application Development course.",
-      "Support in developing an easy to learn workload for the semester.",
-      "Understanding of HTML, CSS, PHP, and SQL."
+      "Assisted students with coursework in the Data-Centric Application Development course.",
+      "Supported the development of an easy-to-learn workload for the semester.",
+      "Applied an understanding of HTML, CSS, PHP, and SQL."
     ],
-    "dates":"June 2018 - Jan 2019"
+    "dates": "Jun 2018 - Jan 2019"
   },
   {
     "title": "Five Below",
     "position": "Store Operations Analyst Intern",
-    "desc":"Analyze employees time sheets to prepare holiday work schedules",
+    "desc": "Analyzed employee time sheets to prepare holiday work schedules",
     "id": "5b",
     "bullets": [
-     "Analyzed data to build Labor reporting and Overtime Tracking report.",
-     "Created sample schedules for test locations and holiday season.",
-     "Assisted in organization of teams for the introduction of a new software."
+      "Analyzed data to build labor and overtime tracking reports.",
+      "Created sample schedules for test locations and the holiday season.",
+      "Assisted in organizing teams for the introduction of new software."
     ],
-    "dates":"May 2018 – Aug 2018"
+    "dates": "May 2018 - Aug 2018"
   },
   {
     "title": "Cousin’s Supermarket",
     "position": "Front End Manager",
-    "desc":"Lead a team to effectively to decrease checkout time",
+    "desc": "Led a team to decrease checkout time",
     "id": "cousins",
     "bullets": [
-      "Provide optimal leadership and communication to ensure productivity.",
-      "Assist cashiers with daily operations",
-      "Carefully address customer concerns and complaints with accurate solutions"
+      "Provided leadership and communication to keep the team productive.",
+      "Assisted cashiers with daily operations.",
+      "Addressed customer concerns and complaints with accurate solutions."
     ],
-    "dates":"Sep 2017 - Jan 2019"
+    "dates": "Sep 2017 - Jan 2019"
   }
 ]

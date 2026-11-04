@@ -1,22 +1,24 @@
-import "./App.css";
+import { Container } from "semantic-ui-react";
+import Navbar from "./components/navbar";
 import LandingPage from "./components/intro/landingPage";
 import ExpList from "./components/exp/expList";
 import Projects from "./components/projects";
-import Navbar from "./components/navbar";
 import ContactMe from "./components/contactMe";
-import { Container } from "semantic-ui-react";
+import Footer from "./components/footer";
+import { SECTIONS } from "./sections";
 
 function App() {
   return (
-    <div className="App">
-      <Container fluid>
-        <Navbar />
+    <>
+      <Navbar sections={SECTIONS} />
+      <Container as="main">
         <LandingPage />
         <ExpList />
         <Projects />
         <ContactMe />
       </Container>
-    </div>
+      <Footer />
+    </>
   );
 }
 

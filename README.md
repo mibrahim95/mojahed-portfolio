@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# Mojahed Ibrahim — Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Source for [mojahedsportfolio.com](https://mojahedsportfolio.com/): a single-page
+portfolio with my experience, projects, résumé, and a contact form.
 
-## Available Scripts
+![Portfolio preview](public/og-image.jpg)
 
-In the project directory, you can run:
+## Tech stack
 
-### `npm start`
+- [React 18](https://react.dev/) + [Vite](https://vite.dev/)
+- [Semantic UI React](https://react.semantic-ui.com/) for layout and components
+- Contact form posts to my own Java Spring Boot API
+  ([telegramApi](https://github.com/mibrahim95/telegramApi)), which validates the
+  message and forwards it to Telegram
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Requires Node.js 20.19+ or 22.12+ (see `.nvmrc`).
 
-### `npm test`
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Script            | What it does                                   |
+| ----------------- | ---------------------------------------------- |
+| `npm run dev`     | Start the dev server with hot reload           |
+| `npm run build`   | Production build into `build/`                 |
+| `npm run preview` | Serve the production build locally             |
+| `npm run lint`    | Run ESLint                                     |
 
-### `npm run build`
+## Configuration
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a `.env.local` file (it is git-ignored):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+REACT_APP_API_HOST=https://your-api.example.com/contact
+# Optional. Sent as HTTP Basic auth to the contact API.
+REACT_APP_JAVA_API_USERNAME_AND_PASS=username:password
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> **Note:** every `REACT_APP_*` / `VITE_*` variable is compiled into the public
+> JavaScript bundle and can be read by anyone. Do not treat the Basic auth value
+> as a secret; protect the API itself (rate limiting, CAPTCHA, origin checks).
 
-### `npm run eject`
+## Editing content
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+All page content lives in JSON, so most updates need no code changes:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `src/json/summaryData.json` — the intro bullet points
+- `src/json/expList.json` — work experience
+- `src/json/projects.json` — project cards (`imgPath`, `github` and `url` are optional)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Images live in `public/`. Keep screenshots around 800px wide and in WebP format.
