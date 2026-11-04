@@ -1,29 +1,26 @@
-import { Container, Icon } from "semantic-ui-react";
+import { SOCIAL } from "../sections";
+import { ArrowUp, ArrowUpRight } from "./icons";
 
 function Footer() {
   return (
     <footer className="site-footer">
-      <Container>
-        <p>
-          <a
-            href="https://www.linkedin.com/in/mojahed-ibrahim/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon name="linkedin" aria-hidden="true" />
-            LinkedIn
+      <div className="wrap footer-inner">
+        <p className="mono">© {new Date().getFullYear()} Mojahed Ibrahim</p>
+        <div className="footer-links">
+          <a className="text-link" href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer">
+            LinkedIn <ArrowUpRight />
           </a>
-          <a
-            href="https://github.com/mibrahim95"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon name="github" aria-hidden="true" />
-            GitHub
+          <a className="text-link" href={SOCIAL.github} target="_blank" rel="noopener noreferrer">
+            GitHub <ArrowUpRight />
           </a>
-        </p>
-        <p>© {new Date().getFullYear()} Mojahed Ibrahim</p>
-      </Container>
+          <a className="text-link" href={SOCIAL.repo} target="_blank" rel="noopener noreferrer">
+            Site source <ArrowUpRight />
+          </a>
+          <a className="text-link" href="#top">
+            Back to top <ArrowUp />
+          </a>
+        </div>
+      </div>
     </footer>
   );
 }

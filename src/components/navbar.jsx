@@ -1,48 +1,73 @@
-import { Menu, Container, Dropdown } from "semantic-ui-react";
+import { useEffect, useState } from "react";
 import useActiveSection from "../hooks/useActiveSection";
+import useTheme from "../hooks/useTheme";
+import { Close, Menu, Moon, Sun } from "./icons";
 
 function Navbar({ sections }) {
   const active = useActiveSection(sections.map((s) => s.id));
+  const [theme, toggleTheme] = useTheme();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
-    <header className="site-nav">
-      <Container>
-        <Menu text size="huge" as="nav" aria-label="Main">
-          <Menu.Item as="a" href={`#${sections[0].id}`} header>
-            Mojahed Ibrahim
-          </Menu.Item>
+    <header className={`site-nav${scrolled ? " is-scrolled" : ""}`}>
+      <div className="wrap nav-inner">
+        <a className="brand" href={`#${sections[0].id}`} onClick={() => setOpen(false)}>
+          Mojahed Ibrahim<span>.</span>
+        </a>
 
-          <Menu.Menu position="right" className="nav-desktop">
-            {sections.map(({ id, label }) => (
-              <Menu.Item
-                key={id}
-                as="a"
-                href={`#${id}`}
-                active={active === id}
-                aria-current={active === id ? "location" : undefined}
-              >
-                {label}
-              </Menu.Item>
+        <nav aria-label="Main">
+          <ul id="nav-links" className={`nav-links${open ? " is-open" : ""}`}>
+            {sections.map(({ id, label }, i) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  aria-current={active === id ? "location" : undefined}
+                  onClick={() => setOpen(false)}
+                >
+                  <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+                  {label}
+                </a>
+              </li>
             ))}
-          </Menu.Menu>
+          </ul>
+        </nav>
 
-          <Menu.Menu position="right" className="nav-mobile">
-            <Dropdown item icon="sidebar" direction="left" aria-label="Open menu">
-              <Dropdown.Menu>
-                {sections.map(({ id, label }) => (
-                  <Dropdown.Item
-                    key={id}
-                    as="a"
-                    href={`#${id}`}
-                    active={active === id}
-                    text={label}
-                  />
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu.Menu>
-        </Menu>
-      </Container>
+        <div className="nav-actions">
+          <button
+            type="button"
+            className="icon-btn"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+          >
+            {theme === "dark" ? <Sun /> : <Moon />}
+          </button>
+          <button
+            type="button"
+            className="icon-btn menu-btn"
+            aria-expanded={open}
+            aria-controls="nav-links"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((o) => !o)}
+          >
+            {open ? <Close /> : <Menu />}
+          </button>
+        </div>
+      </div>
     </header>
   );
 }

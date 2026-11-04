@@ -5,3 +5,9 @@ export const SECTIONS = [
   { id: "projects", label: "Projects" },
   { id: "contactMe", label: "Contact Me" },
 ];
+
+export const SOCIAL = {
+  linkedin: "https://www.linkedin.com/in/mojahed-ibrahim/",
+  github: "https://github.com/mibrahim95",
+  repo: "https://github.com/mibrahim95/mojahed-portfolio",
+};

@@ -8,7 +8,8 @@ portfolio with my experience, projects, résumé, and a contact form.
 ## Tech stack
 
 - [React 18](https://react.dev/) + [Vite](https://vite.dev/)
-- [Semantic UI React](https://react.semantic-ui.com/) for layout and components
+- Hand-written CSS (no UI kit): OKLCH colour tokens, light and dark themes
+- Fonts: Instrument Serif, Geist and Geist Mono, self-hosted via Fontsource
 - Contact form posts to my own Java Spring Boot API
   ([telegramApi](https://github.com/mibrahim95/telegramApi)), which validates the
   message and forwards it to Telegram

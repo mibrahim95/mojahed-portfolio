@@ -9,7 +9,15 @@
       name="description"
       content="Portfolio of Mojahed Ibrahim, web application developer: work experience, projects, résumé, and contact."
     />
-    <meta name="theme-color" content="#1b1c1d" />
+    <meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1714" media="(prefers-color-scheme: dark)" />
+    <script>
+      // Apply a saved light/dark choice before first paint (no flash).
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
     <link rel="canonical" href="https://mojahedsportfolio.com/" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/logo192.png" />

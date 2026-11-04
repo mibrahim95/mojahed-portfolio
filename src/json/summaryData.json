@@ -1,22 +1,6 @@
 [
-    {
-        "title":"Experience",
-        "desc": "5+ years of experience in software engineering",
-        "icon":"terminal"
-    },
-    {
-        "title":"Education",
-        "desc": "Temple University - Bachelor of Business Administration in MIS",
-        "icon":"graduation cap"
-    },
-    {
-        "title":"Projects",
-        "desc": "Multiple projects built on personal time",
-        "icon":"keyboard"
-    },
-    {
-        "title":"Knowledge",
-        "desc": "Various frontend and backend programming languages",
-        "icon":"lightbulb"
-    }
+  { "label": "Building since", "value": "2019, professionally" },
+  { "label": "Education", "value": "Temple University, B.B.A. in Management Information Systems" },
+  { "label": "Day to day", "value": "PHP, JavaScript, jQuery, MySQL" },
+  { "label": "On my own time", "value": "Java, Spring Boot, React" }
 ]

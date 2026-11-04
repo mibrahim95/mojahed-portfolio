@@ -1,15 +1,28 @@
 [
   {
     "header": "Turn 14 Distribution",
-    "languages": ["PHP", "JavaScript", "HTML", "CSS", "jQuery", "MySQL"],
+    "languages": [
+      "PHP",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "jQuery",
+      "MySQL"
+    ],
     "imgPath": "/turn14.webp",
     "desc": "Work on a multitude of pages, features, and improvements to help the company grow.",
     "github": "",
-    "url": "https://turn14.com/"
+    "url": "https://turn14.com/",
+    "featured": true
   },
   {
     "header": "Telegram Integration API",
-    "languages": ["Java", "Spring Boot", "REST", "Telegram Bot API"],
+    "languages": [
+      "Java",
+      "Spring Boot",
+      "REST",
+      "Telegram Bot API"
+    ],
     "imgPath": "",
     "desc": "Spring Boot API that validates contact-form submissions from this site and forwards them to Telegram.",
     "github": "https://github.com/mibrahim95/telegramApi",
@@ -17,15 +30,25 @@
   },
   {
     "header": "This Portfolio",
-    "languages": ["React", "Vite", "Semantic UI"],
+    "languages": [
+      "React",
+      "Vite",
+      "CSS"
+    ],
     "imgPath": "/portfolioPreview.webp",
-    "desc": "The site you are on: a responsive single-page portfolio wired to my own contact API.",
+    "desc": "The site you are on: a hand-built, responsive single-page portfolio with light and dark themes, wired to my own contact API.",
     "github": "https://github.com/mibrahim95/mojahed-portfolio",
     "url": ""
   },
   {
     "header": "Cousin's Supermarket Inventory",
-    "languages": ["PHP", "JavaScript", "HTML", "CSS", "Heroku"],
+    "languages": [
+      "PHP",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Heroku"
+    ],
     "imgPath": "/cousinsInv.webp",
     "desc": "The first steps to advancing the inventory system.",
     "github": "https://github.com/mibrahim95/cousinsinv",
@@ -33,7 +56,15 @@
   },
   {
     "header": "Video Game Maintenance List",
-    "languages": ["PHP", "JavaScript", "HTML", "CSS", "jQuery", "MySQL", "Heroku"],
+    "languages": [
+      "PHP",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "jQuery",
+      "MySQL",
+      "Heroku"
+    ],
     "imgPath": "/gameCheck.webp",
     "desc": "Help pinpoint nonfunctional games as well as pick out highly rated ones.",
     "github": "https://github.com/mibrahim95/romCheck",
