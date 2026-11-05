@@ -31,7 +31,7 @@ function Nav({ onSearch }) {
           ))}
         </nav>
         <div className="nav-actions">
-          <button type="button" className="kbtn" onClick={onSearch} aria-keyshortcuts="Control+K Meta+K">
+          <button type="button" className="kbtn" onClick={onSearch} aria-label="Find a skill or jump to a section" aria-keyshortcuts="Control+K Meta+K">
             <Search />
             <span className="kbtn-label">Find a skill</span>
             <kbd>{SHORTCUT}</kbd>

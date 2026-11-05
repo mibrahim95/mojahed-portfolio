@@ -25,7 +25,7 @@ function Tape({ hover, setHover, isLit }) {
         <div className="tape-spans" role="list" aria-label="Timeline of school and work">
           <div className={`tspan tspan-school${isLit("education") ? "" : " is-dim"}`} role="listitem" style={{ "--l": "0%", "--w": `${s.at(grad)}%`, "--lane": 0 }}>
             <a href="#education">
-              {edu.school}, {edu.short} {edu.major}
+              {edu.school}, {edu.short} {edu.major}, to {edu.year}
               <span className="visually-hidden">, graduated {edu.graduated}</span>
             </a>
           </div>

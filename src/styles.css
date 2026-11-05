@@ -2188,6 +2188,14 @@ kbd {
   color: #f1efe9;
 }
 
+[data-theme="light"] .cab-help {
+  color: var(--ink-2);
+}
+
+[data-theme="light"] .cab-help b {
+  color: var(--ink);
+}
+
 .cabinet.is-cheat .cab-marquee {
   animation: flash 0.5s steps(1) 6;
 }
@@ -2278,7 +2286,7 @@ kbd {
 }
 
 .tspan-school {
-  background: linear-gradient(90deg, transparent, var(--data-soft) 30%);
+  background: linear-gradient(90deg, transparent, var(--data-soft) 60%);
   box-shadow: inset 0 -1px 0 color-mix(in oklab, var(--data) 50%, transparent), inset -1px 0 0 color-mix(in oklab, var(--data) 50%, transparent);
 }
 
@@ -2697,7 +2705,7 @@ kbd {
 }
 
 .is-empty {
-  opacity: 0.6;
+  opacity: 0.85;
 }
 
 .chat__time {

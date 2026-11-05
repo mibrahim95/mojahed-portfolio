@@ -110,6 +110,14 @@ const isSubsequence = (q, s) => {
   return i === q.length;
 };
 
+// True when a and b differ only by two neighbouring letters swapped ("pyhton" for "python").
+function swapped(a, b) {
+  if (a.length !== b.length) return false;
+  let i = 0;
+  while (i < a.length && a[i] === b[i]) i++;
+  return i < a.length - 1 && a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2);
+}
+
 // 0 = no match. Exact beats prefix beats word prefix beats substring beats typo beats loose letters.
 function score(q, text) {
   const t = norm(text);
@@ -119,6 +127,7 @@ function score(q, text) {
   if (t.split(" ").some((w) => w.startsWith(q))) return 70;
   if (q.length >= 2 && t.includes(q)) return 60;
   if (q.length >= 4) {
+    if (swapped(q, t.slice(0, q.length))) return 50;
     const d = editDistance(q, t.slice(0, q.length + 1));
     if (d <= 1) return 50;
     if (d <= 2 && q.length >= 6) return 38;

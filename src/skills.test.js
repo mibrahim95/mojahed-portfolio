@@ -22,6 +22,7 @@ test("java does not match JavaScript work", () => {
 test("aliases and typos resolve", () => {
   assert.equal(m.resolveSkill("springboot").name, "Spring Boot");
   assert.equal(m.resolveSkill("dockr").name, "Docker");
+  assert.equal(m.resolveSkill("pyhton").name, "Python");
   assert.equal(m.resolveSkill("js").name, "JavaScript");
 });
 
