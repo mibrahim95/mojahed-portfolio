@@ -3,19 +3,28 @@ import { SkillLogo } from "./logo";
 
 // Two projects have no screenshot. Their pictures are drawn from what they are.
 
-// What the Telegram API delivers: the same three lines the contact function sends.
+// What the Telegram API does: the request the contact form sends, and the message it becomes.
 function ApiMedia() {
   return (
-    <div className="gen gen-api" role="img" aria-label="A contact-form message delivered to Telegram by the API">
-      <p className="gen-req">
-        <b>POST</b> /api/contact <span>200 OK</span>
+    <div className="gen gen-api" role="img" aria-label="A contact-form request to the API, and the Telegram message it turns into">
+      <div className="gen-code">
+        <p className="gen-req">
+          <b>POST</b> /api/contact <span>200 OK</span>
+        </p>
+        <pre>{`{
+  "name": "Dana Whitfield",
+  "email": "dana@company.com",
+  "message": "Can we talk about a role?"
+}`}</pre>
+      </div>
+      <p className="gen-hop" aria-hidden="true">
+        <span /> Telegram Bot API
       </p>
       <p className="gen-bubble">
-        Name: Dana Whitfield
+        <b>New message from your site</b>
+        Dana Whitfield, dana@company.com
         <br />
-        Email: dana@company.com
-        <br />
-        Message: Hi Mojahed, can we talk about a role?
+        Can we talk about a role?
         <span className="gen-time">9:41</span>
       </p>
     </div>

@@ -148,7 +148,7 @@ function ContactMe() {
                     id="contact-name"
                     name="fullName"
                     autoComplete="name"
-                    placeholder="Jane Doe"
+                    placeholder="Priya Raman"
                     value={form.fullName}
                     onChange={handleChange}
                     aria-invalid={!!errors.fullName}
@@ -168,7 +168,7 @@ function ContactMe() {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    placeholder="jane@company.com"
+                    placeholder="priya@company.com"
                     value={form.email}
                     onChange={handleChange}
                     aria-invalid={!!errors.email}

@@ -9,7 +9,8 @@ import { ArrowRight, Download } from "./icons";
 import { SkillLogo } from "./logo";
 import Portrait from "./portrait";
 
-const STACK = ["PHP", "MySQL", "SQL", "JavaScript", "jQuery", "HTML", "CSS", "Java", "Spring Boot", "React", "Python", "Docker", "Linux", "Git", "Excel", "Raspberry Pi"];
+// Backend first, the way the résumé now reads. PL/SQL is on the résumé but never leads.
+const STACK = ["Java", "Spring Boot", "REST APIs", "SQL", "MySQL", "Redis", "Git", "Maven", "Concourse CI/CD", "Jira", "Linux", "Docker", "Python", "PHP", "JavaScript", "Tailscale"];
 const current = experiences[0];
 const building = projects.find((p) => p.header === "Heartbeat Frame");
 const edu = about.education;
@@ -27,8 +28,8 @@ export function PixelHeart() {
 // Before/after bars for the two Comcast speedups, drawn to scale.
 function Speedups() {
   const rows = [
-    { label: "Slow report, after I rewrote its query, indexes and joins", before: 100, after: 20, note: "80% less runtime" },
-    { label: "A recurring report", before: 100, after: 100 / 4.5, note: "4 to 5 hours, now about 1" },
+    { label: "One slow job, after I rewrote its query, added indexes and changed its joins", before: 100, after: 20, note: "80% less runtime" },
+    { label: "A separate recurring job", before: 100, after: 100 / 4.5, note: "4 to 5 hours, now about 1" },
   ];
   return (
     <ul className="speed">
@@ -90,12 +91,9 @@ function Hero({ onPick, onSearch }) {
       <div className="wrap bento">
         <div className="tile tile-id" data-load style={{ "--d": 0 }}>
           <p className="id-place">
-            <span className="dot-live" aria-hidden="true" />
-            {about.role}, {about.location}
+            {about.role} at {about.company} · {about.location}
           </p>
-          <h1 id="hero-title">
-            Mojahed <em>Ibrahim</em>
-          </h1>
+          <h1 id="hero-title">Mojahed Ibrahim</h1>
           <p className="id-headline">{about.headline}</p>
           <p className="id-lede">{about.lede}</p>
           <div className="id-actions">
@@ -130,9 +128,9 @@ function Hero({ onPick, onSearch }) {
         </div>
 
         <div className="tile tile-speed" data-load style={{ "--d": 2 }}>
-          <h2 className="tile-title">Making slow reports fast</h2>
+          <h2 className="tile-title">Making slow jobs fast</h2>
           <p className="speed-big">
-            <span>6+ hours</span> cut from the daily reporting run by running report families in parallel.
+            <span>{about.highlights[0].value}</span> {about.highlights[0].label}.
           </p>
           <Speedups />
         </div>
@@ -159,7 +157,7 @@ function Hero({ onPick, onSearch }) {
         </div>
 
         <div className="tile tile-stack" data-load style={{ "--d": 4 }}>
-          <h2 className="tile-title">Daily stack</h2>
+          <h2 className="tile-title">Stack</h2>
           <ul className="stack">
             {STACK.map((name, i) => {
               const s = SKILLS.find((x) => x.name === name);
@@ -188,9 +186,7 @@ function Hero({ onPick, onSearch }) {
             <PixelHeart />
           </div>
           <div className="build-body">
-            <h2 className="tile-title">
-              <span className="dot-live" aria-hidden="true" /> Currently building
-            </h2>
+            <h2 className="tile-title">Building now</h2>
             <p className="build-name">{building.header}</p>
             <p className="build-desc">
               A Raspberry Pi 5 gift frame with a color e-ink panel, a round display, two OLEDs, a touch pad and a

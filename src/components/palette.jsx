@@ -12,7 +12,7 @@ const PLACES = [
   ["Skills", "#skills"],
   ["Contact", "#contact"],
 ];
-const STARTERS = ["PHP", "SQL", "JavaScript", "Java", "Python", "Docker"];
+const STARTERS = ["Java", "Spring Boot", "REST APIs", "SQL", "Docker", "Python"];
 
 function buildRows(text) {
   const sql = parseSql(text);

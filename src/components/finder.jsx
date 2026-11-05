@@ -110,8 +110,8 @@ function Finder({ skill, query, onQuery, onPick }) {
           <div className="finder-head">
             <h2 id="finder-title">Find my work by skill</h2>
             <p>
-              Type a skill or pick one below. Projects and jobs that use it move to the front, and the rest fold
-              away. Works from anywhere with <kbd>{SHORTCUT}</kbd>.
+              Type a skill or pick one. The projects and jobs that use it move up front and the rest fold away.
+              Press <kbd>{SHORTCUT}</kbd> to search from anywhere on the page.
             </p>
           </div>
 
@@ -125,7 +125,7 @@ function Finder({ skill, query, onQuery, onPick }) {
               type="search"
               value={query}
               onChange={(e) => onQuery(e.target.value)}
-              placeholder="Try Python, Docker or SQL"
+              placeholder="Try Java, Docker or SQL"
               autoComplete="off"
               spellCheck="false"
             />

@@ -27,6 +27,15 @@ function Walker({ to }) {
   const [facing, setFacing] = useState("right");
   const [walk, setWalk] = useState(0);
   const [frame, setFrame] = useState(0);
+  const [seen, setSeen] = useState(false);
+  const el = useRef(null);
+
+  // Breathe and walk only while the tape is on screen; offscreen the timer stops.
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => setSeen(e.isIntersecting));
+    io.observe(el.current);
+    return () => io.disconnect();
+  }, []);
 
   // A new target: turn to face it and walk for a time that matches the distance.
   if (from !== to) {
@@ -43,14 +52,14 @@ function Walker({ to }) {
   }, [walk, from]);
 
   useEffect(() => {
-    if (reducedMotion()) return undefined;
+    if (reducedMotion() || !seen) return undefined;
     const t = setInterval(() => setFrame((f) => f + 1), walk ? 140 : 560);
     return () => clearInterval(t);
-  }, [walk]);
+  }, [walk, seen]);
 
   const rows = walk ? (frame % 2 ? HERO_WALK_B : HERO_WALK_A) : frame % 2 ? HERO_IDLE_2 : HERO_IDLE;
   return (
-    <div className="walker" style={{ "--x": SPOT[to], "--dur": `${walk}ms` }} aria-hidden="true">
+    <div className="walker" ref={el} style={{ "--x": SPOT[to], "--dur": `${walk}ms` }} aria-hidden="true">
       <span className="walker-sprite" data-facing={facing}>
         <Pix rows={rows} scale={3} />
       </span>
@@ -117,7 +126,7 @@ function Tape({ sel, setSel, isLit }) {
   );
 }
 
-const FIRST = 3;
+const FIRST = 2;
 
 function Job({ job, skill, lit, setSel }) {
   const [open, setOpen] = useState(false);
@@ -203,8 +212,8 @@ function Experience({ skill }) {
         <div className="section-head" data-reveal>
           <h2 id="experience-title">Experience</h2>
           <p>
-            An internship and a tutoring job, four years of PHP and MySQL at Turn&nbsp;14, then reporting and data
-            pipelines at Comcast. <a className="link" href={RESUME} {...external}>Full résumé (PDF)</a>
+            Java pipelines and API integrations at Comcast today. Before that, four years of PHP and MySQL at
+            Turn&nbsp;14, and in college a tutoring job and an internship. <a className="link" href={RESUME} {...external}>Full résumé (PDF)</a>
           </p>
           {skill && (
             <p className="proj-note" role="status">

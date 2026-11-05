@@ -19,8 +19,5 @@ export const openProject = (key) => window.dispatchEvent(new CustomEvent(OPEN_PR
 const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 export const SHORTCUT = isMac ? "⌘K" : "Ctrl K";
 
-// The Konami code fired (from the keyboard or the cabinet pad). The skyline listens.
-export const CHEAT = "portfolio:cheat";
-
 // Page-wide arrow keys leave these alone: typing, dialogs and widgets with their own arrow handling.
 export const SKIP_KEYS = "input, textarea, select, dialog, [contenteditable], [role='tablist'], [role='listbox'], .segmented";

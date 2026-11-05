@@ -1,6 +1,6 @@
 // Sprite grids for <Pix>: one character per pixel, "." is clear. Colors live in styles.css (.px-<char>).
 
-// Player One: beard, navy suit, coral tie (after the portrait). 12 x 16, facing right.
+// Player One: beard, navy suit, signal-yellow tie (after the portrait). 12 x 16, facing right.
 // k ink, s skin, w shirt, n suit, d suit shade, r tie
 const HEAD = [
   "....kkkkk...",

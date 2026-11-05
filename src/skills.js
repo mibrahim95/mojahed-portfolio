@@ -16,7 +16,7 @@ const LOGO = {
   Docker: "docker", Git: "git", "Raspberry Pi": "raspberrypi", Jira: "jira", Maven: "apachemaven",
   "Concourse CI/CD": "concourse", Proxmox: "proxmox", Tailscale: "tailscale", Go: "go", Vite: "vite",
   "Netlify Functions": "netlify", Flask: "flask", NumPy: "numpy", "Telegram Bot API": "telegram",
-  RetroPie: "retropie",
+  RetroPie: "retropie", Redis: "redis", JSON: "json", Vagrant: "vagrant", Heroku: "heroku",
 };
 
 export const logoBySlug = (slug) => (PATHS[slug] ? { d: PATHS[slug], hex: brands[slug] } : null);
@@ -168,7 +168,7 @@ const NEAR = {
   etl: ["CloverDX", "Data-ingestion pipelines"], bash: ["Linux", "Git"], shell: ["Linux", "Git"],
   pandas: ["Python", "NumPy"], api: ["REST APIs", "Spring Boot"], testing: ["Unit testing", "Code review"],
 };
-const POPULAR = ["PHP", "SQL", "JavaScript", "Java"];
+const POPULAR = ["Java", "SQL", "REST APIs", "PHP"];
 
 export function suggestFor(query) {
   const q = norm(query);

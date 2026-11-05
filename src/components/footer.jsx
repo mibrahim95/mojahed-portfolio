@@ -9,7 +9,7 @@ function Footer() {
           <Mark size={40} />
           <span>
             <b>Mojahed Ibrahim</b>
-            <span>Software engineer in Philadelphia. © {new Date().getFullYear()}</span>
+            <span>Backend developer in Philadelphia. © {new Date().getFullYear()}</span>
           </span>
         </a>
         <nav className="footer-links" aria-label="Elsewhere">
@@ -20,7 +20,7 @@ function Footer() {
         </nav>
         <p className="footer-egg">
           <kbd>↑</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd><kbd>←</kbd><kbd>→</kbd><kbd>B</kbd><kbd>A</kbd>
-          <span className="visually-hidden">The Konami code works on this page, or on the arcade cabinet in Projects.</span>
+          <span className="visually-hidden">Type the Konami code anywhere on this page and watch the skyline.</span>
         </p>
       </div>
     </footer>

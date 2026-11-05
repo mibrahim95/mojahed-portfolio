@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { CHEAT, reducedMotion } from "../motion";
+import { reducedMotion } from "../motion";
+
+// Up, up, down, down, left, right, left, right, B, A, typed anywhere on the page.
+const CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
 
 // Philadelphia at night, in five parallax layers on one 1600 x 420 grid. It sits
 // as a band between the dashboard and the skill finder:
@@ -148,6 +151,10 @@ function build() {
     windows(glass, cx - 21, 104, 42, G - 104, 0.28, rand, "band");
     beacons.push([cx, 86]);
   }
+  // Its glass crown, lit at night: the cap above the top floor, with the mullions left dark.
+  const crown =
+    poly([[900 - 21, 106], [900 - 21, 98.5], [900 - 14.5, 88], [900 + 14.5, 88], [900 + 21, 98.5], [900 + 21, 106]]);
+  const mullions = [-12, -4, 4, 12].map((dx) => rect(900 + dx - 0.6, 89, 1.2, 17)).join("");
   // Comcast Technology Center: the tallest, with an open lantern at the crown.
   let lantern;
   {
@@ -234,6 +241,8 @@ function build() {
     marks,
     markWin: join(markWin),
     lantern,
+    crown,
+    mullions,
     glass: join(glass),
     hall,
     hallWin: join(hallWin),
@@ -272,6 +281,14 @@ const svgProps = {
 function Skyline() {
   const root = useRef(null);
   const [lit, setLit] = useState(false);
+  const [onScreen, setOnScreen] = useState(false);
+
+  // The twinkles and the plane only run while the band is on screen.
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting));
+    io.observe(root.current);
+    return () => io.disconnect();
+  }, []);
 
   // Scroll parallax is measured against the band itself, so it works wherever the band sits.
   useEffect(() => {
@@ -327,16 +344,26 @@ function Skyline() {
         away ? 900 : 0
       );
     };
-    window.addEventListener(CHEAT, onCheat);
+    let seq = [];
+    const onKey = (e) => {
+      if (e.target.closest?.("input, textarea, select, [contenteditable]")) return;
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      seq = [...seq, k].slice(-CODE.length);
+      if (seq.join() === CODE.join()) {
+        seq = [];
+        onCheat();
+      }
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-      window.removeEventListener(CHEAT, onCheat);
+      window.removeEventListener("keydown", onKey);
     };
   }, []);
 
   return (
-    <div className={`skyline${lit ? " is-cheat" : ""}`} ref={root} aria-hidden="true">
+    <div className={`skyline${lit ? " is-cheat" : ""}${onScreen ? "" : " is-paused"}`} ref={root} aria-hidden="true">
       <svg className="sk-layer sk-sky" {...svgProps} style={{ "--depth": 0.55, "--drift": 4 }}>
         {S.stars.map((d, i) => (
           <path key={i} className="sk-star" style={{ "--g": i }} d={d} />
@@ -361,6 +388,8 @@ function Skyline() {
         <path className="sk-mark" d={S.marks} />
         <Win win={S.markWin} kind="near" />
         <path className="sk-lantern" d={S.lantern} />
+        <path className="sk-crown" d={S.crown} />
+        <path className="sk-mullion" d={S.mullions} />
         <Win win={S.glass} kind="glass" />
         <path className="sk-hall" d={S.hall} />
         <Win win={S.hallWin} kind="hall" />
@@ -375,6 +404,13 @@ function Skyline() {
           {S.reflect.flatMap((x, i) =>
             [0, 1, 2, 3].map((k) => (
               <rect key={`${i}-${k}`} x={x - (8 - k * 2) + ((i + k) % 3)} y={G + 5 + k * 7} width={16 - k * 4} height="1.5" style={{ "--i": i + k }} />
+            ))
+          )}
+        </g>
+        <g className="sk-crown-reflect">
+          {[900, 982].flatMap((x) =>
+            [0, 1, 2, 3, 4, 5].map((k) => (
+              <rect key={`${x}-${k}`} x={x - (13 - k * 2) + (k % 2) * 2} y={G + 4 + k * 5.5} width={26 - k * 4} height="1.6" style={{ "--i": k }} />
             ))
           )}
         </g>
