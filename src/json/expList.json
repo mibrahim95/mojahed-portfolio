@@ -3,18 +3,18 @@
     "title": "Comcast",
     "position": "Software Engineer 2",
     "location": "Philadelphia, PA",
-    "desc": "Daily reports that business teams rely on, built in Oracle PL/SQL, Java and CloverDX and run over hundreds of thousands to millions of records.",
+    "desc": "Daily reports and data pipelines that business teams rely on, built with SQL, Java and CloverDX over hundreds of thousands to millions of records.",
     "id": "comcast",
     "kind": "Full time",
     "bullets": [
       "Cut more than 6 hours from total daily reporting time by adding parallel processing (parallel PL/SQL and CloverDX graphs) to four or five report families.",
       "Rewrote a slow query, added indexes and changed its joins, which cut that report's runtime by over 80%. Brought a separate recurring report down from four or five hours to about one.",
       "Support about 15 recurring reports. Built two of them end to end and drove the design of about five more.",
-      "Write and maintain Oracle PL/SQL packages, procedures and migration scripts behind an internal fulfillment-accuracy reporting system.",
       "Automated an API import of another team's data into the reporting database, with retries for rate limits and other failures.",
       "Built report-failure alerts over Slack, Teams and email, including an end-of-day alert when a report fails to publish. Moved the Slack alerts to OAuth.",
       "Upgraded CloverDX from 6.3.1 to 7.4.2 and updated the reports and graphs that depend on it.",
       "Build Java data-ingestion pipelines that move data between internal systems.",
+      "Write and maintain Oracle PL/SQL packages, procedures and migration scripts behind an internal fulfillment-accuracy reporting system.",
       "Review teammates' code and mentor new contractors on the team."
     ],
     "dates": "Feb 2023 – now"

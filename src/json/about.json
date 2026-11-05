@@ -1,27 +1,97 @@
 {
   "role": "Software Engineer 2",
   "company": "Comcast",
-  "headline": "I build the reports, data pipelines and web apps that sit on top of big databases.",
-  "lede": "At Comcast I work on daily reports that business teams rely on, written in Oracle PL/SQL, Java and CloverDX. Much of that work is making slow jobs fast and setting up alerts for when one fails. Before that I spent four years at Turn 14 Distribution building PHP and MySQL apps for a B2B e-commerce platform and a warehouse system.",
+  "headline": "I build web apps and the databases and reports behind them.",
+  "lede": "I've spent 7+ years writing PHP, JavaScript, SQL and Java for business software. At Turn 14 Distribution I built PHP and MySQL apps for a B2B e-commerce platform and a warehouse management system. At Comcast I work on the daily reports and data pipelines business teams rely on, mostly making slow jobs fast and adding alerts for when one fails.",
   "facts": [
-    { "label": "Now", "value": "Software Engineer 2 at Comcast, since 2023" },
-    { "label": "Before", "value": "Web Application Developer at Turn 14 Distribution, 2019–2023" },
-    { "label": "Studied", "value": "B.B.A., Temple University, Fox School of Business, 2019" },
-    { "label": "Based in", "value": "Philadelphia, PA" }
+    {
+      "label": "Now",
+      "value": "Software Engineer 2 at Comcast, since 2023"
+    },
+    {
+      "label": "Before",
+      "value": "Web Application Developer at Turn 14 Distribution, 2019–2023"
+    },
+    {
+      "label": "Studied",
+      "value": "B.B.A., Temple University, Fox School of Business, 2019"
+    },
+    {
+      "label": "Based in",
+      "value": "Philadelphia, PA"
+    }
   ],
   "highlights": [
-    { "value": "6+ hours", "label": "cut from total daily reporting time with parallel processing" },
-    { "value": "80%", "label": "faster runtime on one report after a query, index and join rework" },
-    { "value": "1,000+", "label": "MySQL tables designed and tuned, averaging 700K+ rows each" },
-    { "value": "7+ years", "label": "building production software, from PHP web apps to Oracle reporting" }
+    {
+      "value": "1,000+",
+      "label": "MySQL tables designed and tuned, averaging 700K+ rows each"
+    },
+    {
+      "value": "7+ years",
+      "label": "building production software, from PHP web apps to enterprise reporting"
+    },
+    {
+      "value": "6+ hours",
+      "label": "cut from total daily reporting time with parallel processing"
+    },
+    {
+      "value": "80%",
+      "label": "faster runtime on one report after a query, index and join rework"
+    }
   ],
   "skills": [
-    { "group": "Languages", "items": ["SQL", "Oracle PL/SQL", "Java", "PHP", "JavaScript", "HTML", "CSS"] },
-    { "group": "Databases", "items": ["Oracle", "MySQL", "Query and index tuning", "Replication", "Migrations"] },
-    { "group": "Back end and data", "items": ["Spring Boot", "REST APIs", "CloverDX", "Data-ingestion pipelines", "Data validation"] },
-    { "group": "Front end", "items": ["React", "jQuery", "Responsive HTML and CSS"] },
-    { "group": "Tools", "items": ["Git and GitHub", "Maven", "Jira", "Concourse CI/CD", "Linux", "Excel"] },
-    { "group": "Also used", "items": ["Go", "Python", "Slack, Teams and email alerting"] }
+    {
+      "group": "Web",
+      "items": [
+        "PHP",
+        "JavaScript",
+        "jQuery",
+        "HTML",
+        "CSS",
+        "React"
+      ]
+    },
+    {
+      "group": "Databases and SQL",
+      "items": [
+        "MySQL",
+        "SQL",
+        "Oracle PL/SQL",
+        "Query and index tuning",
+        "Replication",
+        "Migrations"
+      ]
+    },
+    {
+      "group": "Back end and data",
+      "items": [
+        "Java",
+        "Spring Boot",
+        "REST APIs",
+        "CloverDX",
+        "Data-ingestion pipelines",
+        "Data validation"
+      ]
+    },
+    {
+      "group": "Tools",
+      "items": [
+        "Git and GitHub",
+        "Maven",
+        "Jira",
+        "Concourse CI/CD",
+        "Linux",
+        "Excel"
+      ]
+    },
+    {
+      "group": "Also used",
+      "items": [
+        "Go",
+        "Python",
+        "Slack, Teams and email alerting"
+      ]
+    }
   ],
   "education": {
     "school": "Temple University",
