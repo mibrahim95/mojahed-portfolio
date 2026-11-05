@@ -1,33 +1,5 @@
 [
   {
-    "header": "Turn 14 Distribution",
-    "kind": "Production web apps",
-    "year": "2019–2023",
-    "languages": [
-      "PHP",
-      "MySQL",
-      "JavaScript",
-      "jQuery",
-      "HTML",
-      "CSS"
-    ],
-    "imgPath": "/turn14.webp",
-    "desc": "My day job for four years. I built pages and features for the company's B2B e-commerce site and its warehouse management system, and owned much of the MySQL underneath: a 1,000+ table schema, replication, and the queries and reports that internal teams and B2B clients ran.",
-    "github": "",
-    "url": "https://turn14.com/",
-    "skills": [
-      "PHP",
-      "MySQL",
-      "SQL",
-      "JavaScript",
-      "jQuery",
-      "HTML",
-      "CSS",
-      "Schema design",
-      "Replication"
-    ]
-  },
-  {
     "header": "Telegram contact API",
     "kind": "Java service",
     "year": "2022",
@@ -38,13 +10,14 @@
       "Telegram Bot API"
     ],
     "imgPath": "",
-    "desc": "A Spring Boot REST API that checks contact-form submissions (name length, email format, message size) and forwards the valid ones to my phone as Telegram messages. It ran this site's contact form while it was hosted on Heroku.",
+    "desc": "A Spring Boot REST API that checks contact-form submissions (name length, email format, message size) and forwards the valid ones to my phone as Telegram messages. It ran this site's contact form while the site was hosted on Heroku.",
     "github": "https://github.com/mibrahim95/telegramApi",
     "url": "",
     "skills": [
       "Java",
       "Spring Boot",
       "REST APIs",
+      "JSON",
       "Telegram Bot API",
       "Heroku",
       "Git"
@@ -62,7 +35,7 @@
       "SPI and I2C"
     ],
     "imgPath": "/heartbeatFrame.webp",
-    "desc": "A gift picture frame built around a Raspberry Pi 5, with a 7.3-inch color e-ink panel, a round display, two small OLEDs, a touch pad and a speaker. My Python app runs as a systemd service and drives all of it: about 67 e-ink screens I designed, open-access museum art, and a pixel cat animated through a direct SPI driver I wrote. A phone shortcut sends the frame a heart through a token-protected Flask API over Tailscale.",
+    "desc": "A gift picture frame built around a Raspberry Pi 5, with a 7.3-inch color e-ink panel, a round display, two small OLEDs, a touch pad and a speaker. My Python app runs as a systemd service and drives all of it: about 67 e-ink screens I designed, open-access museum art, and a pixel cat animated through a direct SPI driver I wrote. A phone shortcut sends the frame a heart through a token-protected Flask API over Tailscale. The code lives in a private repo.",
     "github": "",
     "url": "",
     "skills": [
@@ -103,6 +76,60 @@
       "DNS",
       "Monitoring",
       "Self-hosting"
+    ]
+  },
+  {
+    "header": "Turn 14 Distribution",
+    "kind": "Production web apps",
+    "year": "2019–2023",
+    "languages": [
+      "PHP",
+      "MySQL",
+      "JavaScript",
+      "jQuery",
+      "HTML",
+      "CSS"
+    ],
+    "imgPath": "/turn14.webp",
+    "desc": "My job from 2019 to 2023. I built features for the company's B2B e-commerce site and its warehouse management system in PHP and JavaScript, down to the MySQL underneath: a 1,000+ table schema, replication, and the queries that internal teams and B2B clients ran.",
+    "github": "",
+    "url": "https://turn14.com/",
+    "skills": [
+      "PHP",
+      "JavaScript",
+      "jQuery",
+      "AJAX",
+      "MySQL",
+      "SQL",
+      "HTML",
+      "CSS",
+      "Schema design",
+      "Replication"
+    ]
+  },
+  {
+    "header": "This portfolio",
+    "kind": "React site",
+    "year": "2022–2026",
+    "languages": [
+      "React",
+      "Vite",
+      "CSS",
+      "Netlify Functions"
+    ],
+    "imgPath": "/portfolioPreview.webp",
+    "desc": "The site you're reading. I first built it in 2022 on Create React App and Semantic UI, then rebuilt it in 2026 on Vite with hand-written CSS. The contact form now runs through a small Netlify Function that can deliver to Telegram or Slack.",
+    "github": "https://github.com/mibrahim95/mojahed-portfolio",
+    "url": "",
+    "skills": [
+      "React",
+      "JavaScript",
+      "Vite",
+      "HTML",
+      "CSS",
+      "Semantic UI",
+      "Netlify Functions",
+      "Git"
     ]
   },
   {
@@ -167,30 +194,6 @@
       "Linux",
       "RetroPie",
       "Hardware"
-    ]
-  },
-  {
-    "header": "This portfolio",
-    "kind": "React site",
-    "year": "2022–2026",
-    "languages": [
-      "React",
-      "Vite",
-      "CSS",
-      "Netlify Functions"
-    ],
-    "imgPath": "/portfolioPreview.webp",
-    "desc": "The site you're reading. I first built it in 2022 on Create React App and Semantic UI, then rebuilt it in 2026 on Vite with hand-written CSS. The contact form now runs through a small Netlify Function that can deliver to Telegram or Slack.",
-    "github": "https://github.com/mibrahim95/mojahed-portfolio",
-    "url": "",
-    "skills": [
-      "React",
-      "JavaScript",
-      "Vite",
-      "HTML",
-      "CSS",
-      "Netlify Functions",
-      "Git"
     ]
   }
 ]

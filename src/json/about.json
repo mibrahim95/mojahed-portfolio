@@ -3,8 +3,8 @@
   "role": "Software Engineer 2",
   "company": "Comcast",
   "location": "Philadelphia, PA",
-  "headline": "I build web apps and the databases and reports behind them.",
-  "lede": "Seven years of PHP, JavaScript, SQL and Java on business software. At Turn 14 Distribution I built the PHP and MySQL apps behind a B2B e-commerce site and a warehouse management system. At Comcast I look after about 15 daily reports that run over millions of records, and I make the slow ones fast.",
+  "headline": "I build Java backends that move data between systems, and I make slow jobs fast.",
+  "lede": "Seven years of production code, and these days it's backend work. At Comcast I build Java data-ingestion pipelines and API integrations, add retries for rate limits, and send failure alerts over Slack, Teams and email. I took more than 6 hours off the daily batch run with parallel processing. Before Comcast I spent four years at Turn 14 Distribution building the PHP and MySQL apps behind a B2B e-commerce site and a warehouse management system.",
   "photo": {
     "src": "/profile.webp",
     "alt": "Mojahed Ibrahim in a navy suit and tie, smiling outdoors",
@@ -14,72 +14,78 @@
   },
   "highlights": [
     {
-      "value": "1,000+",
-      "label": "MySQL tables I designed and tuned at Turn 14, averaging 700K+ rows each"
+      "value": "6+ hours",
+      "label": "cut from the daily batch run at Comcast by adding parallel processing to four or five job families"
     },
     {
       "value": "7+ years",
-      "label": "shipping production code, from PHP web apps to enterprise reporting"
-    },
-    {
-      "value": "6+ hours",
-      "label": "cut from the daily reporting run at Comcast by running reports in parallel"
+      "label": "writing production code, from PHP web apps to Java data pipelines"
     },
     {
       "value": "80%",
-      "label": "less runtime on one report after I rewrote its query, indexes and joins"
+      "label": "less runtime on one slow job after I rewrote its query, added indexes and changed its joins"
+    },
+    {
+      "value": "10,000+",
+      "label": "lines of legacy code I removed in a refactor at Turn 14"
     }
   ],
   "skills": [
-    {
-      "group": "Web",
-      "items": [
-        "PHP",
-        "JavaScript",
-        "jQuery",
-        "HTML",
-        "CSS",
-        "React"
-      ]
-    },
-    {
-      "group": "Databases and SQL",
-      "items": [
-        "MySQL",
-        "SQL",
-        "Query and index tuning",
-        "Schema design",
-        "Replication",
-        "Migrations",
-        "Oracle PL/SQL"
-      ]
-    },
     {
       "group": "Back end",
       "items": [
         "Java",
         "Spring Boot",
         "REST APIs",
-        "Data-ingestion pipelines"
+        "JSON",
+        "Data-ingestion pipelines",
+        "API integration",
+        "Retry handling",
+        "Parallel processing",
+        "Slack, Teams and email alerting",
+        "OAuth",
+        "Redis"
       ]
     },
     {
-      "group": "Data and reporting",
-      "items": [
-        "CloverDX",
-        "Recurring reports",
-        "Data validation",
-        "Excel: PivotTables, VLOOKUP, macros"
-      ]
-    },
-    {
-      "group": "Tools",
+      "group": "Delivery and tools",
       "items": [
         "Git and GitHub",
-        "Jira",
         "Maven",
         "Concourse CI/CD",
-        "Linux"
+        "Jira",
+        "Linux",
+        "Code review",
+        "Unit testing",
+        "Agile",
+        "Mentoring",
+        "Vagrant"
+      ]
+    },
+    {
+      "group": "Data and SQL",
+      "items": [
+        "SQL",
+        "MySQL",
+        "Query and index tuning",
+        "Schema design",
+        "Migrations",
+        "Replication",
+        "CloverDX",
+        "Data validation",
+        "Oracle PL/SQL"
+      ]
+    },
+    {
+      "group": "Web",
+      "items": [
+        "PHP",
+        "JavaScript",
+        "jQuery",
+        "AJAX",
+        "HTML",
+        "CSS",
+        "React"
       ]
     },
     {
@@ -97,7 +103,7 @@
       "items": [
         "Go",
         "Python",
-        "Slack, Teams and email alerting"
+        "Excel: PivotTables, VLOOKUP, macros"
       ]
     }
   ],
@@ -113,12 +119,12 @@
     "honors": [
       "Dean's List, Fall 2016"
     ],
-    "summary": "A business degree with a technical major. I studied Management Information Systems at Temple's Fox School of Business and tutored for the department before I graduated.",
+    "summary": "I earned a business degree in Management Information Systems at Temple's Fox School of Business, and tutored SQL and PHP for the department before I graduated.",
     "teaching": {
       "role": "MIS Information Technology Assistant",
       "dates": "Jun 2018 – Jan 2019",
       "course": "Data-Centric Application Development",
-      "text": "Before graduating I worked for the MIS department as a tutor for its Data-Centric Application Development course, helping students with SQL, PHP, HTML and CSS."
+      "text": "I tutored students in SQL, PHP, HTML and CSS for the MIS department's Data-Centric Application Development course."
     }
   },
   "email": "mojahedibrahim95@gmail.com",
@@ -162,6 +168,43 @@
     "performance tuning": "Query and index tuning",
     "database design": "Schema design",
     "self-hosted": "Self-hosting",
-    "homelab": "Self-hosting"
+    "homelab": "Self-hosting",
+    "spring framework": "Spring Boot",
+    "api": "API integration",
+    "apis": "API integration",
+    "api integrations": "API integration",
+    "integrations": "API integration",
+    "system integration": "API integration",
+    "retries": "Retry handling",
+    "retry": "Retry handling",
+    "retry logic": "Retry handling",
+    "rate limiting": "Retry handling",
+    "parallel": "Parallel processing",
+    "parallelism": "Parallel processing",
+    "alerts": "Slack, Teams and email alerting",
+    "alerting": "Slack, Teams and email alerting",
+    "notifications": "Slack, Teams and email alerting",
+    "slack": "Slack, Teams and email alerting",
+    "microsoft teams": "Slack, Teams and email alerting",
+    "oauth2": "OAuth",
+    "oauth 2.0": "OAuth",
+    "data pipelines": "Data-ingestion pipelines",
+    "pipelines": "Data-ingestion pipelines",
+    "data ingestion": "Data-ingestion pipelines",
+    "ingestion": "Data-ingestion pipelines",
+    "scrum": "Agile",
+    "agile scrum": "Agile",
+    "code reviews": "Code review",
+    "peer review": "Code review",
+    "mentorship": "Mentoring",
+    "mentor": "Mentoring",
+    "unit tests": "Unit testing",
+    "cicd": "Concourse CI/CD",
+    "continuous integration": "Concourse CI/CD",
+    "phinx": "Migrations",
+    "schema migrations": "Migrations",
+    "data quality": "Data validation",
+    "reconciliation": "Data validation",
+    "jquery ajax": "AJAX"
   }
 }
