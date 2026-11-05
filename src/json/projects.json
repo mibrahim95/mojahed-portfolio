@@ -14,7 +14,18 @@
     "imgPath": "/turn14.webp",
     "desc": "My day job for four years. I built pages and features for the company's B2B e-commerce site and its warehouse management system, and owned much of the MySQL underneath: a 1,000+ table schema, replication, and the queries and reports that internal teams and B2B clients ran.",
     "github": "",
-    "url": "https://turn14.com/"
+    "url": "https://turn14.com/",
+    "skills": [
+      "PHP",
+      "MySQL",
+      "SQL",
+      "JavaScript",
+      "jQuery",
+      "HTML",
+      "CSS",
+      "Schema design",
+      "Replication"
+    ]
   },
   {
     "header": "Telegram contact API",
@@ -29,7 +40,70 @@
     "imgPath": "",
     "desc": "A Spring Boot REST API that checks contact-form submissions (name length, email format, message size) and forwards the valid ones to my phone as Telegram messages. It ran this site's contact form while it was hosted on Heroku.",
     "github": "https://github.com/mibrahim95/telegramApi",
-    "url": ""
+    "url": "",
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "REST APIs",
+      "Telegram Bot API",
+      "Heroku",
+      "Git"
+    ]
+  },
+  {
+    "header": "Heartbeat Frame",
+    "kind": "Raspberry Pi build",
+    "year": "2026",
+    "languages": [
+      "Python",
+      "Raspberry Pi",
+      "Flask",
+      "NumPy",
+      "SPI and I2C"
+    ],
+    "imgPath": "/heartbeatFrame.webp",
+    "desc": "A gift picture frame built around a Raspberry Pi 5, with a 7.3-inch color e-ink panel, a round display, two small OLEDs, a touch pad and a speaker. My Python app runs as a systemd service and drives all of it: about 67 e-ink screens I designed, open-access museum art, and a pixel cat animated through a direct SPI driver I wrote. A phone shortcut sends the frame a heart through a token-protected Flask API over Tailscale.",
+    "github": "",
+    "url": "",
+    "skills": [
+      "Python",
+      "Raspberry Pi",
+      "Linux",
+      "Flask",
+      "REST APIs",
+      "NumPy",
+      "systemd",
+      "Tailscale",
+      "Unit testing",
+      "Hardware",
+      "Git"
+    ]
+  },
+  {
+    "header": "Homelab",
+    "kind": "Self-hosted server",
+    "year": "2026",
+    "languages": [
+      "Proxmox",
+      "Docker",
+      "Linux",
+      "Tailscale"
+    ],
+    "imgPath": "",
+    "desc": "A Proxmox server on a mini PC at home. Each service runs in its own unprivileged Linux container, most as Docker Compose stacks: Immich backs up my phone's photos, Nextcloud holds my files, and Pi-hole with Nginx Proxy Manager gives each service a short local name. Away from home I reach it only over Tailscale, with access rules limited to the ports I need, and an outside port scan confirmed the router exposes nothing. Pulse watches the containers and posts alerts to Discord.",
+    "github": "",
+    "url": "",
+    "skills": [
+      "Proxmox",
+      "Linux",
+      "LXC",
+      "Docker",
+      "Tailscale",
+      "Networking",
+      "DNS",
+      "Monitoring",
+      "Self-hosting"
+    ]
   },
   {
     "header": "Cousin's Supermarket inventory",
@@ -44,7 +118,14 @@
     "imgPath": "/cousinsInv.webp",
     "desc": "A searchable product list with prices and UPCs for a local supermarket, built as the first step toward a full inventory system. Customers waited about 20% less for price checks.",
     "github": "https://github.com/mibrahim95/cousinsinv",
-    "url": ""
+    "url": "",
+    "skills": [
+      "PHP",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Git"
+    ]
   },
   {
     "header": "Video game maintenance list",
@@ -59,7 +140,14 @@
     "imgPath": "/gameCheck.webp",
     "desc": "Tracks which games in a large collection work and which don't, and picks out the highly rated ones.",
     "github": "",
-    "url": ""
+    "url": "",
+    "skills": [
+      "PHP",
+      "MySQL",
+      "SQL",
+      "JavaScript",
+      "jQuery"
+    ]
   },
   {
     "header": "Arcade1Up RetroPie mod",
@@ -73,7 +161,13 @@
     "imgPath": "/arcadeMod.webp",
     "desc": "A personal project and a gift. I fitted an Arcade1Up cabinet with a Raspberry Pi running RetroPie, so it plays a full game library instead of the few games it shipped with.",
     "github": "",
-    "url": ""
+    "url": "",
+    "skills": [
+      "Raspberry Pi",
+      "Linux",
+      "RetroPie",
+      "Hardware"
+    ]
   },
   {
     "header": "This portfolio",
@@ -88,6 +182,15 @@
     "imgPath": "/portfolioPreview.webp",
     "desc": "The site you're reading. I first built it in 2022 on Create React App and Semantic UI, then rebuilt it in 2026 on Vite with hand-written CSS. The contact form now runs through a small Netlify Function that can deliver to Telegram or Slack.",
     "github": "https://github.com/mibrahim95/mojahed-portfolio",
-    "url": ""
+    "url": "",
+    "skills": [
+      "React",
+      "JavaScript",
+      "Vite",
+      "HTML",
+      "CSS",
+      "Netlify Functions",
+      "Git"
+    ]
   }
 ]

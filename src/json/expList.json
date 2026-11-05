@@ -17,7 +17,22 @@
       "Write and maintain the Oracle PL/SQL packages, procedures and migration scripts behind an internal fulfillment-accuracy reporting system.",
       "Review teammates' code and mentor new contractors on the team."
     ],
-    "dates": "Feb 2023 – now"
+    "dates": "Feb 2023 – now",
+    "skills": [
+      "SQL",
+      "Java",
+      "CloverDX",
+      "Query and index tuning",
+      "Data-ingestion pipelines",
+      "API integration",
+      "Alerting",
+      "OAuth",
+      "Maven",
+      "Concourse CI/CD",
+      "Git",
+      "Code review",
+      "Oracle PL/SQL"
+    ]
   },
   {
     "title": "Turn 14 Distribution",
@@ -33,7 +48,21 @@
       "Refactored 10,000+ lines of legacy code across many files so it was easier to maintain and faster to run.",
       "Developed, reviewed and tested code on my own for several production applications, working in an Agile team."
     ],
-    "dates": "Jan 2019 – Feb 2023"
+    "dates": "Jan 2019 – Feb 2023",
+    "skills": [
+      "PHP",
+      "MySQL",
+      "SQL",
+      "JavaScript",
+      "jQuery",
+      "HTML",
+      "CSS",
+      "Schema design",
+      "Query and index tuning",
+      "Replication",
+      "Refactoring",
+      "Agile"
+    ]
   },
   {
     "title": "Temple University",
@@ -46,7 +75,14 @@
       "Tutored students in SQL, PHP, HTML and CSS for the Data-Centric Application Development course.",
       "Helped shape a semester workload that students could learn from at a steady pace."
     ],
-    "dates": "Jun 2018 – Jan 2019"
+    "dates": "Jun 2018 – Jan 2019",
+    "skills": [
+      "SQL",
+      "PHP",
+      "HTML",
+      "CSS",
+      "Teaching"
+    ]
   },
   {
     "title": "Five Below",
@@ -60,6 +96,11 @@
       "Created sample schedules for test locations and for the holiday season.",
       "Helped organize teams for the rollout of new software."
     ],
-    "dates": "May 2018 – Aug 2018"
+    "dates": "May 2018 – Aug 2018",
+    "skills": [
+      "Excel",
+      "Data analysis",
+      "Reporting"
+    ]
   }
 ]

@@ -83,6 +83,16 @@
       ]
     },
     {
+      "group": "Home lab and hardware",
+      "items": [
+        "Proxmox",
+        "Docker",
+        "Linux containers (LXC)",
+        "Tailscale",
+        "Raspberry Pi"
+      ]
+    },
+    {
       "group": "Also used",
       "items": [
         "Go",
@@ -111,5 +121,47 @@
       "text": "Before graduating I worked for the MIS department as a tutor for its Data-Centric Application Development course, helping students with SQL, PHP, HTML and CSS."
     }
   },
-  "email": "mojahedibrahim95@gmail.com"
+  "email": "mojahedibrahim95@gmail.com",
+  "skillAliases": {
+    "js": "JavaScript",
+    "ecmascript": "JavaScript",
+    "html5": "HTML",
+    "css3": "CSS",
+    "reactjs": "React",
+    "react.js": "React",
+    "spring": "Spring Boot",
+    "springboot": "Spring Boot",
+    "rest": "REST APIs",
+    "restful": "REST APIs",
+    "rest api": "REST APIs",
+    "plsql": "Oracle PL/SQL",
+    "pl/sql": "Oracle PL/SQL",
+    "oracle": "Oracle PL/SQL",
+    "etl": "CloverDX",
+    "golang": "Go",
+    "py": "Python",
+    "python3": "Python",
+    "rpi": "Raspberry Pi",
+    "raspi": "Raspberry Pi",
+    "pve": "Proxmox",
+    "proxmox ve": "Proxmox",
+    "docker compose": "Docker",
+    "docker-compose": "Docker",
+    "linux containers": "LXC",
+    "ubuntu": "Linux",
+    "debian": "Linux",
+    "github": "Git",
+    "ci/cd": "Concourse CI/CD",
+    "concourse": "Concourse CI/CD",
+    "spreadsheets": "Excel",
+    "pivottables": "Excel",
+    "pivot tables": "Excel",
+    "vlookup": "Excel",
+    "indexing": "Query and index tuning",
+    "query optimization": "Query and index tuning",
+    "performance tuning": "Query and index tuning",
+    "database design": "Schema design",
+    "self-hosted": "Self-hosting",
+    "homelab": "Self-hosting"
+  }
 }

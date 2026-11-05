@@ -16,6 +16,18 @@ function Phosphor() {
   );
 }
 
+// Other projects without a screenshot show what they're built with.
+function Stack({ project }) {
+  return (
+    <div className="phosphor" aria-label={`${project.header}: ${project.languages.join(", ")}`} role="img">
+      <span className="dim">&gt; {project.kind.toLowerCase()}</span>
+      {project.languages.map((l) => (
+        <span key={l}>{l}</span>
+      ))}
+    </div>
+  );
+}
+
 function Screen({ project }) {
   return (
     <div className="screen-content" key={project.header}>
@@ -26,8 +38,10 @@ function Screen({ project }) {
           width="800"
           height="600"
         />
-      ) : (
+      ) : project.header === "Telegram contact API" ? (
         <Phosphor />
+      ) : (
+        <Stack project={project} />
       )}
     </div>
   );
