@@ -7,23 +7,36 @@ import Experience from "./components/experience";
 import ContactMe from "./components/contactMe";
 import Footer from "./components/footer";
 import Palette from "./components/palette";
+import Skyline from "./components/skyline";
 import { SkillLogo } from "./components/logo";
 import { Close } from "./components/icons";
 import useReveal from "./hooks/useReveal";
 import { countLine, findSkill, logoFor, parseSql, resolveSkill } from "./skills";
 import { transition } from "./motion";
 
-// Shown at the bottom of the screen while a skill filter is on, so it is never a mystery.
+// While a skill filter is on and the search box has scrolled away, a pill under the nav
+// says what is filtering the page, with a way back to change it and a way out.
 function FilterBar({ skill, onReset }) {
-  if (!skill) return null;
+  const [away, setAway] = useState(false);
+  useEffect(() => {
+    const el = document.querySelector("#skills .finder-box");
+    if (!el || !("IntersectionObserver" in window)) return undefined;
+    const io = new IntersectionObserver(([e]) => setAway(!e.isIntersecting), { rootMargin: "-110px 0px 0px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  if (!skill || !away) return null;
   return (
     <div className="filterbar" role="status">
       <SkillLogo logo={logoFor(skill.name)} name={skill.name} size={16} />
-      <span>
+      <span className="filterbar-text">
         <b>{skill.name}</b>
         <span className="filterbar-n">{countLine(skill)}</span>
+        <span className="filterbar-short">
+          {skill.items.length} {skill.items.length === 1 ? "match" : "matches"}
+        </span>
       </span>
-      <a className="filterbar-see" href="#skills">Matches</a>
+      <a className="filterbar-see" href="#skills">Change</a>
       <button type="button" onClick={onReset} aria-label={`Stop filtering by ${skill.name}`}>
         <Close />
       </button>
@@ -81,6 +94,7 @@ function App() {
       <Nav onSearch={() => setPalette(true)} />
       <main id="main">
         <Hero onPick={pickAndShow} onSearch={() => setPalette(true)} />
+        <Skyline />
         <Finder skill={skill} query={query} onQuery={type} onPick={pick} />
         <Projects skill={skill} onPick={pick} />
         <Experience skill={skill} />

@@ -306,21 +306,13 @@ kbd {
   flex: none;
 }
 
+/* Fixed colours in both themes so the mark always matches the favicon and app icons. */
 .mark-tile {
-  fill: var(--signal);
+  fill: #ff7d5c;
 }
 
-.mark-m,
-.mark-i {
-  fill: none;
-  stroke: var(--signal-ink);
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.mark-dot {
-  fill: var(--signal-ink);
+.mark-px {
+  fill: #15151a;
 }
 
 .slogo {
@@ -3324,6 +3316,412 @@ kbd {
   }
 
   .js .tape-scroll:not(.is-in) .tspan {
+    transform: none;
+  }
+}
+
+/* ---------- Philadelphia skyline band ----------
+   Five parallax layers drawn in SVG (components/skyline.jsx). The band sits between
+   the dashboard and the skill finder; the finder panel docks on its waterline. */
+:root,
+[data-theme="dark"] {
+  --sky-2: #12131d;
+  --sky-3: #1c1b2b;
+  --sky-glow: rgb(255 125 92 / 0.14);
+  --sk-star: #e4e7ff;
+  --sk-moon: #f1ecdf;
+  --sk-far: #1c1d2a;
+  --sk-mid: #15161f;
+  --sk-near: #0f1017;
+  --sk-mark: #0b0c12;
+  --sk-hall: #111219;
+  --sk-dark: #20212f;
+  --sk-warm: #ffd9a8;
+  --sk-ice: #c9d0ff;
+  --sk-lantern: #a9b6ff;
+  --sk-beacon: #ff7d5c;
+  --sk-water: #0d0e12;
+  --sk-bridge: #22232f;
+  --sk-cable: #3d3f54;
+  --sk-bulb: #eceeff;
+  --sk-house: #ffe1b5;
+  --gold: #ffd166;
+}
+
+[data-theme="light"] {
+  --sky-2: #dcdee9;
+  --sky-3: #efe4dd;
+  --sky-glow: rgb(255 140 110 / 0.2);
+  --sk-star: transparent;
+  --sk-moon: #ffffff;
+  --sk-far: #cdd0dd;
+  --sk-mid: #afb3c7;
+  --sk-near: #9095ac;
+  --sk-mark: #6d728d;
+  --sk-hall: #7a7f99;
+  --sk-dark: rgb(255 255 255 / 0.18);
+  --sk-warm: rgb(255 255 255 / 0.75);
+  --sk-ice: rgb(236 238 255 / 0.85);
+  --sk-lantern: #eef0ff;
+  --sk-beacon: #c43d1f;
+  --sk-water: #f2f1ee;
+  --sk-bridge: #6d728d;
+  --sk-cable: #6d728d;
+  --sk-bulb: #ffffff;
+  --sk-house: #ffffff;
+  --gold: #e0a63a;
+}
+
+:root {
+  --nav-h: 64px;
+  --sky-h: clamp(220px, 26.5vw, 400px);
+}
+
+html {
+  scroll-padding-top: calc(var(--nav-h) + 20px);
+}
+
+.skyline {
+  --sy: 0;
+  --px: 0;
+  position: relative;
+  height: var(--sky-h);
+  margin-top: 8px;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 42% at 56% 90%, var(--sky-glow), transparent 70%),
+    linear-gradient(to bottom, var(--bg), var(--sky-2) 34%, var(--sky-3) 84%, var(--sk-water) 91%);
+}
+
+/* The water fades into the page so the finder can dock on it. */
+.skyline::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 7%;
+  background: linear-gradient(transparent, var(--bg));
+}
+
+.sk-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: translate3d(calc(var(--px) * var(--drift) * -1px), calc(var(--sy) * var(--depth) * 1px), 0);
+  will-change: transform;
+}
+
+.sk-star { fill: var(--sk-star); }
+.sk-plane rect { fill: var(--sk-cable); }
+.sk-plane-light { fill: var(--sk-beacon); }
+.sk-far path { fill: var(--sk-far); }
+.sk-mid-body { fill: var(--sk-mid); }
+.sk-near-body { fill: var(--sk-near); }
+.sk-mark { fill: var(--sk-mark); }
+.sk-hall { fill: var(--sk-hall); }
+.sk-lantern { fill: var(--sk-lantern); opacity: 0.5; }
+.sk-win-dark { fill: var(--sk-dark); transition: fill 0.6s var(--ease); }
+.sk-mid-dark { opacity: 0.5; }
+.sk-win { fill: var(--sk-warm); }
+.sk-mid-lit { opacity: 0.55; }
+.sk-glass-lit { fill: var(--sk-ice); }
+.sk-clock { fill: var(--sk-warm); }
+.sk-beacon { fill: var(--sk-beacon); }
+.sk-water { fill: var(--sk-water); }
+.sk-reflect rect { fill: var(--sk-warm); opacity: 0.2; }
+.sk-bridge { fill: var(--sk-bridge); }
+.sk-cable { fill: none; stroke: var(--sk-cable); stroke-width: 1.4; }
+.sk-bulb { fill: var(--sk-bulb); opacity: 0.85; transition: fill 0.4s var(--ease); }
+.sk-house { fill: none; stroke: var(--sk-house); stroke-width: 1.6; stroke-dasharray: 1.6 2.2; }
+
+[data-theme="light"] .sk-house,
+[data-theme="light"] .sk-bulb {
+  opacity: 0.7;
+}
+
+/* A crescent: the shadow is the moon, the box is the dark side. In light mode it is a pale sun. */
+.sk-moon {
+  position: absolute;
+  top: 14%;
+  right: 17%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: inset -10px 7px 0 0 var(--sk-moon);
+  transform: rotate(-12deg);
+}
+
+[data-theme="light"] .sk-moon {
+  width: 52px;
+  height: 52px;
+  background: #fff6ef;
+  box-shadow: 0 0 0 10px rgb(255 255 255 / 0.3);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sk-star {
+    animation: twinkle 4.5s ease-in-out infinite;
+    animation-delay: calc(var(--g) * -1.5s);
+  }
+
+  .sk-win {
+    animation: window-flicker 9s steps(1) infinite;
+    animation-delay: calc(var(--g) * -2.3s);
+  }
+
+  .sk-beacon {
+    animation: beacon 2.4s ease-in-out infinite;
+    animation-delay: calc(var(--i) * -0.55s);
+  }
+
+  .sk-bulb {
+    animation: bulb-chase 3.2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.11s);
+  }
+
+  .sk-reflect rect {
+    animation: shimmer 3.6s ease-in-out infinite;
+    animation-delay: calc(var(--i) * -0.37s);
+  }
+
+  .sk-plane {
+    animation: fly 46s linear infinite;
+    animation-delay: -12s;
+  }
+
+  .sk-plane-light {
+    animation: beacon 1.2s steps(1) infinite;
+  }
+
+  .skyline.is-cheat .sk-fireworks span {
+    animation: firework 1.6s steps(6) 3;
+    animation-delay: calc(var(--i) * 0.27s);
+  }
+
+  .skyline.is-cheat .sk-bulb {
+    animation-duration: 0.9s;
+  }
+}
+
+@keyframes twinkle {
+  50% { opacity: 0.25; }
+}
+
+@keyframes window-flicker {
+  0%, 100% { opacity: 1; }
+  31% { opacity: 0.35; }
+  37% { opacity: 1; }
+  72% { opacity: 0.6; }
+}
+
+@keyframes beacon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+
+@keyframes bulb-chase {
+  0%, 100% { opacity: 0.35; }
+  15% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.08; transform: translateX(0); }
+  50% { opacity: 0.24; transform: translateX(2px); }
+}
+
+@keyframes fly {
+  from { transform: translate(-60px, 110px); }
+  to { transform: translate(1680px, 50px); }
+}
+
+/* Konami: every window on, the bridge lights go coral, fireworks over the city. */
+.skyline.is-cheat .sk-win-dark { fill: var(--sk-warm); }
+.skyline.is-cheat .sk-bulb { fill: var(--signal); }
+
+.sk-fireworks {
+  position: absolute;
+  inset: 0;
+}
+
+.sk-fireworks span {
+  position: absolute;
+  top: calc(14% + var(--i) * 6%);
+  left: calc(14% + var(--i) * 17%);
+  width: 6px;
+  height: 6px;
+  opacity: 0;
+  color: var(--signal);
+  background: currentColor;
+  box-shadow:
+    0 -28px currentColor, 0 28px currentColor, 28px 0 currentColor, -28px 0 currentColor,
+    20px 20px currentColor, -20px 20px currentColor, 20px -20px currentColor, -20px -20px currentColor;
+}
+
+.sk-fireworks span:nth-child(even) { color: var(--data); }
+.sk-fireworks span:nth-child(3n) { color: var(--gold); }
+
+/* Reduced motion still gets the payoff, just without the bursts. */
+@media (prefers-reduced-motion: reduce) {
+  .skyline.is-cheat .sk-fireworks span {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes firework {
+  0% { opacity: 1; transform: scale(0.1); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+.finder {
+  position: relative;
+  z-index: 1;
+  margin-top: -6px;
+  padding-top: 0;
+}
+
+/* ---------- pixel sprites ---------- */
+.pix {
+  display: block;
+  image-rendering: pixelated;
+}
+
+.px-k { fill: #1a1c2c; }
+.px-s { fill: #e2a77e; }
+.px-w { fill: #f1efe9; }
+.px-n { fill: #3a4789; }
+.px-d { fill: #283266; }
+.px-r { fill: #ff7d5c; }
+
+/* ---------- the walker on the tape ---------- */
+.tape-track {
+  position: relative;
+  /* the walker layer is translated; clip it so it never widens the scroller */
+  overflow-x: clip;
+}
+
+.tape-spans {
+  height: 244px;
+}
+
+.tspan {
+  bottom: calc(64px + var(--lane) * 44px);
+}
+
+.walker {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translateX(calc(var(--x) * 1%));
+  transition: transform var(--dur, 0ms) cubic-bezier(0.45, 0.05, 0.3, 1);
+}
+
+.walker-sprite {
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+  transform: translateX(-50%);
+}
+
+.walker-sprite[data-facing="left"] .pix {
+  transform: scaleX(-1);
+}
+
+/* ---------- filter pill, under the nav ---------- */
+.filterbar {
+  top: calc(var(--nav-h) + 10px);
+  bottom: auto;
+  animation-name: drop;
+}
+
+.filterbar-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -14px);
+  }
+}
+
+.groups-untagged {
+  margin-top: 22px;
+  color: var(--ink-3);
+  font-size: 0.86rem;
+}
+
+.palette-row[aria-disabled="true"] {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* ---------- phones and tablets: a visible row of section links ---------- */
+@media (max-width: 900px) {
+  :root {
+    --nav-h: 104px;
+  }
+
+  .nav {
+    padding-block: 10px 4px;
+  }
+
+  .nav-inner {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .nav-links {
+    display: flex;
+    order: 3;
+    width: calc(100% + 20px);
+    margin: 0 -10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-links a {
+    flex: none;
+    padding: 8px;
+    font-size: 0.86rem;
+    white-space: nowrap;
+  }
+}
+
+.filterbar-short {
+  display: none;
+  color: var(--ink-2);
+}
+
+@media (max-width: 640px) {
+  .filterbar-see {
+    display: inline;
+  }
+
+  .filterbar-n {
+    display: none;
+  }
+
+  .filterbar-short {
+    display: inline;
+  }
+
+  .sk-moon {
+    top: 10%;
+    right: 6%;
+    width: 30px;
+    height: 30px;
+    box-shadow: inset -8px 5px 0 0 var(--sk-moon);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-layer {
     transform: none;
   }
 }

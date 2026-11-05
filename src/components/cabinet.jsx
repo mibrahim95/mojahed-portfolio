@@ -1,10 +1,26 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { reducedMotion } from "../motion";
+import { CHEAT, SKIP_KEYS, reducedMotion } from "../motion";
 
 // Up, up, down, down, left, right, left, right, B, A. Works from the keyboard
 // anywhere on the page, or from the cabinet's own D-pad and buttons.
 const CODE = ["up", "up", "down", "down", "left", "right", "left", "right", "b", "a"];
 const KEYS = { ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right", b: "b", a: "a", B: "b", A: "a" };
+
+// The pad's up and down walk the whole page, one section at a time.
+const SECTIONS = ["top", "skills", "projects", "experience", "contact"];
+function jump(dir) {
+  const line = window.innerHeight * 0.35;
+  let at = 0;
+  SECTIONS.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= line) at = i;
+  });
+  const next = SECTIONS[Math.min(SECTIONS.length - 1, Math.max(0, at + dir))];
+  document.getElementById(next)?.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+}
+
+// True when the latest presses could still be the start of the code, so the pad waits before scrolling away.
+const midCode = (seq) => seq.some((_, i) => seq.slice(i).every((k, j) => k === CODE[j]));
 
 // 8x8 pixel sprites for the two projects without a screenshot.
 const SPRITES = {
@@ -34,10 +50,10 @@ function PixelShot({ src }) {
 
 function Dpad({ press }) {
   const dirs = [
-    ["up", "Up", "M3 0h1v1h1v1h1v1h-5v-1h1v-1h1z"],
-    ["left", "Left", "M0 3v1h1v1h1v1h1v-5h-1v1h-1v1z"],
-    ["right", "Right", "M6 3v1h-1v1h-1v1h-1v-5h1v1h1v1z"],
-    ["down", "Down", "M3 6h1v-1h1v-1h1v-1h-5v1h1v1h1z"],
+    ["up", "Up: previous section", "M3 0h1v1h1v1h1v1h-5v-1h1v-1h1z"],
+    ["left", "Left: previous project", "M0 3v1h1v1h1v1h1v-5h-1v1h-1v1z"],
+    ["right", "Right: next project", "M6 3v1h-1v1h-1v1h-1v-5h1v1h1v1z"],
+    ["down", "Down: next section", "M3 6h1v-1h1v-1h1v-1h-5v1h1v1h1z"],
   ];
   return (
     <div className="dpad" role="group" aria-label="D-pad">
@@ -58,14 +74,23 @@ function Cabinet({ list, index, onMove, onOpen }) {
   const [info, setInfo] = useState(false);
   const [blip, setBlip] = useState(0);
   const seq = useRef([]);
+  const pending = useRef(0);
+  const root = useRef(null);
+  const move = useRef(onMove);
   const p = list[index];
+
+  useEffect(() => {
+    move.current = onMove;
+  });
 
   // Returns true when this press completed the code.
   const feed = useCallback((key) => {
     seq.current = [...seq.current, key].slice(-CODE.length);
     if (seq.current.join() === CODE.join()) {
       seq.current = [];
+      clearTimeout(pending.current);
       setCheat(true);
+      window.dispatchEvent(new Event(CHEAT));
       return true;
     }
     return false;
@@ -75,9 +100,20 @@ function Cabinet({ list, index, onMove, onOpen }) {
     const onKey = (e) => {
       if (e.target.closest?.("input, textarea, select, dialog, [contenteditable]")) return;
       if (KEYS[e.key]) feed(KEYS[e.key]);
+      // Left and right page through the cabinet while Projects holds the middle of the screen.
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.target.closest?.(SKIP_KEYS)) return;
+      const r = root.current?.closest("section")?.getBoundingClientRect();
+      const midY = window.innerHeight / 2;
+      if (!r || r.top > midY || r.bottom < midY) return;
+      e.preventDefault();
+      move.current(e.key === "ArrowLeft" ? -1 : 1);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      clearTimeout(pending.current);
+    };
   }, [feed]);
 
   useEffect(() => {
@@ -89,13 +125,19 @@ function Cabinet({ list, index, onMove, onOpen }) {
   const press = (key) => {
     if (feed(key)) return;
     setBlip((b) => b + 1);
+    clearTimeout(pending.current);
     if (key === "a") onOpen();
     else if (key === "b") setInfo((v) => !v);
-    else onMove(key === "left" || key === "up" ? -1 : 1);
+    else if (key === "left" || key === "right") onMove(key === "left" ? -1 : 1);
+    else {
+      const dir = key === "up" ? -1 : 1;
+      if (midCode(seq.current)) pending.current = setTimeout(() => jump(dir), 700);
+      else jump(dir);
+    }
   };
 
   return (
-    <aside className={`cabinet${cheat ? " is-cheat" : ""}`} aria-labelledby="cab-title" data-reveal>
+    <aside className={`cabinet${cheat ? " is-cheat" : ""}`} aria-labelledby="cab-title" data-reveal ref={root}>
       <div className="cab-marquee">
         <h3 id="cab-title" className="px">
           Play mode
@@ -149,7 +191,8 @@ function Cabinet({ list, index, onMove, onOpen }) {
         </div>
       </div>
       <p className="cab-help">
-        Browse with the D-pad, <b>A</b> opens, <b>B</b> shows details. Old cheat codes still work.
+        Left and right browse, up and down move through the page, <b>A</b> opens, <b>B</b> shows details. Your arrow
+        keys work too, and so do old cheat codes.
       </p>
     </aside>
   );

@@ -1,12 +1,13 @@
-// "mi": an M drawn as one stroke, like a line on a chart, and an i whose dot is
-// the last data point. Same drawing as public/favicon.svg; keep the two in step.
+// The mark: "MI" in chunky pixel strokes on a coral tile, like a player-one
+// button. Same drawing as public/favicon.svg and the PNG app icons; keep them in step.
+const MARK_PIXELS =
+  "M2 4h2v8h-2zM4 5h1v2h-1zM5 6h1v2h-1zM6 5h1v2h-1zM7 4h2v8h-2zM10 4h4v1h-4zM11 5h2v6h-2zM10 11h4v1h-4z";
+
 export function Mark({ size = 30 }) {
   return (
-    <svg className="mark" width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <rect className="mark-tile" width="32" height="32" rx="9" />
-      <path className="mark-m" d="M7.5 22.5V11l5.75 7.25L19 11v11.5" />
-      <path className="mark-i" d="M24.5 16.5v6" />
-      <circle className="mark-dot" cx="24.5" cy="11.25" r="2.1" />
+    <svg className="mark" width={size} height={size} viewBox="0 0 16 16" aria-hidden="true" focusable="false" shapeRendering="crispEdges">
+      <rect className="mark-tile" width="16" height="16" rx="3.5" />
+      <path className="mark-px" d={MARK_PIXELS} />
     </svg>
   );
 }

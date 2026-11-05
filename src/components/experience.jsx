@@ -5,14 +5,61 @@ import { RESUME, external } from "../sections";
 import { dash, logoFor } from "../skills";
 import { NOW, range, scale, tenure, toMonth, SHORT } from "../timeline";
 import { SkillLogo } from "./logo";
+import { Pix } from "./pixel";
+import { HERO_IDLE, HERO_IDLE_2, HERO_WALK_A, HERO_WALK_B } from "../sprites";
+import { SKIP_KEYS, reducedMotion } from "../motion";
 
 const s = scale(2016);
 const edu = about.education;
 // Turn 14 and Comcast run back to back on one line; the internship and tutoring job overlapped, so each gets its own.
 const LANE = { temple: 2, "5b": 3 };
+// Oldest first, for the arrow keys.
+const ORDER = experiences.slice().sort((a, b) => range(a.dates)[0] - range(b.dates)[0]).map((j) => j.id);
+const mid = (j) => {
+  const [a, b] = range(j.dates);
+  return s.at(a) + (s.at(b) - s.at(a)) / 2;
+};
+const SPOT = Object.fromEntries(experiences.map((j) => [j.id, mid(j)]));
+
+// The page's pixel me, walking along the top of the tape to whichever job is selected.
+function Walker({ to }) {
+  const [from, setFrom] = useState(to);
+  const [facing, setFacing] = useState("right");
+  const [walk, setWalk] = useState(0);
+  const [frame, setFrame] = useState(0);
+
+  // A new target: turn to face it and walk for a time that matches the distance.
+  if (from !== to) {
+    const dx = SPOT[to] - SPOT[from];
+    setFrom(to);
+    setFacing(dx < 0 ? "left" : "right");
+    setWalk(reducedMotion() ? 0 : Math.round(Math.min(1400, Math.max(380, Math.abs(dx) * 22))));
+  }
+
+  useEffect(() => {
+    if (!walk) return undefined;
+    const t = setTimeout(() => setWalk(0), walk);
+    return () => clearTimeout(t);
+  }, [walk, from]);
+
+  useEffect(() => {
+    if (reducedMotion()) return undefined;
+    const t = setInterval(() => setFrame((f) => f + 1), walk ? 140 : 560);
+    return () => clearInterval(t);
+  }, [walk]);
+
+  const rows = walk ? (frame % 2 ? HERO_WALK_B : HERO_WALK_A) : frame % 2 ? HERO_IDLE_2 : HERO_IDLE;
+  return (
+    <div className="walker" style={{ "--x": SPOT[to], "--dur": `${walk}ms` }} aria-hidden="true">
+      <span className="walker-sprite" data-facing={facing}>
+        <Pix rows={rows} scale={3} />
+      </span>
+    </div>
+  );
+}
 
 // A tape measure pulled out from 2016 to today. One tick per month, a numeral per year.
-function Tape({ hover, setHover, isLit }) {
+function Tape({ sel, setSel, isLit }) {
   const grad = toMonth(edu.graduated);
   const ref = useRef(null);
   // On narrow screens the tape scrolls; start at today, the end that matters most.
@@ -22,31 +69,33 @@ function Tape({ hover, setHover, isLit }) {
   return (
     <div className="tape-scroll" data-reveal ref={ref}>
       <div className="tape-area">
-        <div className="tape-spans" role="list" aria-label="Timeline of school and work">
-          <div className={`tspan tspan-school${isLit("education") ? "" : " is-dim"}`} role="listitem" style={{ "--l": "0%", "--w": `${s.at(grad)}%`, "--lane": 0 }}>
-            <a href="#education">
-              {edu.school}, {edu.short} {edu.major}, to {edu.year}
-              <span className="visually-hidden">, graduated {edu.graduated}</span>
-            </a>
+        <div className="tape-track">
+          <div className="tape-spans" role="list" aria-label="Timeline of school and work">
+            <div className={`tspan tspan-school${isLit("education") ? "" : " is-dim"}`} role="listitem" style={{ "--l": "0%", "--w": `${s.at(grad)}%`, "--lane": 0 }}>
+              <a href="#education">
+                {edu.school}, {edu.short} {edu.major}, to {edu.year}
+                <span className="visually-hidden">, graduated {edu.graduated}</span>
+              </a>
+            </div>
+            {experiences.map((j) => {
+              const [a, b] = range(j.dates);
+              return (
+                <div
+                  key={j.id}
+                  role="listitem"
+                  className={`tspan tspan-${j.id}${sel === j.id ? " is-hover" : ""}${isLit(`job-${j.id}`) ? "" : " is-dim"}`}
+                  style={{ "--l": `${s.at(a)}%`, "--w": `${s.at(b) - s.at(a)}%`, "--lane": LANE[j.id] || 1 }}
+                  onMouseEnter={() => setSel(j.id)}
+                >
+                  <a href={`#job-${j.id}`} onFocus={() => setSel(j.id)}>
+                    {SHORT[j.id]}
+                    <span className="visually-hidden">: {j.position}, {dash(j.dates)}</span>
+                  </a>
+                </div>
+              );
+            })}
           </div>
-          {experiences.map((j) => {
-            const [a, b] = range(j.dates);
-            return (
-              <div
-                key={j.id}
-                role="listitem"
-                className={`tspan tspan-${j.id}${hover === j.id ? " is-hover" : ""}${isLit(`job-${j.id}`) ? "" : " is-dim"}`}
-                style={{ "--l": `${s.at(a)}%`, "--w": `${s.at(b) - s.at(a)}%`, "--lane": LANE[j.id] || 1 }}
-                onMouseEnter={() => setHover(j.id)}
-                onMouseLeave={() => setHover(null)}
-              >
-                <a href={`#job-${j.id}`}>
-                  {SHORT[j.id]}
-                  <span className="visually-hidden">: {j.position}, {dash(j.dates)}</span>
-                </a>
-              </div>
-            );
-          })}
+          <Walker to={sel} />
         </div>
         <div className="tape" aria-hidden="true">
           <span className="tape-case">
@@ -70,7 +119,7 @@ function Tape({ hover, setHover, isLit }) {
 
 const FIRST = 3;
 
-function Job({ job, skill, lit, setHover }) {
+function Job({ job, skill, lit, setSel }) {
   const [open, setOpen] = useState(false);
   const folded = skill && !lit;
   const extra = job.bullets.length - FIRST;
@@ -81,10 +130,8 @@ function Job({ job, skill, lit, setHover }) {
       className={`job${folded ? " is-folded" : ""}${skill && lit ? " is-match" : ""}`}
       id={`job-${job.id}`}
       data-reveal
-      onMouseEnter={() => setHover(job.id)}
-      onMouseLeave={() => setHover(null)}
-      onFocus={() => setHover(job.id)}
-      onBlur={() => setHover(null)}
+      onMouseEnter={() => setSel(job.id)}
+      onFocus={() => setSel(job.id)}
     >
       <div className="job-when">
         <p>{dash(job.dates)}</p>
@@ -130,11 +177,28 @@ function Job({ job, skill, lit, setHover }) {
 }
 
 function Experience({ skill }) {
-  const [hover, setHover] = useState(null);
+  const [sel, setSel] = useState(ORDER.at(-1));
+  const root = useRef(null);
+
+  // Left and right walk the timeline while this section holds the middle of the screen.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.target.closest?.(SKIP_KEYS)) return;
+      const r = root.current.getBoundingClientRect();
+      const midY = window.innerHeight / 2;
+      if (r.top > midY || r.bottom < midY) return;
+      e.preventDefault();
+      setSel((id) => ORDER[Math.min(ORDER.length - 1, Math.max(0, ORDER.indexOf(id) + (e.key === "ArrowRight" ? 1 : -1)))]);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const isLit = (key) => !skill || skill.items.some((i) => i.key === key);
   const lit = experiences.filter((j) => isLit(`job-${j.id}`)).length;
   return (
-    <section className="experience" id="experience" aria-labelledby="experience-title">
+    <section className="experience" id="experience" aria-labelledby="experience-title" ref={root}>
       <div className="wrap">
         <div className="section-head" data-reveal>
           <h2 id="experience-title">Experience</h2>
@@ -152,11 +216,11 @@ function Experience({ skill }) {
           )}
         </div>
 
-        <Tape hover={hover} setHover={setHover} isLit={isLit} />
+        <Tape sel={sel} setSel={setSel} isLit={isLit} />
 
         <ol className="jobs">
           {experiences.map((j) => (
-            <Job key={j.id} job={j} skill={skill} lit={isLit(`job-${j.id}`)} setHover={setHover} />
+            <Job key={j.id} job={j} skill={skill} lit={isLit(`job-${j.id}`)} setSel={setSel} />
           ))}
         </ol>
       </div>

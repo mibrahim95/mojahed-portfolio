@@ -91,6 +91,10 @@ function Results({ skill, query, onPick }) {
   return null;
 }
 
+// Skills on the résumé that nothing on this page is tagged with get a plain mention, not a chip that finds nothing.
+const resumeOnly = (names) => names.filter((n) => !findSkill(n)?.items.length);
+const UNTAGGED = resumeOnly(GROUPS.flatMap((g) => g.items));
+
 function Finder({ skill, query, onQuery, onPick }) {
   const [more, setMore] = useState(false);
   const status = skill
@@ -138,17 +142,22 @@ function Finder({ skill, query, onQuery, onPick }) {
           <Results skill={skill} query={query} onPick={onPick} />
 
           <div className="groups">
-            {GROUPS.filter((g) => more || !g.more).map((g) => (
+            {GROUPS.filter((g) => (more || !g.more) && g.items.length > resumeOnly(g.items).length).map((g) => (
               <div className="group" key={g.group}>
                 <h3>{g.group}</h3>
                 <div className="chips">
-                  {g.items.map((n) => (
+                  {g.items.filter((n) => !UNTAGGED.includes(n)).map((n) => (
                     <SkillChip key={n} name={n} active={skill?.name === n} onPick={onPick} />
                   ))}
                 </div>
               </div>
             ))}
           </div>
+          {UNTAGGED.length > 0 && (
+            <p className="groups-untagged">
+              Also on my résumé, with no project or job here to show for it yet: {UNTAGGED.join(", ")}.
+            </p>
+          )}
           <button type="button" className="link-btn groups-more" aria-expanded={more} onClick={() => setMore((m) => !m)}>
             {more ? "Fewer skills" : `${GROUPS.at(-1).items.length} more skills from my projects`}
           </button>
