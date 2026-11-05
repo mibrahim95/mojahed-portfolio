@@ -11,7 +11,8 @@ const CONTACT_ENDPOINT = "/.netlify/functions/contact";
 // Public, display-only: picks the live preview. "telegram" | "slack" | "email" (no preview).
 // It must match the server's CONTACT_PROVIDER; it holds no secret.
 const PREVIEW = (import.meta.env.REACT_APP_CONTACT_PROVIDER || "email").toLowerCase();
-const HAS_PREVIEW = PREVIEW === "telegram" || PREVIEW === "slack";
+// With no chat provider the preview shows a neutral inbox notification instead.
+const PREVIEW_LOOK = PREVIEW === "telegram" || PREVIEW === "slack" ? PREVIEW : "inbox";
 
 // Same limits the contact function applies: name 3–99 characters, message
 // under 250 characters, a valid email.
@@ -233,20 +234,18 @@ function ContactMe() {
         </div>
 
         <div className="contact-side">
-          {HAS_PREVIEW && (
-            <figure className="phone" data-reveal style={{ "--i": 2 }}>
-              <div className="phone-screen">
-                <Chat
-                  provider={PREVIEW}
-                  name={form.fullName.trim()}
-                  email={form.email.trim()}
-                  msg={form.msg.trim()}
-                  typing={typing % 2 === 1}
-                />
-              </div>
-              <figcaption>Live preview: the exact message I get, as you type.</figcaption>
-            </figure>
-          )}
+          <figure className="phone" data-reveal style={{ "--i": 2 }}>
+            <div className="phone-screen">
+              <Chat
+                provider={PREVIEW_LOOK}
+                name={form.fullName.trim()}
+                email={form.email.trim()}
+                msg={form.msg.trim()}
+                typing={typing % 2 === 1}
+              />
+            </div>
+            <figcaption>Live preview: the message as it reaches me, while you type.</figcaption>
+          </figure>
           <aside className="contact-alt" data-reveal style={{ "--i": 3 }} aria-labelledby="contact-alt-title">
             <h3 id="contact-alt-title">Or reach me directly</h3>
             <ul>

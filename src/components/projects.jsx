@@ -1,177 +1,257 @@
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import projects from "../json/projects.json";
 import { external } from "../sections";
-import { ChevronLeft, ChevronRight } from "./icons";
+import { logoFor, slug } from "../skills";
+import { OPEN_PROJECT, transition } from "../motion";
+import { ArrowUpRight, ChevronLeft, ChevronRight, Close } from "./icons";
+import { SkillLogo } from "./logo";
+import { ProjectMedia } from "./media";
+import Cabinet from "./cabinet";
 
-// The Telegram API has no screenshot, so the screen shows what it outputs.
-function Phosphor() {
-  return (
-    <div className="phosphor" aria-label="Example of a message the API delivers to Telegram" role="img">
-      <span className="dim">&gt; POST /sendMessage</span>
-      <span>Name: Jane Doe</span>
-      <span>Email: jane@example.com</span>
-      <span>Message: Hi Mojahed, can we talk about a role?</span>
-      <span className="dim">&gt; validated · forwarded to Telegram</span>
-    </div>
-  );
-}
+const CATEGORY = {
+  "Turn 14 Distribution": "work",
+  "Telegram contact API": "web",
+  "Cousin's Supermarket inventory": "web",
+  "Video game maintenance list": "web",
+  "This portfolio": "web",
+  "Heartbeat Frame": "hardware",
+  Homelab: "hardware",
+  "Arcade1Up RetroPie mod": "hardware",
+};
+const FILTERS = [
+  ["all", "All"],
+  ["work", "Day job"],
+  ["web", "Web and APIs"],
+  ["hardware", "Hardware and home lab"],
+];
+const ALL = projects.map((p) => ({ ...p, key: `p-${slug(p.header)}`, cat: CATEGORY[p.header] || "web" }));
 
-// Other projects without a screenshot show what they're built with.
-function Stack({ project }) {
-  return (
-    <div className="phosphor" aria-label={`${project.header}: ${project.languages.join(", ")}`} role="img">
-      <span className="dim">&gt; {project.kind.toLowerCase()}</span>
-      {project.languages.map((l) => (
-        <span key={l}>{l}</span>
-      ))}
-    </div>
-  );
-}
+const media = (key) => document.getElementById(key)?.querySelector(".card-media");
 
-function Screen({ project }) {
-  return (
-    <div className="screen-content" key={project.header}>
-      {project.imgPath ? (
-        <img
-          src={project.imgPath}
-          alt={`Screenshot of ${project.header}`}
-          width="800"
-          height="600"
-        />
-      ) : project.header === "Telegram contact API" ? (
-        <Phosphor />
-      ) : (
-        <Stack project={project} />
-      )}
-    </div>
-  );
-}
+function Detail({ project, onClose, onStep }) {
+  const ref = useRef(null);
 
-function Projects() {
-  const [active, setActive] = useState(0);
-  const tabs = useRef([]);
-  const project = projects[active];
-  const count = projects.length;
-
-  const select = (i, focus = false) => {
-    const next = (i + count) % count;
-    setActive(next);
-    if (focus) tabs.current[next]?.focus();
-  };
-
-  const onKeyDown = (e) => {
-    const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
-    if (e.key in keys) {
-      e.preventDefault();
-      select(active + keys[e.key], true);
-    } else if (e.key === "Home") {
-      e.preventDefault();
-      select(0, true);
-    } else if (e.key === "End") {
-      e.preventDefault();
-      select(count - 1, true);
-    }
-  };
+  // Runs inside the transition's flushSync, so the dialog is open before the new frame is captured.
+  useLayoutEffect(() => {
+    const d = ref.current;
+    if (project && !d.open) d.showModal();
+    if (!project && d.open) d.close();
+  }, [project]);
 
   return (
-    <section className="arcade" id="projects" aria-labelledby="projects-title">
-      <div className="wrap">
-        <div className="arcade-head" data-reveal>
-          <div>
-            <p className="arcade-kicker" aria-hidden="true">
-              <span className="p1">1UP</span>
-              <span className="hi">{count} PROJECTS</span>
-            </p>
-            <h2 id="projects-title">Select a project</h2>
+    <dialog
+      ref={ref}
+      className="detail"
+      aria-labelledby="detail-title"
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowRight") onStep(1);
+        if (e.key === "ArrowLeft") onStep(-1);
+      }}
+    >
+      {project && (
+        <article className="detail-box">
+          <div className="detail-media">
+            <ProjectMedia project={project} />
           </div>
-          <div>
-            <p className="arcade-intro">
-              Production work from Turn&nbsp;14, plus the side projects I build
-              for myself and for friends. Pick one, or use the arrow keys.
+          <div className="detail-body">
+            <p className="detail-kind">
+              {project.kind} · {project.year}
             </p>
-            <p className="press-start" aria-hidden="true">PRESS ◀ ▶ TO SELECT</p>
-          </div>
-        </div>
-
-        <div className="arcade-stage" data-reveal style={{ "--i": 1 }}>
-          <div className="cabinet">
-            <div className="cabinet-marquee" aria-hidden="true">
-              <span>{project.header}</span>
-              <span>{project.year}</span>
-            </div>
-            <div className="screen" id="project-panel" role="tabpanel" aria-labelledby={`cart-${active}`}>
-              <Screen project={project} />
-            </div>
-            <div className="cabinet-controls">
-              <div className="joystick">
-                <button type="button" className="joy-btn" onClick={() => select(active - 1)} aria-label="Previous project">
-                  <ChevronLeft />
-                </button>
-                <button type="button" className="joy-btn cyan" onClick={() => select(active + 1)} aria-label="Next project">
-                  <ChevronRight />
-                </button>
-              </div>
-              <span className="coin-slot" aria-hidden="true">
-                {active + 1} / {count}
-              </span>
-            </div>
-          </div>
-
-          <div className="panel" aria-live="polite">
-            <p className="panel-level">
-              <span>{project.year === "Personal" ? "BONUS LEVEL" : `LEVEL ${project.year}`}</span>
-              <span className="kind">{project.kind.toUpperCase()}</span>
-            </p>
-            <h3>{project.header}</h3>
-            <p className="panel-desc">{project.desc}</p>
-            <ul className="powerups" aria-label="Built with">
-              {project.languages.map((l) => (
-                <li key={l}>{l}</li>
+            <h3 id="detail-title">{project.header}</h3>
+            <p className="detail-desc">{project.desc}</p>
+            <h4>Built with</h4>
+            <ul className="detail-stack">
+              {project.skills.map((s) => (
+                <li key={s}>
+                  <SkillLogo logo={logoFor(s)} name={s} size={15} />
+                  {s}
+                </li>
               ))}
             </ul>
-            {(project.url || project.github) && (
-              <div className="panel-actions">
-                {project.url && (
-                  <a className="pixel-btn" href={project.url} {...external}>
-                    ▶ VISIT SITE<span className="visually-hidden">: {project.header}</span>
-                  </a>
-                )}
-                {project.github && (
-                  <a className="pixel-btn alt" href={project.github} {...external}>
-                    VIEW CODE<span className="visually-hidden">: {project.header}</span>
-                  </a>
-                )}
-              </div>
-            )}
+            <div className="detail-actions">
+              {project.url && (
+                <a className="btn btn-primary btn-sm" href={project.url} {...external}>
+                  Visit site <ArrowUpRight />
+                </a>
+              )}
+              {project.github && (
+                <a className="btn btn-ghost btn-sm" href={project.github} {...external}>
+                  View code <ArrowUpRight />
+                </a>
+              )}
+            </div>
           </div>
+          <div className="detail-nav">
+            <button type="button" className="icon-btn" onClick={() => onStep(-1)} aria-label="Previous project">
+              <ChevronLeft />
+            </button>
+            <button type="button" className="icon-btn" onClick={() => onStep(1)} aria-label="Next project">
+              <ChevronRight />
+            </button>
+            <button type="button" className="icon-btn" onClick={onClose} aria-label="Close" autoFocus>
+              <Close />
+            </button>
+          </div>
+        </article>
+      )}
+    </dialog>
+  );
+}
+
+function Card({ p, folded, matched, selected, onOpen }) {
+  return (
+    <li
+      id={p.key}
+      className={`card${folded ? " is-folded" : ""}${matched ? " is-match" : ""}${selected ? " is-selected" : ""}`}
+      style={{ viewTransitionName: `card-${p.key}` }}
+    >
+      <div className="card-media">
+        <ProjectMedia project={p} sizes="(min-width: 1100px) 400px, 100vw" />
+      </div>
+      <div className="card-body">
+        <p className="card-kind">
+          {p.kind} <span>{p.year}</span>
+        </p>
+        <h3>
+          <button type="button" className="card-hit" onClick={(e) => onOpen(p, e.currentTarget)} aria-haspopup="dialog">
+            {p.header}
+          </button>
+        </h3>
+        <p className="card-desc">{p.desc}</p>
+        <ul className="card-logos" aria-label="Built with">
+          {p.languages.map((l) => (
+            <li key={l} title={l}>
+              <SkillLogo logo={logoFor(l)} name={l} size={14} />
+              <span>{l}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </li>
+  );
+}
+
+function Projects({ skill, onPick }) {
+  const [cat, setCat] = useState("all");
+  const [detail, setDetail] = useState(null);
+  const [screen, setScreen] = useState(0);
+
+  const inCat = ALL.filter((p) => cat === "all" || p.cat === cat);
+  const matches = (p) => !skill || skill.items.some((i) => i.key === p.key);
+  // Matches move to the front; the rest fold up behind them.
+  const shown = skill ? [...inCat.filter(matches), ...inCat.filter((p) => !matches(p))] : inCat;
+  const lit = inCat.filter(matches).length;
+  const onScreen = shown[Math.min(screen, shown.length - 1)];
+
+  const open = (p) => {
+    const m = media(p.key);
+    if (m) m.style.viewTransitionName = "proj-media";
+    const vt = transition(() => {
+      if (m) m.style.viewTransitionName = "";
+      setDetail(p);
+    });
+    if (!vt && m) m.style.viewTransitionName = "";
+  };
+
+  const close = () => {
+    if (!detail) return;
+    const m = media(detail.key);
+    const vt = transition(() => {
+      setDetail(null);
+      if (m) m.style.viewTransitionName = "proj-media";
+    });
+    const done = () => m && (m.style.viewTransitionName = "");
+    if (vt) vt.finished.finally(done);
+    else done();
+    document.getElementById(detail.key)?.querySelector(".card-hit")?.focus({ preventScroll: true });
+  };
+
+  const step = (d) => {
+    const i = ALL.findIndex((p) => p.key === detail.key);
+    transition(() => setDetail(ALL[(i + d + ALL.length) % ALL.length]));
+  };
+
+  useEffect(() => {
+    const onOpen = (e) => {
+      const p = ALL.find((x) => x.key === e.detail);
+      if (p) open(p);
+    };
+    window.addEventListener(OPEN_PROJECT, onOpen);
+    return () => window.removeEventListener(OPEN_PROJECT, onOpen);
+  });
+
+  const pickCat = (c) => {
+    setScreen(0);
+    transition(() => setCat(c));
+  };
+
+  return (
+    <section className="projects" id="projects" aria-labelledby="projects-title">
+      <div className="wrap">
+        <div className="section-head" data-reveal>
+          <h2 id="projects-title">Projects</h2>
+          <p>Four years of production work at Turn&nbsp;14, and the things I build at home: a contact API, a picture frame, a server, an arcade cabinet.</p>
         </div>
 
-        <div className="carts" role="tablist" aria-label="Projects" onKeyDown={onKeyDown} data-reveal style={{ "--i": 2 }}>
-          {projects.map((p, i) => (
-            <button
-              key={p.header}
-              ref={(el) => (tabs.current[i] = el)}
-              type="button"
-              role="tab"
-              id={`cart-${i}`}
-              className="cart"
-              aria-selected={i === active}
-              aria-controls="project-panel"
-              tabIndex={i === active ? 0 : -1}
-              onClick={() => select(i)}
-            >
-              <span className="cart-thumb" aria-hidden="true">
-                {p.imgPath ? (
-                  <img src={p.imgPath} alt="" width="800" height="600" loading="lazy" />
-                ) : (
-                  <span className="mini-term">&gt;_</span>
-                )}
+        <div className="proj-bar" data-reveal>
+          <div className="segmented" role="group" aria-label="Filter projects">
+            {FILTERS.map(([id, label]) => {
+              const n = id === "all" ? ALL.length : ALL.filter((p) => p.cat === id).length;
+              return (
+                <button key={id} type="button" aria-pressed={cat === id} onClick={() => pickCat(id)}>
+                  {label} <span>{n}</span>
+                </button>
+              );
+            })}
+          </div>
+          {skill && (
+            <p className="proj-note" role="status">
+              <SkillLogo logo={logoFor(skill.name)} name={skill.name} size={16} />
+              <span>
+                <b>{lit}</b> of {inCat.length} use {skill.name}
+                {lit < inCat.length && ". The rest are folded at the end"}.
               </span>
-              <span className="cart-name">{p.header}</span>
-            </button>
-          ))}
+              <button type="button" className="link-btn" onClick={() => onPick(null)}>
+                Show all
+              </button>
+            </p>
+          )}
+        </div>
+
+        <div className="proj-layout">
+          <div className="gallery-wrap">
+            <ul className="gallery">
+              {shown.filter(matches).map((p) => (
+                <Card key={p.key} p={p} matched={!!skill} selected={p === onScreen} onOpen={open} />
+              ))}
+            </ul>
+            {skill && lit < inCat.length && (
+              <>
+                <h3 className="folded-title">Folded: no {skill.name}</h3>
+                <ul className="gallery gallery-folded">
+                  {shown
+                    .filter((p) => !matches(p))
+                    .map((p) => (
+                      <Card key={p.key} p={p} folded selected={p === onScreen} onOpen={open} />
+                    ))}
+                </ul>
+              </>
+            )}
+          </div>
+          <Cabinet
+            list={shown}
+            index={Math.min(screen, shown.length - 1)}
+            onMove={(d) => setScreen((i) => (i + d + shown.length) % shown.length)}
+            onOpen={() => open(onScreen)}
+          />
         </div>
       </div>
+      <Detail project={detail} onClose={close} onStep={step} />
     </section>
   );
 }

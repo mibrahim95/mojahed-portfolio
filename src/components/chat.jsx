@@ -21,6 +21,26 @@ function Body({ name, email, msg }) {
 }
 
 function Chat({ provider = "telegram", name, email, msg, typing = false }) {
+  if (provider === "inbox") {
+    return (
+      <div className="chat chat--inbox" data-provider="inbox" data-ui>
+        <div className="chat__header">
+          <p className="chat__title">Inbox</p>
+          <p className="chat__sub">1 new</p>
+        </div>
+        <div className={`chat__mail${typing ? " is-typing" : ""}`}>
+          <p className="chat__meta">
+            <strong>Portfolio contact form</strong> <span className="chat__time">now</span>
+          </p>
+          <p className="chat__subject">New message{name ? ` from ${name}` : ""}</p>
+          <p className="chat__text">
+            <Body name={name} email={email} msg={msg} />
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (provider === "slack") {
     return (
       <div className="chat chat--slack" data-provider="slack" data-ui>

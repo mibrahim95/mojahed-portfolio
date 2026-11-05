@@ -12,7 +12,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "node --test netlify/contact.test.js"
+    "test": "node --test netlify/contact.test.js src/skills.test.js"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",

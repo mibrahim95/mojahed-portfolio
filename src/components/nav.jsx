@@ -1,23 +1,46 @@
 import { RESUME, external } from "../sections";
+import { Mark } from "./logo";
 import ThemeToggle from "./themeToggle";
+import { Search } from "./icons";
+import { SHORTCUT } from "../motion";
 
-function Nav() {
+
+const LINKS = [
+  ["#projects", "Projects"],
+  ["#experience", "Experience"],
+  ["#education", "Education"],
+  ["#skills", "Skills"],
+  ["#contact", "Contact"],
+];
+
+function Nav({ onSearch }) {
   return (
     <header className="nav">
       <div className="wrap nav-inner">
-        <a className="wordmark" href="#top">
-          <span className="wordmark-mark" aria-hidden="true">MI</span>
-          Mojahed Ibrahim
+        <a className="wordmark" href="#top" aria-label="Mojahed Ibrahim, back to top">
+          <Mark size={30} />
+          <span className="wordmark-name">
+            Mojahed <b>Ibrahim</b>
+          </span>
         </a>
         <nav className="nav-links" aria-label="Main">
-          <a className="nav-section" href="#projects">Projects</a>
-          <a className="nav-section" href="#experience">Experience</a>
-          <a className="nav-section" href="#education">Education</a>
-          <a className="nav-section" href="#skills">Skills</a>
-          <a className="nav-section" href="#contact">Contact</a>
-          <a className="btn btn-ghost" href={RESUME} {...external}>Résumé</a>
-          <ThemeToggle />
+          {LINKS.map(([href, label]) => (
+            <a key={href} href={href}>
+              {label}
+            </a>
+          ))}
         </nav>
+        <div className="nav-actions">
+          <button type="button" className="kbtn" onClick={onSearch} aria-keyshortcuts="Control+K Meta+K">
+            <Search />
+            <span className="kbtn-label">Find a skill</span>
+            <kbd>{SHORTCUT}</kbd>
+          </button>
+          <a className="btn btn-quiet btn-sm nav-resume" href={RESUME} {...external}>
+            Résumé
+          </a>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
