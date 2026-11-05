@@ -3,18 +3,18 @@ import Chat from "./chat";
 import about from "../json/about.json";
 import { RESUME, SOCIAL, external } from "../sections";
 
-// Optional: my Spring Boot Telegram API. When it is not configured, or it is
-// down, messages go to Netlify Forms instead (the static form in index.html).
-const API_HOST = import.meta.env.REACT_APP_API_HOST;
+// Messages go to the Netlify Function first (netlify/functions/contact.js), which
+// delivers them to Telegram or Slack with secrets kept server side. If it is off,
+// misconfigured or down, they go to Netlify Forms (the static form in index.html).
+const CONTACT_ENDPOINT = "/.netlify/functions/contact";
 
-// WARNING: every REACT_APP_* / VITE_* variable is compiled into the public
-// JavaScript bundle, so this value is readable by anyone who visits the site.
-// It is only kept so the existing API keeps working; the API should not rely
-// on it for protection (use rate limiting / CAPTCHA / origin checks there).
-const API_BASIC_AUTH = import.meta.env.REACT_APP_JAVA_API_USERNAME_AND_PASS;
+// Public, display-only: picks the live preview. "telegram" | "slack" | "email" (no preview).
+// It must match the server's CONTACT_PROVIDER; it holds no secret.
+const PREVIEW = (import.meta.env.REACT_APP_CONTACT_PROVIDER || "email").toLowerCase();
+const HAS_PREVIEW = PREVIEW === "telegram" || PREVIEW === "slack";
 
-// Same limits the Spring Boot validator applies (telegramApi Validator.java):
-// name 3–99 characters, message under 250 characters, a valid email.
+// Same limits the contact function applies: name 3–99 characters, message
+// under 250 characters, a valid email.
 const NAME_MIN = 3;
 const NAME_MAX = 99;
 const MSG_MAX = 249;
@@ -38,22 +38,18 @@ async function sendViaNetlify(data) {
 
 // Returns "sent" or "rejected". Throws only when no route could take the message.
 async function sendMessage(data) {
-  if (API_HOST) {
-    let res;
-    try {
-      const headers = { "Content-Type": "application/json" };
-      if (API_BASIC_AUTH) headers.Authorization = `Basic ${btoa(API_BASIC_AUTH)}`;
-      res = await fetch(API_HOST, { method: "POST", headers, body: JSON.stringify(data) });
-    } catch {
-      res = null; // network failure: fall through to Netlify so the message is not lost
-    }
-    if (res?.ok) {
-      // The API answers 200 with { success: false } when its validation fails.
-      const body = await res.json().catch(() => ({}));
-      return body.success === false ? "rejected" : "sent";
-    }
-    if (res && res.status >= 400 && res.status < 500) return "rejected";
+  let res = null;
+  try {
+    res = await fetch(CONTACT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  } catch {
+    // network failure: fall through to Netlify Forms so the message is not lost
   }
+  if (res?.ok) return "sent";
+  if (res?.status === 400) return "rejected";
   await sendViaNetlify(data);
   return "sent";
 }
@@ -131,18 +127,10 @@ function ContactMe() {
             Let&rsquo;s talk.
           </h2>
           <p className="contact-lede" data-reveal style={{ "--i": 1 }}>
-            {API_HOST ? (
-              <>
-                Have a role or a project in mind? Send it here and it lands on my
-                phone as a Telegram message, through{" "}
-                <a className="link" href={SOCIAL.api} {...external}>my own Spring Boot API</a>.
-              </>
-            ) : (
-              <>
-                Have a role or a project in mind? Send me a note here, or email me at{" "}
-                <a className="link" href={`mailto:${about.email}`}>{about.email}</a>.
-              </>
-            )}
+            Hiring for a role, or have a project in mind? Send me a note here
+            {PREVIEW === "telegram" && " and it lands on my phone as a Telegram message"}
+            {PREVIEW === "slack" && " and it shows up in my Slack"}. I reply from{" "}
+            <a className="link" href={`mailto:${about.email}`}>{about.email}</a>.
           </p>
 
           {status.state === "sent" ? (
@@ -244,27 +232,23 @@ function ContactMe() {
           )}
         </div>
 
-        {API_HOST ? (
-          <figure className="phone" data-reveal style={{ "--i": 2 }}>
-            <div className="phone-screen">
-              <div className="phone-top">
-                <span className="phone-avatar" aria-hidden="true">MI</span>
-                <div>
-                  <p className="phone-title">Portfolio messages</p>
-                  <p className="phone-sub">bot</p>
-                </div>
+        <div className="contact-side">
+          {HAS_PREVIEW && (
+            <figure className="phone" data-reveal style={{ "--i": 2 }}>
+              <div className="phone-screen">
+                <Chat
+                  provider={PREVIEW}
+                  name={form.fullName.trim()}
+                  email={form.email.trim()}
+                  msg={form.msg.trim()}
+                  typing={typing % 2 === 1}
+                />
               </div>
-              <Chat
-                name={form.fullName.trim()}
-                email={form.email.trim()}
-                msg={form.msg.trim()}
-                typing={typing % 2 === 1}
-              />
-            </div>
-            <figcaption>Live preview: the exact text my API sends, as you type.</figcaption>
-          </figure>
-        ) : (
-          <aside className="contact-alt" data-reveal style={{ "--i": 2 }} aria-label="Other ways to reach me">
+              <figcaption>Live preview: the exact message I get, as you type.</figcaption>
+            </figure>
+          )}
+          <aside className="contact-alt" data-reveal style={{ "--i": 3 }} aria-labelledby="contact-alt-title">
+            <h3 id="contact-alt-title">Or reach me directly</h3>
             <ul>
               <li><span>Email</span><a className="link" href={`mailto:${about.email}`}>{about.email}</a></li>
               <li><span>LinkedIn</span><a className="link" href={SOCIAL.linkedin} {...external}>in/mojahed-ibrahim</a></li>
@@ -272,7 +256,7 @@ function ContactMe() {
               <li><span>Résumé</span><a className="link" href={RESUME} {...external}>PDF, 2 pages</a></li>
             </ul>
           </aside>
-        )}
+        </div>
       </div>
     </section>
   );

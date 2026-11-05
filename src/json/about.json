@@ -1,42 +1,33 @@
 {
+  "name": "Mojahed Ibrahim",
   "role": "Software Engineer 2",
   "company": "Comcast",
+  "location": "Philadelphia, PA",
   "headline": "I build web apps and the databases and reports behind them.",
-  "lede": "I've spent 7+ years writing PHP, JavaScript, SQL and Java for business software. At Turn 14 Distribution I built PHP and MySQL apps for a B2B e-commerce platform and a warehouse management system. At Comcast I work on the daily reports and data pipelines business teams rely on, mostly making slow jobs fast and adding alerts for when one fails.",
-  "facts": [
-    {
-      "label": "Now",
-      "value": "Software Engineer 2 at Comcast, since 2023"
-    },
-    {
-      "label": "Before",
-      "value": "Web Application Developer at Turn 14 Distribution, 2019–2023"
-    },
-    {
-      "label": "Studied",
-      "value": "B.B.A., Temple University, Fox School of Business, 2019"
-    },
-    {
-      "label": "Based in",
-      "value": "Philadelphia, PA"
-    }
-  ],
+  "lede": "Seven years of PHP, JavaScript, SQL and Java on business software. At Turn 14 Distribution I built the PHP and MySQL apps behind a B2B e-commerce site and a warehouse management system. At Comcast I look after about 15 daily reports that run over millions of records, and I make the slow ones fast.",
+  "photo": {
+    "src": "/profile.webp",
+    "alt": "Mojahed Ibrahim in a navy suit and tie, smiling outdoors",
+    "width": 600,
+    "height": 600,
+    "focal": "50% 30%"
+  },
   "highlights": [
     {
       "value": "1,000+",
-      "label": "MySQL tables designed and tuned, averaging 700K+ rows each"
+      "label": "MySQL tables I designed and tuned at Turn 14, averaging 700K+ rows each"
     },
     {
       "value": "7+ years",
-      "label": "building production software, from PHP web apps to enterprise reporting"
+      "label": "shipping production code, from PHP web apps to enterprise reporting"
     },
     {
       "value": "6+ hours",
-      "label": "cut from total daily reporting time with parallel processing"
+      "label": "cut from the daily reporting run at Comcast by running reports in parallel"
     },
     {
       "value": "80%",
-      "label": "faster runtime on one report after a query, index and join rework"
+      "label": "less runtime on one report after I rewrote its query, indexes and joins"
     }
   ],
   "skills": [
@@ -56,32 +47,39 @@
       "items": [
         "MySQL",
         "SQL",
-        "Oracle PL/SQL",
         "Query and index tuning",
+        "Schema design",
         "Replication",
-        "Migrations"
+        "Migrations",
+        "Oracle PL/SQL"
       ]
     },
     {
-      "group": "Back end and data",
+      "group": "Back end",
       "items": [
         "Java",
         "Spring Boot",
         "REST APIs",
+        "Data-ingestion pipelines"
+      ]
+    },
+    {
+      "group": "Data and reporting",
+      "items": [
         "CloverDX",
-        "Data-ingestion pipelines",
-        "Data validation"
+        "Recurring reports",
+        "Data validation",
+        "Excel: PivotTables, VLOOKUP, macros"
       ]
     },
     {
       "group": "Tools",
       "items": [
         "Git and GitHub",
-        "Maven",
         "Jira",
+        "Maven",
         "Concourse CI/CD",
-        "Linux",
-        "Excel"
+        "Linux"
       ]
     },
     {
@@ -95,8 +93,24 @@
   ],
   "education": {
     "school": "Temple University",
-    "detail": "Fox School of Business, Bachelor of Business Administration",
-    "year": "2019"
+    "college": "Fox School of Business",
+    "location": "Philadelphia, PA",
+    "degree": "Bachelor of Business Administration",
+    "short": "B.B.A.",
+    "major": "Management Information Systems",
+    "graduated": "May 2019",
+    "year": "2019",
+    "honors": [
+      "Dean's List, Fall 2016",
+      "3.5 GPA in the major"
+    ],
+    "summary": "A business degree with a technical major. I studied Management Information Systems at Temple's Fox School of Business and tutored for the department before I graduated.",
+    "teaching": {
+      "role": "MIS Information Technology Assistant",
+      "dates": "Jun 2018 – Jan 2019",
+      "course": "Data-Centric Application Development",
+      "text": "Before graduating I worked for the MIS department as a tutor for its Data-Centric Application Development course, helping students with SQL, PHP, HTML and CSS."
+    }
   },
   "email": "mojahedibrahim95@gmail.com"
 }

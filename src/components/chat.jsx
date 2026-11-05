@@ -1,5 +1,5 @@
-// The exact text the Telegram API builds (telegramApi ReceiveRequests.java):
-// "Name: …\nEmail: …" plus "\nMessage: …" when a message was written.
+// Live preview of the message the contact function sends (netlify/functions/contact.js):
+// "Name: …\nEmail: …\nMessage: …". `provider` picks the look: "telegram" or "slack".
 function Line({ label, value, placeholder }) {
   return (
     <>
@@ -8,15 +8,51 @@ function Line({ label, value, placeholder }) {
   );
 }
 
-function Chat({ name, email, msg, typing = false }) {
+function Body({ name, email, msg }) {
   return (
-    <div className="chat" data-ui>
+    <>
+      <Line label="Name" value={name} placeholder="your name" />
+      {"\n"}
+      <Line label="Email" value={email} placeholder="you@example.com" />
+      {"\n"}
+      <Line label="Message" value={msg} placeholder="what you write here" />
+    </>
+  );
+}
+
+function Chat({ provider = "telegram", name, email, msg, typing = false }) {
+  if (provider === "slack") {
+    return (
+      <div className="chat chat--slack" data-provider="slack" data-ui>
+        <div className="chat__header">
+          <p className="chat__title"># portfolio-messages</p>
+        </div>
+        <div className={`chat__message${typing ? " is-typing" : ""}`}>
+          <span className="chat__avatar" aria-hidden="true">MI</span>
+          <div>
+            <p className="chat__meta">
+              <strong>Portfolio</strong> <span className="chat__tag">APP</span> <span className="chat__time">now</span>
+            </p>
+            <p className="chat__text">
+              <Body name={name} email={email} msg={msg} />
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="chat chat--telegram" data-provider="telegram" data-ui>
+      <div className="chat__header">
+        <span className="chat__avatar" aria-hidden="true">MI</span>
+        <div>
+          <p className="chat__title">Portfolio messages</p>
+          <p className="chat__sub">bot</p>
+        </div>
+      </div>
       <p className={`chat__bubble${typing ? " is-typing" : ""}`}>
-        <Line label="Name" value={name} placeholder="your name" />
-        {"\n"}
-        <Line label="Email" value={email} placeholder="you@example.com" />
-        {"\n"}
-        <Line label="Message" value={msg} placeholder="what you write here" />
+        <Body name={name} email={email} msg={msg} />
         <span className="chat__time">now</span>
       </p>
     </div>

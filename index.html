@@ -1,54 +1,85 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: https://ogp.me/ns#">
+<html lang="en" prefix="og: https://ogp.me/ns#" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mojahed Ibrahim | Software Engineer</title>
+    <!-- Apply the saved theme, else the OS preference, else dark, before first paint (no flash). -->
+    <script>
+      (function () {
+        var t;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark") {
+          t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        }
+        document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
+    <title>Mojahed Ibrahim | Software Engineer: PHP, SQL, JavaScript, Java</title>
     <meta name="author" content="Mojahed Ibrahim" />
     <meta
       name="description"
-      content="Mojahed Ibrahim, Software Engineer 2 at Comcast. PHP, JavaScript, MySQL, SQL and Java: projects, experience, résumé and contact."
+      content="Philadelphia software engineer building web apps, databases and daily reports in PHP, MySQL, SQL, JavaScript and Java. Projects, experience, education and résumé."
     />
-    <meta name="theme-color" content="#0a0b10" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0b10" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbfaf7" />
     <link rel="canonical" href="https://mojahedsportfolio.com/" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Open Graph / link previews (image URLs must be absolute) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Mojahed's Portfolio" />
+    <!-- Open Graph / link previews (image URLs must be absolute). og-image.png: 1200x630, made by design. -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Mojahed Ibrahim" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="Mojahed Ibrahim | Software Engineer" />
     <meta
       property="og:description"
-      content="Software engineer in Philadelphia. Web apps, databases and reporting in PHP, JavaScript, MySQL, SQL and Java."
+      content="Web apps, databases and reporting in PHP, MySQL, SQL, JavaScript and Java. Seven years across B2B e-commerce and enterprise reporting."
     />
     <meta property="og:url" content="https://mojahedsportfolio.com/" />
-    <meta property="og:image" content="https://mojahedsportfolio.com/og-image.jpg" />
+    <meta property="og:image" content="https://mojahedsportfolio.com/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Preview of Mojahed Ibrahim's portfolio" />
+    <meta property="og:image:alt" content="Mojahed Ibrahim, Software Engineer: PHP, SQL, JavaScript and Java" />
+    <meta property="profile:first_name" content="Mojahed" />
+    <meta property="profile:last_name" content="Ibrahim" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Mojahed Ibrahim | Software Engineer" />
     <meta
       name="twitter:description"
-      content="Software engineer in Philadelphia. Web apps, databases and reporting in PHP, JavaScript, MySQL, SQL and Java."
+      content="Web apps, databases and reporting in PHP, MySQL, SQL, JavaScript and Java. Seven years across B2B e-commerce and enterprise reporting."
     />
-    <meta name="twitter:image" content="https://mojahedsportfolio.com/og-image.jpg" />
+    <meta name="twitter:image" content="https://mojahedsportfolio.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Mojahed Ibrahim, Software Engineer: PHP, SQL, JavaScript and Java" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Mojahed Ibrahim",
-        "jobTitle": "Software Engineer 2",
-        "worksFor": { "@type": "Organization", "name": "Comcast" },
+        "jobTitle": "Software Engineer",
+        "description": "Software engineer who builds web applications, databases and reporting in PHP, MySQL, SQL, JavaScript and Java.",
         "url": "https://mojahedsportfolio.com/",
         "image": "https://mojahedsportfolio.com/profile.webp",
+        "worksFor": { "@type": "Organization", "name": "Comcast" },
+        "homeLocation": {
+          "@type": "Place",
+          "address": { "@type": "PostalAddress", "addressLocality": "Philadelphia", "addressRegion": "PA", "addressCountry": "US" }
+        },
         "alumniOf": {
           "@type": "CollegeOrUniversity",
-          "name": "Temple University"
+          "name": "Temple University",
+          "department": { "@type": "Organization", "name": "Fox School of Business" },
+          "sameAs": "https://www.temple.edu/"
         },
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "degree",
+          "name": "Bachelor of Business Administration, Management Information Systems"
+        },
+        "knowsAbout": ["PHP", "MySQL", "SQL", "JavaScript", "jQuery", "HTML", "CSS", "Java", "Spring Boot", "Excel", "Data reporting", "Query optimization"],
         "sameAs": [
           "https://www.linkedin.com/in/mojahed-ibrahim/",
           "https://github.com/mibrahim95"

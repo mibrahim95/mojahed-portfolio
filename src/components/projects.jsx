@@ -72,8 +72,8 @@ function Projects() {
           </div>
           <div>
             <p className="arcade-intro">
-              From the production tools I built at Turn&nbsp;14 to the side projects
-              I make for fun. Pick a cartridge, or use the arrow keys.
+              Production work from Turn&nbsp;14, plus the side projects I build
+              for myself and for friends. Pick one, or use the arrow keys.
             </p>
             <p className="press-start" aria-hidden="true">PRESS ◀ ▶ TO SELECT</p>
           </div>

@@ -23,4 +23,8 @@ export default [
       "react-refresh/only-export-components": "warn",
     },
   },
+  {
+    files: ["netlify/**/*.js"],
+    languageOptions: { globals: globals.node },
+  },
 ];

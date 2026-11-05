@@ -3,18 +3,18 @@
     "title": "Comcast",
     "position": "Software Engineer 2",
     "location": "Philadelphia, PA",
-    "desc": "Daily reports and data pipelines that business teams rely on, built with SQL, Java and CloverDX over hundreds of thousands to millions of records.",
+    "desc": "I keep about 15 daily business reports and the pipelines that feed them running on time, using SQL, Java and CloverDX over hundreds of thousands to millions of records.",
     "id": "comcast",
     "kind": "Full time",
     "bullets": [
-      "Cut more than 6 hours from total daily reporting time by adding parallel processing (parallel PL/SQL and CloverDX graphs) to four or five report families.",
-      "Rewrote a slow query, added indexes and changed its joins, which cut that report's runtime by over 80%. Brought a separate recurring report down from four or five hours to about one.",
+      "Cut more than 6 hours from the total daily reporting run by adding parallel processing to four or five report families, with parallel PL/SQL and CloverDX graphs.",
+      "Rewrote a slow query, added indexes and changed its joins, cutting that report's runtime by over 80%. Took a separate recurring report from four or five hours down to about one.",
       "Support about 15 recurring reports. Built two of them end to end and drove the design of about five more.",
       "Automated an API import of another team's data into the reporting database, with retries for rate limits and other failures.",
-      "Built report-failure alerts over Slack, Teams and email, including an end-of-day alert when a report fails to publish. Moved the Slack alerts to OAuth.",
+      "Built report-failure alerts over Slack, Teams and email, including an end-of-day alert when a report fails to publish, and moved the Slack alerts to OAuth.",
       "Upgraded CloverDX from 6.3.1 to 7.4.2 and updated the reports and graphs that depend on it.",
       "Build Java data-ingestion pipelines that move data between internal systems.",
-      "Write and maintain Oracle PL/SQL packages, procedures and migration scripts behind an internal fulfillment-accuracy reporting system.",
+      "Write and maintain the Oracle PL/SQL packages, procedures and migration scripts behind an internal fulfillment-accuracy reporting system.",
       "Review teammates' code and mentor new contractors on the team."
     ],
     "dates": "Feb 2023 – now"
@@ -27,11 +27,11 @@
     "id": "t14",
     "kind": "Full time",
     "bullets": [
-      "Built and maintained database-driven web applications in PHP, MySQL and JavaScript/jQuery for internal teams and external B2B clients.",
+      "Built and maintained database-driven web applications in PHP, MySQL and JavaScript/jQuery for internal teams and outside B2B clients.",
       "Designed and tuned a MySQL schema of 1,000+ tables averaging 700K+ rows each, and set up replication for read scaling.",
       "Wrote queries and reports against high-volume tables for internal teams and B2B clients.",
-      "Refactored 10,000+ lines of legacy code across many files to make it easier to maintain and faster to run.",
-      "Worked independently to develop, review and test code for several production applications."
+      "Refactored 10,000+ lines of legacy code across many files so it was easier to maintain and faster to run.",
+      "Developed, reviewed and tested code on my own for several production applications, working in an Agile team."
     ],
     "dates": "Jan 2019 – Feb 2023"
   },
@@ -43,7 +43,8 @@
     "id": "temple",
     "kind": "Part time",
     "bullets": [
-      "Tutored students in SQL, PHP, HTML and CSS for the Data-Centric Application Development course."
+      "Tutored students in SQL, PHP, HTML and CSS for the Data-Centric Application Development course.",
+      "Helped shape a semester workload that students could learn from at a steady pace."
     ],
     "dates": "Jun 2018 – Jan 2019"
   },
@@ -56,7 +57,8 @@
     "kind": "Internship",
     "bullets": [
       "Built weekly and monthly labor and overtime reports in Excel that showed store operations where overtime was piling up.",
-      "Created sample schedules for test locations and for the holiday season."
+      "Created sample schedules for test locations and for the holiday season.",
+      "Helped organize teams for the rollout of new software."
     ],
     "dates": "May 2018 – Aug 2018"
   }

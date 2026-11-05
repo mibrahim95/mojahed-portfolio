@@ -1,5 +1,4 @@
 import experiences from "../json/expList.json";
-import about from "../json/about.json";
 import { RESUME, external } from "../sections";
 
 function Experience() {
@@ -9,8 +8,8 @@ function Experience() {
         <div className="exp-aside" data-reveal>
           <h2 id="experience-title">Experience</h2>
           <p>
-            Reporting and data work at Comcast, four years of web development
-            at Turn&nbsp;14, and the tutoring and analyst roles that came before.
+            Reports and data pipelines at Comcast, four years of PHP and MySQL
+            at Turn&nbsp;14, and the tutoring job and internship before that.
           </p>
           <a className="btn btn-light" href={RESUME} {...external}>
             Open the full résumé
@@ -44,15 +43,6 @@ function Experience() {
               </li>
             );
           })}
-          <li className="job job--edu" data-reveal>
-            <p className="job-when">Education</p>
-            <div>
-              <h3 className="job-company">{about.education.school}</h3>
-              <p className="job-role">
-                {about.education.detail}, {about.education.year}
-              </p>
-            </div>
-          </li>
         </ol>
       </div>
     </section>

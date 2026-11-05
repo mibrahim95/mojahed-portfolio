@@ -1,6 +1,7 @@
 import about from "../json/about.json";
 import { SOCIAL, external } from "../sections";
 import { ArrowRight } from "./icons";
+import Portrait from "./portrait";
 
 function Hero() {
   return (
@@ -9,10 +10,7 @@ function Hero() {
         <div className="hero-grid">
           <div>
             <p className="hero-role" data-load style={{ "--d": "0ms" }}>
-              <span className="badge-now">Now</span>
-              <span>
-                <strong>{about.role}</strong> at {about.company}
-              </span>
+              <strong>{about.role}</strong> at {about.company} · {about.location}
             </p>
             <h1 id="hero-title" data-load style={{ "--d": "80ms" }}>
               <span className="hi">Hi, I&rsquo;m Mojahed.</span> <span className="grad">{about.headline}</span>
@@ -22,7 +20,7 @@ function Hero() {
             </p>
             <div className="hero-actions" data-load style={{ "--d": "240ms" }}>
               <a className="btn btn-primary" href="#projects">
-                See my projects <ArrowRight />
+                See my work <ArrowRight />
               </a>
               <a className="btn btn-ghost" href="#contact">
                 Get in touch
@@ -35,15 +33,7 @@ function Hero() {
           </div>
 
           <div className="hero-visual" data-load style={{ "--d": "120ms" }}>
-            <div className="portrait">
-              <img
-                src="/profile.webp"
-                alt="Mojahed Ibrahim in a navy suit and tie, smiling outdoors"
-                width="600"
-                height="600"
-                fetchpriority="high"
-              />
-            </div>
+            <Portrait />
             <figure className="float-shot two" aria-hidden="true">
               <div className="bar"><i /><i /><i /></div>
               <img src="/cousinsInv.webp" alt="" width="800" height="430" />
@@ -54,15 +44,6 @@ function Hero() {
             </figure>
           </div>
         </div>
-
-        <dl className="facts" data-load style={{ "--d": "320ms" }}>
-          {about.facts.map((f) => (
-            <div className="fact" key={f.label}>
-              <dt>{f.label}</dt>
-              <dd>{f.value}</dd>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
   );
