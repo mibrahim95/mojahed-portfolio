@@ -6,11 +6,11 @@
     "languages": [
       "Java",
       "Spring Boot",
-      "REST",
+      "Maven",
       "Telegram Bot API"
     ],
     "imgPath": "",
-    "desc": "A Spring Boot REST API that checks contact-form submissions (name length, email format, message size) and forwards the valid ones to my phone as Telegram messages. It ran this site's contact form while the site was hosted on Heroku.",
+    "desc": "A Spring Boot REST API, built with Maven, that checks contact-form submissions (name length, email format, message size) and forwards the valid ones to my phone as Telegram messages. It ran this site's contact form while the site was hosted on Heroku.",
     "github": "https://github.com/mibrahim95/telegramApi",
     "url": "",
     "skills": [
@@ -18,6 +18,8 @@
       "Spring Boot",
       "REST APIs",
       "JSON",
+      "Input validation",
+      "Maven",
       "Telegram Bot API",
       "Heroku",
       "Git"
@@ -29,27 +31,50 @@
     "year": "2026",
     "languages": [
       "Python",
-      "Raspberry Pi",
       "Flask",
-      "NumPy",
-      "SPI and I2C"
+      "Raspberry Pi",
+      "SPI and I2C",
+      "GitHub Actions"
     ],
     "imgPath": "/heartbeatFrame.webp",
-    "desc": "A gift picture frame built around a Raspberry Pi 5, with a 7.3-inch color e-ink panel, a round display, two small OLEDs, a touch pad and a speaker. My Python app runs as a systemd service and drives all of it: about 67 e-ink screens I designed, open-access museum art, and a pixel cat animated through a direct SPI driver I wrote. A phone shortcut sends the frame a heart through a token-protected Flask API over Tailscale. The code lives in a private repo.",
+    "desc": "A Raspberry Pi 5 picture frame that runs five devices at once: a 7.3-inch color e-ink panel, a round display, two OLEDs on separate I2C buses, a touch pad and an I2S speaker. The Python app runs as a systemd service. I wrote a direct SPI driver for the round display and share the bus with the e-ink panel under a lock. A small Flask API with bearer-token auth listens only on Tailscale and throttles bad tokens. On every push, GitHub Actions runs about 580 unit tests on two Python versions, plus flake8 and pip-audit. The code lives in a private repo.",
     "github": "",
     "url": "",
     "skills": [
       "Python",
+      "Flask",
+      "Waitress",
+      "REST APIs",
+      "JSON",
+      "Token authentication",
+      "Rate limiting",
+      "Input validation",
+      "API integration",
+      "Retry handling",
+      "Multithreading",
+      "Monitoring",
       "Raspberry Pi",
       "Linux",
-      "Flask",
-      "REST APIs",
-      "NumPy",
+      "Bash",
       "systemd",
       "Tailscale",
+      "Security hardening",
+      "SPI",
+      "I2C",
+      "I2S audio",
+      "GPIO",
+      "NumPy",
+      "Pillow",
+      "OpenCV",
+      "Image processing",
+      "YAML",
+      "Twilio API",
       "Unit testing",
-      "Hardware",
-      "Git"
+      "GitHub Actions",
+      "flake8",
+      "pip-audit",
+      "Git",
+      "Hardware"
     ]
   },
   {
@@ -58,12 +83,12 @@
     "year": "2026",
     "languages": [
       "Proxmox",
-      "Docker",
-      "Linux",
-      "Tailscale"
+      "Docker Compose",
+      "Tailscale",
+      "Pi-hole"
     ],
     "imgPath": "",
-    "desc": "A Proxmox server on a mini PC at home. Each service runs in its own unprivileged Linux container, most as Docker Compose stacks: Immich backs up my phone's photos, Nextcloud holds my files, and Pi-hole with Nginx Proxy Manager gives each service a short local name. Away from home I reach it only over Tailscale, with access rules limited to the ports I need, and an outside port scan confirmed the router exposes nothing. Pulse watches the containers and posts alerts to Discord.",
+    "desc": "A Proxmox server on a mini PC at home. Each service runs in its own unprivileged Linux container, most of them as Docker Compose stacks: Immich backs up my phone's photos, Nextcloud holds my files, and Pi-hole with Nginx Proxy Manager gives each service a short local name. Away from home I reach it only over Tailscale, with access rules limited to the ports I need, and an outside port scan confirmed the router exposes nothing. Pulse watches the containers and posts alerts to a Discord webhook.",
     "github": "",
     "url": "",
     "skills": [
@@ -71,10 +96,18 @@
       "Linux",
       "LXC",
       "Docker",
+      "Docker Compose",
       "Tailscale",
+      "Pi-hole",
+      "Nginx Proxy Manager",
+      "Immich",
+      "Nextcloud",
       "Networking",
       "DNS",
       "Monitoring",
+      "Webhooks",
+      "cron",
+      "Security hardening",
       "Self-hosting"
     ]
   },
@@ -114,11 +147,11 @@
     "languages": [
       "React",
       "Vite",
-      "CSS",
-      "Netlify Functions"
+      "Netlify Functions",
+      "Node.js"
     ],
     "imgPath": "/portfolioPreview.webp",
-    "desc": "The site you're reading. I first built it in 2022 on Create React App and Semantic UI, then rebuilt it in 2026 on Vite with hand-written CSS. The contact form now runs through a small Netlify Function that can deliver to Telegram or Slack.",
+    "desc": "The site you're reading. I first built it in 2022 on Create React App and Semantic UI, then rebuilt it in 2026 on Vite with hand-written CSS. A Netlify Function validates each contact message, drops honeypot spam and delivers to Slack or Telegram depending on one environment variable, and Netlify Forms catches anything the function can't send. ESLint and Node's built-in test runner cover the form handler and the skill search.",
     "github": "https://github.com/mibrahim95/mojahed-portfolio",
     "url": "",
     "skills": [
@@ -129,6 +162,16 @@
       "CSS",
       "Semantic UI",
       "Netlify Functions",
+      "Netlify Forms",
+      "Node.js",
+      "JSON",
+      "Input validation",
+      "Webhooks",
+      "Telegram Bot API",
+      "Unit testing",
+      "ESLint",
+      "SEO",
+      "Web accessibility",
       "Git"
     ]
   },
