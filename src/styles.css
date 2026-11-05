@@ -2826,6 +2826,10 @@ kbd {
   opacity: 1;
 }
 
+[data-theme="light"] .chat--inbox .chat__sub {
+  color: #a8300f;
+}
+
 .chat__mail {
   margin: 14px 10px auto;
   padding: 14px;
