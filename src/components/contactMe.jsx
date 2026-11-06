@@ -99,7 +99,8 @@ function ContactMe() {
 
     setStatus({ state: "sending" });
     try {
-      const result = await sendMessage({ fullName: name, email: form.email.trim(), msg: form.msg.trim() });
+      const data = { fullName: name, email: form.email.trim(), msg: form.msg.trim() };
+      const result = await sendMessage(data);
       if (result === "sent") {
         setStatus({ state: "sent", name });
         setForm(EMPTY_FORM);
@@ -107,11 +108,18 @@ function ContactMe() {
         setStatus(REJECTED);
       }
     } catch {
+      // No delivery route is configured or reachable: hand the typed message to the visitor's mail app.
+      const subject = `Portfolio message from ${name}`;
+      const body = `${form.msg.trim()}
+
+${name}
+${form.email.trim()}`;
       setStatus({
         state: "error",
-        title: "Your message could not be sent.",
-        text: "The contact service did not respond. Email me directly or message me on LinkedIn.",
+        title: "The form couldn't send this one.",
+        text: "Your message is still here. Send it by email in one click, or reach me on LinkedIn.",
         fallback: true,
+        mailto: `mailto:${about.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
       });
     }
   };
@@ -215,7 +223,7 @@ function ContactMe() {
                   <p>{status.text}</p>
                   {status.fallback && (
                     <p>
-                      <a className="link" href={`mailto:${about.email}`}>{about.email}</a>
+                      <a className="link" href={status.mailto}>Send it by email</a>
                       {" · "}
                       <a className="link" href={SOCIAL.linkedin} {...external}>LinkedIn</a>
                     </p>
