@@ -19,6 +19,7 @@ const PREVIEW_LOOK = PREVIEW === "telegram" || PREVIEW === "slack" ? PREVIEW : "
 const NAME_MIN = 3;
 const NAME_MAX = 99;
 const MSG_MAX = 249;
+const EMAIL_MAX = 254;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const EMPTY_FORM = { fullName: "", email: "", msg: "", website: "" };
 const FIELD_IDS = { fullName: "contact-name", email: "contact-email", msg: "contact-message" };
@@ -26,6 +27,11 @@ const REJECTED = {
   state: "error",
   title: "That message was not accepted.",
   text: "Check that your name has at least 3 characters, your email is valid and the message is under 250 characters, then send it again.",
+};
+const LIMITED = {
+  state: "error",
+  title: "Too many messages in a row.",
+  text: "Please wait a few minutes and send it again, or email me directly.",
 };
 
 async function sendViaNetlify(data) {
@@ -37,7 +43,7 @@ async function sendViaNetlify(data) {
   if (!res.ok) throw new Error(`Form service responded with ${res.status}`);
 }
 
-// Returns "sent" or "rejected". Throws only when no route could take the message.
+// Returns "sent", "rejected" or "limited". Throws only when no route could take the message.
 async function sendMessage(data) {
   let res = null;
   try {
@@ -51,6 +57,7 @@ async function sendMessage(data) {
   }
   if (res?.ok) return "sent";
   if (res?.status === 400) return "rejected";
+  if (res?.status === 429) return "limited";
   await sendViaNetlify(data);
   return "sent";
 }
@@ -61,7 +68,7 @@ function validate({ fullName, email, msg }) {
   if (!name) errors.fullName = "Please enter your name.";
   else if (name.length < NAME_MIN) errors.fullName = `Please enter at least ${NAME_MIN} characters.`;
   else if (name.length > NAME_MAX) errors.fullName = `Please keep your name under ${NAME_MAX + 1} characters.`;
-  if (!EMAIL_PATTERN.test(email.trim())) errors.email = "Please enter a valid email address, like jane@company.com.";
+  if (email.trim().length > EMAIL_MAX || !EMAIL_PATTERN.test(email.trim())) errors.email = "Please enter a valid email address, like jane@company.com.";
   if (!msg.trim()) errors.msg = "Please write a short message.";
   else if (msg.trim().length > MSG_MAX) errors.msg = `Please shorten your message to ${MSG_MAX} characters.`;
   return errors;
@@ -105,7 +112,7 @@ function ContactMe() {
         setStatus({ state: "sent", name });
         setForm(EMPTY_FORM);
       } else {
-        setStatus(REJECTED);
+        setStatus(result === "limited" ? LIMITED : REJECTED);
       }
     } catch {
       // No delivery route is configured or reachable: hand the typed message to the visitor's mail app.
