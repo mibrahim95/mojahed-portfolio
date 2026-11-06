@@ -1,5 +1,5 @@
 // Live preview of the message the contact function sends (netlify/functions/contact.js):
-// "Name: …\nEmail: …\nMessage: …". `provider` picks the look: "telegram" or "slack".
+// "Name: …\nEmail: …\nMessage: …". `provider` picks the look: "telegram", "slack", "discord" or "inbox".
 function Line({ label, value, placeholder }) {
   return (
     <>
@@ -41,11 +41,11 @@ function Chat({ provider = "telegram", name, email, msg, typing = false }) {
     );
   }
 
-  if (provider === "slack") {
+  if (provider === "slack" || provider === "discord") {
     return (
-      <div className="chat chat--slack" data-provider="slack" data-ui>
+      <div className={`chat chat--${provider}`} data-provider={provider} data-ui>
         <div className="chat__header">
-          <p className="chat__title"># portfolio-messages</p>
+          <p className="chat__title">{provider === "discord" ? "# contact" : "# portfolio-messages"}</p>
         </div>
         <div className={`chat__message${typing ? " is-typing" : ""}`}>
           <span className="chat__avatar" aria-hidden="true">MI</span>

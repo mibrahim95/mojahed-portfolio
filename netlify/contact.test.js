@@ -1,7 +1,7 @@
 // Run with: npm test   (Node's built-in test runner, no extra packages)
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { escapeSlack, handle, limited } from "./functions/contact.js";
+import { escapeDiscord, escapeSlack, handle, limited } from "./functions/contact.js";
 
 const post = (body, headers = {}) =>
   new Request("http://x/.netlify/functions/contact", {
@@ -10,6 +10,7 @@ const post = (body, headers = {}) =>
     body: typeof body === "string" ? body : JSON.stringify(body),
   });
 const SLACK = { CONTACT_PROVIDER: "slack", SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/T/B/x" };
+const DISCORD = { CONTACT_PROVIDER: "discord", DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/123456789/abc-DEF_ghi" };
 const TELEGRAM = { CONTACT_PROVIDER: "telegram", TELEGRAM_BOT_TOKEN: "123:abc-DEF", TELEGRAM_CHAT_ID: "42" };
 const good = { fullName: "Jane Doe", email: "jane@company.com", msg: "Hi <there> & hello", website: "" };
 
@@ -17,7 +18,7 @@ function mockFetch(status = 200) {
   const calls = [];
   globalThis.fetch = async (url, init) => {
     calls.push({ url, body: JSON.parse(init.body) });
-    return new Response("{}", { status });
+    return new Response(status === 204 ? null : "{}", { status });
   };
   return calls;
 }
@@ -59,6 +60,24 @@ test("slack escapes control characters", async () => {
   await handle(post(good), { ...SLACK, CONTACT_PROVIDER: "Slack" });
   assert.match(calls[0].body.text, /Hi &lt;there&gt; &amp; hello$/);
   assert.equal(calls[0].body.mrkdwn, false);
+});
+
+test("discord posts escaped text to the webhook with mentions and previews off", async () => {
+  const calls = mockFetch(204);
+  const res = await handle(post({ ...good, msg: "@everyone **hi** [x](https://e.co) # big" }), DISCORD);
+  assert.equal(res.status, 200);
+  assert.equal(calls[0].url, DISCORD.DISCORD_WEBHOOK_URL);
+  assert.deepEqual(calls[0].body.allowed_mentions, { parse: [] });
+  assert.equal(calls[0].body.flags, 4);
+  assert.equal(
+    calls[0].body.content,
+    "Name: Jane Doe\nEmail: jane@company.com\nMessage: @everyone \\*\\*hi\\*\\* \\[x\\](https://e.co) \\# big",
+  );
+});
+
+test("escapeDiscord neutralizes markdown and keeps plain text", () => {
+  assert.equal(escapeDiscord("*a* _b_ ~c~ `d` ||e|| > f # g [h]"), "\\*a\\* \\_b\\_ \\~c\\~ \\`d\\` \\|\\|e\\|\\| \\> f \\# g \\[h\\]");
+  assert.equal(escapeDiscord("Hello, world: 1-2 (ok)"), "Hello, world: 1-2 (ok)");
 });
 
 test("provider failure returns 502", async () => {
@@ -115,8 +134,10 @@ test("control and bidi characters are stripped from the message", async () => {
   assert.match(calls[0].body.text, /Message: line one\nlinetwo$/);
 });
 
-test("unexpected Slack or Telegram settings are treated as not configured", async () => {
+test("unexpected Slack, Discord or Telegram settings are treated as not configured", async () => {
   const calls = mockFetch();
+  for (const url of ["http://discord.com/api/webhooks/1/x", "https://evil.example/api/webhooks/1/x", "https://discord.com.evil.example/api/webhooks/1/x", "https://discord.com/api/webhooks/1/x?wait=true"])
+    assert.equal((await handle(post(good), { ...DISCORD, DISCORD_WEBHOOK_URL: url })).status, 503, url);
   assert.equal((await handle(post(good), { ...SLACK, SLACK_WEBHOOK_URL: "http://169.254.169.254/" })).status, 503);
   assert.equal((await handle(post(good), { ...TELEGRAM, TELEGRAM_BOT_TOKEN: "x/../../evil" })).status, 503);
   assert.equal(calls.length, 0);

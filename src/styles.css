@@ -3360,7 +3360,8 @@ kbd {
   color: #fff;
 }
 
-.chat--slack .chat__message {
+.chat--slack .chat__message,
+.chat--discord .chat__message {
   display: flex;
   gap: 10px;
   margin-top: auto;
@@ -3372,7 +3373,8 @@ kbd {
   border-radius: 8px;
 }
 
-.chat--slack .chat__tag {
+.chat--slack .chat__tag,
+.chat--discord .chat__tag {
   padding: 1px 4px;
   border-radius: 3px;
   background: #e8e8e8;
@@ -3402,6 +3404,28 @@ kbd {
 
 .chat--slack .chat__time {
   color: #ababad;
+}
+
+/* Discord reuses the Slack layout (avatar, message, APP tag) in its own dark palette. */
+.chat--discord {
+  background: #313338;
+  color: #dbdee1;
+}
+
+.chat--discord .chat__header {
+  background: #2b2d31;
+  border-bottom: 1px solid #1e1f22;
+  color: #f2f3f5;
+}
+
+.chat--discord .chat__avatar,
+.chat--discord .chat__tag {
+  background: #4752c4;
+  color: #fff;
+}
+
+.chat--discord .chat__time {
+  color: #949ba4;
 }
 
 /* No chat provider: a neutral inbox notification in the site's own colours. */

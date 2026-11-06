@@ -49,9 +49,21 @@ async function postJson(url, body) {
   if (!res.ok) throw new Error(`provider responded ${res.status}`);
 }
 
-// One entry per delivery route. To add Discord or email later, add an entry here
+// One entry per delivery route. To add email later, add an entry here
 // (env check + send) and document its variables in the README.
 export const PROVIDERS = {
+  discord: {
+    // Only a real Discord webhook address, so a bad setting can't point the function elsewhere.
+    configured: (env) => /^https:\/\/(?:discord|discordapp)\.com\/api\/webhooks\/\d+\/[\w-]+$/.test(env.DISCORD_WEBHOOK_URL || ""),
+    // Discord answers 204 No Content on success. The text stays far under the 2,000-character limit:
+    // the form caps a message at 249 characters and escaping at most doubles it.
+    send: (text, env) =>
+      postJson(env.DISCORD_WEBHOOK_URL, {
+        content: escapeDiscord(text),
+        allowed_mentions: { parse: [] }, // @everyone, @here and <@id> ping nobody
+        flags: 4, // SUPPRESS_EMBEDS: no link previews for pasted URLs
+      }),
+  },
   telegram: {
     // Plain text (no parse_mode), so nothing the sender types is interpreted as markup.
     // The token must look like a bot token, so it can only ever change the bot path.
@@ -80,6 +92,10 @@ export const PROVIDERS = {
 // Slack reads <, > and & as control characters: <!channel>, <@U123>, <https://x|text>. Escaping
 // them turns mentions and disguised links into plain text.
 export const escapeSlack = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// Discord renders markdown. A backslash before these characters shows them as plain text, so the
+// sender can't bold, quote, hide spoilers, make headings or build [text](link) links.
+export const escapeDiscord = (text) => text.replace(/[\\*_~`|>#[\]]/g, "\\$&");
 
 export function validate(body) {
   const str = (v) => (typeof v === "string" ? v.trim() : "");

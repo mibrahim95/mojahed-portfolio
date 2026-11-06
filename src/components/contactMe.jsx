@@ -4,15 +4,15 @@ import about from "../json/about.json";
 import { RESUME, SOCIAL, external } from "../sections";
 
 // Messages go to the Netlify Function first (netlify/functions/contact.js), which
-// delivers them to Telegram or Slack with secrets kept server side. If it is off,
+// delivers them to Discord, Slack or Telegram with secrets kept server side. If it is off,
 // misconfigured or down, they go to Netlify Forms (the static form in index.html).
 const CONTACT_ENDPOINT = "/.netlify/functions/contact";
 
-// Public, display-only: picks the live preview. "telegram" | "slack" | "email" (no preview).
+// Public, display-only: picks the live preview. "discord" | "telegram" | "slack" | "email" (no preview).
 // It must match the server's CONTACT_PROVIDER; it holds no secret.
 const PREVIEW = (import.meta.env.REACT_APP_CONTACT_PROVIDER || "email").toLowerCase();
 // With no chat provider the preview shows a neutral inbox notification instead.
-const PREVIEW_LOOK = PREVIEW === "telegram" || PREVIEW === "slack" ? PREVIEW : "inbox";
+const PREVIEW_LOOK = ["discord", "telegram", "slack"].includes(PREVIEW) ? PREVIEW : "inbox";
 
 // Same limits the contact function applies: name 3–99 characters, message
 // under 250 characters, a valid email.

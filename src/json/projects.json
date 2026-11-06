@@ -151,7 +151,7 @@
       "Node.js"
     ],
     "imgPath": "/portfolioPreview.webp",
-    "desc": "The site you're reading. I first built it in 2022 on Create React App and Semantic UI, then rebuilt it in 2026 on Vite with hand-written CSS. A Netlify Function validates each contact message, drops honeypot spam and delivers to Slack or Telegram depending on one environment variable, and Netlify Forms catches anything the function can't send. ESLint and Node's built-in test runner cover the form handler and the skill search.",
+    "desc": "The site you're reading. I first built it in 2022 on Create React App and Semantic UI, then rebuilt it in 2026 on Vite with hand-written CSS. A Netlify Function validates each contact message, drops honeypot spam and delivers to Discord, Slack or Telegram depending on one environment variable, and Netlify Forms catches anything the function can't send. ESLint and Node's built-in test runner cover the form handler and the skill search.",
     "github": "https://github.com/mibrahim95/mojahed-portfolio",
     "url": "",
     "skills": [

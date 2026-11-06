@@ -10,7 +10,7 @@ portfolio with my experience, projects, résumé, and a contact form.
 - [React 18](https://react.dev/) + [Vite](https://vite.dev/)
 - Hand-written CSS (no UI kit), dark theme by default with a light-theme toggle
 - Fonts self-hosted via Fontsource
-- Contact form: a Netlify Function delivers messages to Telegram or Slack, with
+- Contact form: a Netlify Function delivers messages to Discord, Slack or Telegram, with
   Netlify Forms as the fallback
 
 ## Getting started
@@ -49,14 +49,27 @@ Set these in the Netlify dashboard: **Project configuration** > **Environment va
 
 | Variable | Where it is read | Value |
 | --- | --- | --- |
-| `CONTACT_PROVIDER` | function (secret side) | `telegram`, `slack` or `none` |
-| `REACT_APP_CONTACT_PROVIDER` | browser (public) | `telegram`, `slack` or `email`. Picks the live preview next to the form; `email` shows none. Set it to match `CONTACT_PROVIDER` (use `email` when that is `none`). |
+| `CONTACT_PROVIDER` | function (secret side) | `discord`, `telegram`, `slack` or `none` |
+| `REACT_APP_CONTACT_PROVIDER` | browser (public) | `discord`, `telegram`, `slack` or `email`. Picks the live preview next to the form; `email` shows none. Set it to match `CONTACT_PROVIDER` (use `email` when that is `none`). |
+| `DISCORD_WEBHOOK_URL` | function | Discord only |
 | `TELEGRAM_BOT_TOKEN` | function | Telegram only |
 | `TELEGRAM_CHAT_ID` | function | Telegram only |
 | `SLACK_WEBHOOK_URL` | function | Slack only |
 
 > Never give a secret a `REACT_APP_` or `VITE_` prefix. Those variables are compiled
 > into the public JavaScript and anyone can read them.
+
+**Discord**
+
+1. In Discord, make a private server and a private text channel (for example `#contact`).
+2. Channel gear icon (**Edit Channel**) > **Integrations** > **Webhooks** > **New Webhook** >
+   **Copy Webhook URL**. Anyone with the URL can post to the channel, so keep it secret.
+3. In Netlify add: `CONTACT_PROVIDER` = `discord`, `DISCORD_WEBHOOK_URL` = the URL
+   (tick **Contains secret values**), `REACT_APP_CONTACT_PROVIDER` = `discord`. Redeploy.
+4. On your phone set the server's notifications to **All Messages** so each message buzzes.
+
+The function turns off mentions (`@everyone` pings nobody), link previews and Discord's
+markdown, so a sender can't format or ping anything.
 
 **Telegram**
 
@@ -87,7 +100,7 @@ Set these in the Netlify dashboard: **Project configuration** > **Environment va
    **Form submission notifications** > **Add notification** > **Email notification**,
    form `contact`, your email address.
 
-Do the Forms setup even when Telegram or Slack is on: it is the fallback.
+Do the Forms setup even when Discord, Telegram or Slack is on: it is the fallback.
 
 **Old variables to delete:** `REACT_APP_API_HOST` and `REACT_APP_JAVA_API_USERNAME_AND_PASS`
 are no longer read. Remove them, and change that password anywhere you reuse it,
