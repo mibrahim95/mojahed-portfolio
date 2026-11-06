@@ -57,7 +57,7 @@ function Palette({ open, onClose, onPick }) {
       document.querySelector(row.href)?.scrollIntoView({ block: "start" });
     } else {
       onClose();
-      window.open(row.href, row.href.startsWith("mailto") ? "_self" : "_blank", "noopener");
+      window.open(row.href, row.href.startsWith("mailto") ? "_self" : "_blank", "noopener,noreferrer");
     }
     setText("");
     setActive(0);
