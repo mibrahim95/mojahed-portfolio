@@ -1,5 +1,6 @@
 import { logoBySlug } from "../skills";
 import { SkillLogo } from "./logo";
+import { PixelHeart } from "./hero";
 
 // Two projects have no screenshot. Their pictures are drawn from what they are.
 
@@ -57,6 +58,14 @@ function RackMedia() {
 }
 
 export function ProjectMedia({ project, sizes }) {
+  if (project.header === "Heartbeat Frame") {
+    return (
+      <span className="media-heart">
+        <img src={project.imgPath} alt={`Photo of ${project.header}`} width="800" height="480" loading="lazy" sizes={sizes} />
+        <PixelHeart />
+      </span>
+    );
+  }
   if (project.imgPath) {
     return <img src={project.imgPath} alt={`Screenshot of ${project.header}`} width="800" height="480" loading="lazy" sizes={sizes} />;
   }

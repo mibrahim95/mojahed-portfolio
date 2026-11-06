@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { reducedMotion } from "../motion";
+import { Pix } from "./pixel";
+import { HERO_IDLE, HERO_WALK_A, HERO_WALK_B } from "../sprites";
 
 // Up, up, down, down, left, right, left, right, B, A, typed anywhere on the page.
 const CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
@@ -278,6 +280,31 @@ const svgProps = {
 
 
 
+// Pixel me on an evening walk along the river. CSS moves him and swaps the two walk
+// frames; a click stops him for a hello. Reduced motion parks him, standing.
+function Stroller() {
+  const [hi, setHi] = useState(false);
+  useEffect(() => {
+    if (!hi) return undefined;
+    const t = setTimeout(() => setHi(false), 2200);
+    return () => clearTimeout(t);
+  }, [hi]);
+  return (
+    <div className={`stroller${hi ? " is-hi" : ""}`}>
+      <div className="stroller-walk">
+      <button type="button" className="stroller-btn" onClick={() => setHi(true)} aria-label="Say hi to pixel Mojahed">
+        <span className="stroller-flip">
+          <Pix rows={HERO_WALK_A} scale={3} className="st-a" />
+          <Pix rows={HERO_WALK_B} scale={3} className="st-b" />
+          <Pix rows={HERO_IDLE} scale={3} className="st-idle" />
+        </span>
+      </button>
+      <span className="stroller-say" role="status">{hi ? "Hi, thanks for stopping by." : ""}</span>
+      </div>
+    </div>
+  );
+}
+
 function Skyline() {
   const root = useRef(null);
   const [lit, setLit] = useState(false);
@@ -363,7 +390,7 @@ function Skyline() {
   }, []);
 
   return (
-    <div className={`skyline${lit ? " is-cheat" : ""}${onScreen ? "" : " is-paused"}`} ref={root} aria-hidden="true">
+    <div className={`skyline${lit ? " is-cheat" : ""}${onScreen ? "" : " is-paused"}`} ref={root}>
       <svg className="sk-layer sk-sky" {...svgProps} style={{ "--depth": 0.55, "--drift": 4 }}>
         {S.stars.map((d, i) => (
           <path key={i} className="sk-star" style={{ "--g": i }} d={d} />
@@ -374,7 +401,7 @@ function Skyline() {
           <circle className="sk-plane-light" cx="9" cy="1" r="1.3" />
         </g>
       </svg>
-      <span className="sk-moon" />
+      <span className="sk-moon" aria-hidden="true" />
       <svg className="sk-layer sk-far" {...svgProps} style={{ "--depth": 0.38, "--drift": 8 }}>
         <path d={S.far} />
       </svg>
@@ -423,7 +450,8 @@ function Skyline() {
           <path key={i} className="sk-house" d={d} />
         ))}
       </svg>
-      <div className="sk-fireworks">
+      <Stroller />
+      <div className="sk-fireworks" aria-hidden="true">
         {[0, 1, 2, 3, 4].map((i) => (
           <span key={i} style={{ "--i": i }} />
         ))}

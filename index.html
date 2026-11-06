@@ -10,7 +10,7 @@
       content="Philadelphia backend developer. I build Java data pipelines, REST APIs and system integrations with retries and failure alerts, and I make slow batch jobs fast. Projects, experience and résumé."
     />
     <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#0d1012" />
+    <meta name="theme-color" content="#101416" />
     <!-- Apply the saved theme (dark or darker) before first paint, so it never flashes. Dark is the default. -->
     <script>
       (function () {
@@ -18,7 +18,7 @@
         try { t = localStorage.getItem("theme"); } catch (e) {}
         if (t !== "darker") t = "dark";
         document.documentElement.setAttribute("data-theme", t);
-        if (t === "darker") document.querySelector('meta[name="theme-color"]').setAttribute("content", "#020303");
+        if (t === "darker") document.querySelector('meta[name="theme-color"]').setAttribute("content", "#06080f");
       })();
     </script>
     <link rel="canonical" href="https://mojahedsportfolio.com/" />
@@ -38,11 +38,11 @@
         display: grid;
         place-items: center;
         pointer-events: none;
-        background: #0d1012;
+        background: #101416;
         color: #eef1ee;
         animation: intro-out 0.5s cubic-bezier(0.7, 0, 0.2, 1) 1.05s forwards;
       }
-      [data-theme="darker"] #intro { background: #020303; }
+      [data-theme="darker"] #intro { background: #06080f; }
       #intro.is-skip { animation-duration: 0.22s; animation-delay: 0s; }
       .intro-in { display: grid; justify-items: center; gap: 18px; padding: 0 24px; text-align: center; }
       .intro-mark { width: 72px; height: 72px; animation: intro-mark 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }

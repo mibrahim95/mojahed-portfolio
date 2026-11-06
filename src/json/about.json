@@ -3,8 +3,8 @@
   "role": "Software Engineer 2 (backend)",
   "company": "Comcast",
   "location": "Philadelphia, PA",
-  "headline": "Backend engineer building Java services, APIs and the pipelines that connect them.",
-  "lede": "I've written production code for seven years, and since 2023 that has meant backend work at Comcast. I build the Java pipelines and API imports that move data between internal systems. The imports retry when they hit a rate limit, and a failed report sends an alert over Slack, Teams and email. Adding parallel processing to four or five job families took more than six hours off the daily run. Before Comcast I spent four years at Turn 14 Distribution on the PHP and MySQL behind a B2B e-commerce site and a warehouse management system.",
+  "headline": "I build backend services, APIs and data pipelines, and the web apps on top of them.",
+  "lede": "Seven years of production code: Java pipelines and API integrations at Comcast, PHP and MySQL e-commerce at Turn 14, and Python, Linux and a Proxmox homelab on my own time.",
   "photo": {
     "src": "/profile.webp",
     "alt": "Mojahed Ibrahim in a navy suit and tie, smiling outdoors",
@@ -33,15 +33,28 @@
   "sections": {
     "speedTitle": "Performance work",
     "skills": "Pick a skill or type one, and the projects and jobs where I used it move to the front.",
-    "projects": "Work from Turn 14 and from my own time, including a Spring Boot contact API, a Raspberry Pi frame with its own Flask API and CI pipeline, and the Proxmox server I run at home.",
-    "experience": "Since 2023 I've built Java pipelines and API integrations at Comcast. Before that I spent four years on PHP and MySQL at Turn 14, and in college I tutored SQL and PHP and interned at Five Below."
+    "projects": "Production PHP and MySQL, a Java API, a Raspberry Pi frame with its own Flask API, and the Proxmox server I run at home. Pick a card for the full write-up.",
+    "experience": "Java pipelines and API integrations at Comcast since 2023. Four years of PHP and MySQL at Turn 14 before that, and in college I tutored SQL and PHP and interned at Five Below."
   },
   "skills": [
     {
-      "group": "Back end and APIs",
+      "group": "Backend services",
+      "short": "Backend",
       "items": [
         "Java",
+        "PHP",
+        "Python",
         "Spring Boot",
+        "Flask",
+        "Go",
+        "Node.js",
+        "Netlify Functions"
+      ]
+    },
+    {
+      "group": "APIs and integrations",
+      "short": "APIs",
+      "items": [
         "REST APIs",
         "API integration",
         "Retry handling",
@@ -50,17 +63,12 @@
         "OAuth",
         "Token authentication",
         "Webhooks",
-        "JSON",
-        "PHP",
-        "Python",
-        "Flask",
-        "Go",
-        "Node.js",
-        "Netlify Functions"
+        "JSON"
       ]
     },
     {
       "group": "Data pipelines and reliability",
+      "short": "Pipelines",
       "items": [
         "Data-ingestion pipelines",
         "Batch processing",
@@ -73,7 +81,8 @@
       ]
     },
     {
-      "group": "Databases and SQL",
+      "group": "SQL and databases",
+      "short": "SQL",
       "items": [
         "SQL",
         "MySQL",
@@ -86,25 +95,26 @@
       ]
     },
     {
-      "group": "Delivery and tooling",
+      "group": "Web",
+      "short": "Web",
       "items": [
-        "Git and GitHub",
-        "GitHub Actions",
-        "Maven",
-        "Concourse CI/CD",
-        "Jira",
-        "Unit testing",
-        "Code review",
-        "Refactoring",
-        "Agile",
-        "Mentoring",
-        "ESLint",
-        "flake8",
-        "Vagrant"
+        "JavaScript",
+        "jQuery",
+        "AJAX",
+        "HTML",
+        "CSS",
+        "React",
+        "Vite",
+        "SEO",
+        "Web accessibility",
+        "Sass",
+        "gulp",
+        "Bootstrap"
       ]
     },
     {
-      "group": "Linux and infrastructure",
+      "group": "Homelab and infrastructure",
+      "short": "Infra",
       "items": [
         "Linux",
         "Bash",
@@ -126,24 +136,8 @@
       ]
     },
     {
-      "group": "Web front end",
-      "items": [
-        "JavaScript",
-        "jQuery",
-        "AJAX",
-        "HTML",
-        "CSS",
-        "React",
-        "Vite",
-        "SEO",
-        "Web accessibility",
-        "Sass",
-        "gulp",
-        "Bootstrap"
-      ]
-    },
-    {
       "group": "Hardware and Python libraries",
+      "short": "Hardware",
       "items": [
         "Raspberry Pi",
         "SPI",
@@ -158,7 +152,27 @@
       ]
     },
     {
+      "group": "Delivery and tooling",
+      "short": "Delivery",
+      "items": [
+        "Git and GitHub",
+        "GitHub Actions",
+        "Maven",
+        "Concourse CI/CD",
+        "Jira",
+        "Unit testing",
+        "Code review",
+        "Refactoring",
+        "Agile",
+        "Mentoring",
+        "ESLint",
+        "flake8",
+        "Vagrant"
+      ]
+    },
+    {
       "group": "Also used",
+      "short": "Also",
       "items": [
         "Excel: PivotTables, VLOOKUP, macros",
         "Data analysis",
@@ -168,6 +182,7 @@
     },
     {
       "group": "Familiar with",
+      "short": "Familiar",
       "items": [
         "AWS",
         "Azure",

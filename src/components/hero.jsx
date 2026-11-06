@@ -1,21 +1,16 @@
 import about from "../json/about.json";
 import experiences from "../json/expList.json";
-import projects from "../json/projects.json";
-import { RESUME, SOCIAL, external } from "../sections";
-import { SKILLS, dash, logoFor, slug } from "../skills";
-import { range, scale, tenure, SHORT, toMonth } from "../timeline";
-import { SHORTCUT, openProject } from "../motion";
-import { ArrowRight, Download } from "./icons";
+import { GROUPS, SKILLS, logoFor } from "../skills";
+import { tenure } from "../timeline";
+import { SHORTCUT } from "../motion";
 import { SkillLogo } from "./logo";
 import Portrait from "./portrait";
+import Skyline from "./skyline";
 
-// Backend first, the way the résumé now reads. PL/SQL is on the résumé but never leads.
-const STACK = ["Java", "Spring Boot", "REST APIs", "SQL", "MySQL", "Redis", "Git", "Maven", "Concourse CI/CD", "Jira", "Linux", "Docker", "Python", "PHP", "JavaScript", "Tailscale"];
+// The range: the core skill groups, each with the three skills that best stand for it.
+const RANGE = GROUPS.slice(0, 6);
 const current = experiences[0];
-const building = projects.find((p) => p.header === "Heartbeat Frame");
 const edu = about.education;
-// The first sentence of a description, for short blurbs.
-const lead = (text) => text.split(/(?<=\.)\s+/)[0];
 
 // A two-frame pixel heart, the same one the frame shows when a heart arrives.
 export function PixelHeart() {
@@ -27,74 +22,42 @@ export function PixelHeart() {
   );
 }
 
-// Before/after bars for the two Comcast speedups, drawn to scale.
+// Before and after for the two speedups. Each row is drawn to its own scale (before = the
+// full track), and every value sits in the column on the right, never on a bar.
+const SPEEDUPS = [
+  { title: "One slow job", how: "Rewrote its query, added indexes and changed its joins.", before: "100%", after: "−80%", w: 20, range: 0, sr: "One slow job now runs in 80% less time." },
+  { title: "A recurring job", how: "Four or five hours down to about one.", before: "4 to 5 h", after: "~1 h", w: 20, range: 20, sr: "A recurring job went from four or five hours to about one." },
+];
+
 function Speedups() {
-  const rows = [
-    { label: "One slow job, after I rewrote its query, added indexes and changed its joins", before: 100, after: 20, note: "80% less runtime" },
-    { label: "A separate recurring job", before: 100, after: 100 / 4.5, note: "4 to 5 hours, now about 1" },
-  ];
   return (
     <ul className="speed">
-      {rows.map((r, i) => (
-        <li key={r.label} style={{ "--i": i }}>
-          <p className="speed-label">{r.label}</p>
-          <div className="speed-bars" aria-hidden="true">
-            <span className="speed-before" />
-            <span className="speed-after" style={{ "--w": `${r.after}%` }} />
+      {SPEEDUPS.map((r, i) => (
+        <li key={r.title} className="sp-row" style={{ "--i": i, "--w": `${r.w}%`, "--range": `${r.range}%` }}>
+          <p className="sp-title">
+            {r.title}
+            <span>{r.how}</span>
+          </p>
+          <div className="sp-bars" aria-hidden="true">
+            <span className="sp-bar sp-before" />
+            <span className="sp-bar sp-after" />
           </div>
-          <p className="speed-note">{r.note}</p>
+          <p className="sp-vals" aria-hidden="true">
+            <span>{r.before}</span>
+            <span className="sp-val-after">{r.after}</span>
+          </p>
+          <p className="visually-hidden">{r.sr}</p>
         </li>
       ))}
     </ul>
   );
 }
 
-// Turn 14 and Comcast share the main line; the internship and tutoring job overlapped, so each gets its own.
-const ROW = { temple: 1, "5b": 2 };
-
-function CareerStrip() {
-  const s = scale(2018);
-  const lanes = experiences
-    .slice()
-    .reverse()
-    .map((j) => ({ id: j.id, label: SHORT[j.id], when: range(j.dates), href: `#job-${j.id}`, dates: j.dates }));
-  const grad = toMonth(edu.graduated);
-  return (
-    <div className="strip" role="list" aria-label="Career timeline">
-      {lanes.map((l, i) => (
-        <a
-          key={l.id}
-          role="listitem"
-          href={l.href}
-          className={`strip-bar strip-${l.id}`}
-          aria-label={`${l.label}, ${dash(l.dates)}`}
-          style={{ "--l": `${s.at(l.when[0])}%`, "--w": `${s.at(l.when[1]) - s.at(l.when[0])}%`, "--row": ROW[l.id] || 0, "--i": i }}
-        >
-          <span>{l.label}</span>
-        </a>
-      ))}
-      <span className="strip-grad" style={{ "--l": `${s.at(grad)}%` }}>
-        <span>B.B.A. {edu.year}</span>
-      </span>
-      <div className="strip-years" aria-hidden="true">
-        {s.years.map((y) => (
-          <span key={y} style={{ "--l": `${s.at(y * 12)}%` }}>
-            {String(y).slice(2).padStart(3, "’")}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Hero({ onPick, onSearch }) {
+function Hero({ onGroup, onSearch }) {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="wrap intro">
         <div className="intro-copy">
-          <p className="id-place" data-load style={{ "--d": 0 }}>
-            {about.role} at {about.company} · {about.location}
-          </p>
           <h1 id="hero-title" className="id-name">
             <span className="id-line" style={{ "--d": 0 }}>
               <span>Mojahed</span>
@@ -111,20 +74,12 @@ function Hero({ onPick, onSearch }) {
           </p>
           <div className="id-actions" data-load style={{ "--d": 5 }}>
             <a className="btn btn-primary" href="#projects">
-              See projects <ArrowRight />
+              See projects
             </a>
             <a className="btn btn-ghost" href="#contact">
               Get in touch
             </a>
-            <a className="btn btn-ghost" href={RESUME} {...external}>
-              <Download /> Résumé PDF
-            </a>
           </div>
-          <p className="id-social" data-load style={{ "--d": 6 }}>
-            <a className="link" href={SOCIAL.linkedin} {...external}>LinkedIn</a>
-            <a className="link" href={SOCIAL.github} {...external}>GitHub</a>
-            <a className="link" href={`mailto:${about.email}`}>{about.email}</a>
-          </p>
         </div>
 
         <figure className="badge">
@@ -145,11 +100,13 @@ function Hero({ onPick, onSearch }) {
         </figure>
       </div>
 
+      <Skyline />
+
       <div className="wrap bento">
         <div className="tile tile-speed" data-reveal>
           <h2 className="tile-title">{about.sections.speedTitle}</h2>
           <p className="speed-big">
-            <span>{about.highlights[0].value}</span> {about.highlights[0].label}.
+            <span>{about.highlights[0].value}</span> taken off the daily batch run by running job families in parallel.
           </p>
           <Speedups />
         </div>
@@ -176,50 +133,33 @@ function Hero({ onPick, onSearch }) {
         </div>
 
         <div className="tile tile-stack" data-reveal style={{ "--i": 2 }}>
-          <h2 className="tile-title">Stack</h2>
-          <ul className="stack">
-            {STACK.map((name, i) => {
-              const s = SKILLS.find((x) => x.name === name);
-              return (
-                <li key={name} style={{ "--i": i }}>
-                  <button type="button" className="stack-btn" onClick={() => onPick(name)}>
-                    <SkillLogo logo={logoFor(name)} name={name} size={22} />
-                    <span className="stack-name">{name}</span>
-                    <span className="stack-count">
-                      {s.items.length}
-                      <span className="visually-hidden"> places on this page</span>
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
+          <h2 className="tile-title">What I work on</h2>
+          <ul className="range">
+            {RANGE.map((g, i) => (
+              <li key={g.group} style={{ "--i": i }}>
+                <button type="button" className="range-btn" onClick={() => onGroup(g.group)}>
+                  <span className="range-name">{g.group}</span>
+                  <span className="range-skills">
+                    {g.items.slice(0, 3).map((n) => (
+                      <span key={n}>
+                        <SkillLogo logo={logoFor(n)} name={n} size={14} />
+                        {n}
+                      </span>
+                    ))}
+                  </span>
+                  <span className="range-n">
+                    {g.items.length}
+                    <span className="visually-hidden"> skills</span>
+                  </span>
+                </button>
+              </li>
+            ))}
           </ul>
           <button type="button" className="stack-more" onClick={onSearch}>
             Search all {SKILLS.length} skills <kbd>{SHORTCUT}</kbd>
           </button>
         </div>
 
-        <div className="tile tile-build" data-reveal style={{ "--i": 3 }}>
-          <div className="build-media">
-            <img src={building.imgPath} alt="The Heartbeat Frame build" width="800" height="480" loading="lazy" />
-            <PixelHeart />
-          </div>
-          <div className="build-body">
-            <h2 className="tile-title">Building now</h2>
-            <p className="build-name">{building.header}</p>
-            <p className="build-desc">{lead(building.desc)}</p>
-            <button type="button" className="link-btn" onClick={() => openProject(`p-${slug(building.header)}`)}>
-              Open the project <ArrowRight />
-            </button>
-          </div>
-        </div>
-
-        <div className="tile tile-career" data-reveal style={{ "--i": 4 }}>
-          <h2 className="tile-title">
-            Career <a className="link tile-link" href="#experience">Full history</a>
-          </h2>
-          <CareerStrip />
-        </div>
       </div>
     </section>
   );

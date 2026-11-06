@@ -189,40 +189,43 @@ function Case({ p, n, lit, dim, onOpen }) {
   );
 }
 
-// The index: one row per project in big type. On desktop a preview of the hovered project
-// follows the pointer; the position goes straight into CSS variables, not React state.
-function Index({ items, isLit, skill, onOpen }) {
-  const ref = useRef(null);
-  const move = (e) => {
-    if (e.pointerType !== "mouse") return;
-    const r = ref.current.getBoundingClientRect();
-    ref.current.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    ref.current.style.setProperty("--my", `${e.clientY - r.top}px`);
-  };
+// More builds: every one is on show as a card with its picture, what it is and its
+// stack. A card opens the full write-up; nothing is hidden behind a hover.
+function Builds({ items, isLit, skill, onOpen }) {
   return (
-    <ol className="index" ref={ref} onPointerMove={move} data-reveal>
-      {items.map((p) => {
+    <ul className="builds">
+      {items.map((p, i) => {
         const lit = skill && isLit(p);
         return (
-          <li key={p.key} id={p.key} className={`row${lit ? " is-match" : ""}${skill && !lit ? " is-dim" : ""}`}>
-            <button type="button" className="row-btn proj-open" onClick={() => onOpen(p)} aria-haspopup="dialog">
-              <span className="row-year">{dash(p.year)}</span>
-              <span className="row-title">{p.header}</span>
-              <span className="row-kind">{p.kind}</span>
-              <span className="row-stack" aria-hidden="true">
-                {p.languages.slice(0, 4).map((l) => (
-                  <SkillLogo key={l} logo={logoFor(l)} name={l} size={16} />
+          <li
+            key={p.key}
+            id={p.key}
+            className={`build build-${i}${lit ? " is-match" : ""}${skill && !lit ? " is-dim" : ""}`}
+            data-reveal
+            style={{ "--i": i }}
+          >
+            <button type="button" className="build-btn proj-open" onClick={() => onOpen(p)} aria-haspopup="dialog">
+              <span className="build-pic case-media">
+                <ProjectMedia project={p} sizes="(min-width: 900px) 400px, 100vw" />
+              </span>
+              <span className="build-meta">
+                <span>{p.kind}</span>
+                <span>{dash(p.year)}</span>
+              </span>
+              <span className="build-title">
+                {p.header} <ArrowUpRight className="build-arrow" />
+              </span>
+              <span className="build-what">{split(p.desc)[0]}</span>
+              <span className="build-stack" aria-hidden="true">
+                {p.languages.slice(0, 5).map((l) => (
+                  <SkillLogo key={l} logo={logoFor(l)} name={l} size={15} />
                 ))}
               </span>
-              <ArrowUpRight className="row-arrow" />
             </button>
-            <div className="row-peek" aria-hidden="true">
-              <ProjectMedia project={p} sizes="320px" />
-            </div>
           </li>
         );
       })}
-    </ol>
+    </ul>
   );
 }
 
@@ -297,9 +300,9 @@ function Projects({ skill, onPick }) {
 
         <div className="index-head" data-reveal>
           <h3>More builds</h3>
-          <p>From small PHP and MySQL tools to the server I run at home. Open one for the full write-up.</p>
+          <p>The server I run at home, this site, and smaller PHP and MySQL tools. Each card opens the full write-up.</p>
         </div>
-        <Index items={REST} isLit={isLit} skill={skill} onOpen={open} />
+        <Builds items={REST} isLit={isLit} skill={skill} onOpen={open} />
       </div>
       <Detail project={detail} onClose={close} onStep={step} />
     </section>

@@ -7,11 +7,10 @@ import Experience from "./components/experience";
 import ContactMe from "./components/contactMe";
 import Footer from "./components/footer";
 import Palette from "./components/palette";
-import Skyline from "./components/skyline";
 import { SkillLogo } from "./components/logo";
 import { Close } from "./components/icons";
 import useReveal from "./hooks/useReveal";
-import { countLine, findSkill, logoFor, parseSql, resolveSkill } from "./skills";
+import { GROUPS, countLine, findSkill, logoFor, parseSql, resolveSkill } from "./skills";
 import { transition } from "./motion";
 
 // While a skill filter is on and the search box has scrolled away, a pill under the nav
@@ -49,6 +48,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [skill, setSkill] = useState(null);
   const [palette, setPalette] = useState(false);
+  const [group, setGroup] = useState(GROUPS[0].group);
 
   const apply = (next) => {
     if (next?.name === skill?.name) return;
@@ -58,6 +58,8 @@ function App() {
   // A chip, tile or palette row: an exact skill name, or null to reset.
   const pick = (name) => {
     setQuery(name || "");
+    const home = name && GROUPS.find((g) => g.items.includes(name));
+    if (home) setGroup(home.group);
     apply(name ? findSkill(name) : null);
   };
 
@@ -67,9 +69,15 @@ function App() {
     apply(resolveSkill(parseSql(text) ?? text));
   };
 
+  const show = () => document.getElementById("skills")?.scrollIntoView({ block: "start" });
   const pickAndShow = (name) => {
     pick(name);
-    document.getElementById("skills")?.scrollIntoView({ block: "start" });
+    show();
+  };
+  // The hero's range tiles open their group in the finder.
+  const groupAndShow = (g) => {
+    transition(() => setGroup(g));
+    show();
   };
 
   useEffect(() => {
@@ -93,9 +101,8 @@ function App() {
       </a>
       <Nav onSearch={() => setPalette(true)} />
       <main id="main">
-        <Hero onPick={pickAndShow} onSearch={() => setPalette(true)} />
-        <Skyline />
-        <Finder skill={skill} query={query} onQuery={type} onPick={pick} />
+        <Hero onPick={pickAndShow} onGroup={groupAndShow} onSearch={() => setPalette(true)} />
+        <Finder skill={skill} query={query} onQuery={type} onPick={pick} group={group} onGroup={(g) => transition(() => setGroup(g))} />
         <Projects skill={skill} onPick={pick} />
         <Experience skill={skill} />
         <ContactMe />

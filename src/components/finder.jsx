@@ -1,4 +1,3 @@
-import { useState } from "react";
 import about from "../json/about.json";
 import { GROUPS, SKILLS, countLine, dash, findSkill, logoFor, noteFor, searchSkills, suggestFor } from "../skills";
 import { Close, Search } from "./icons";
@@ -108,54 +107,47 @@ function Results({ skill, query, onPick }) {
   return null;
 }
 
-// "All" keeps the résumé's group order, so the backend skills lead.
-const TABS = [{ group: "All", items: SKILLS.map((x) => x.name) }, ...GROUPS];
-
-// Every skill is here, but folded to about two rows (one on a phone) until "Show all".
-// Folding is CSS (nth-child), so hidden chips also leave the tab order; the chip that is
-// filtering the page always stays in view.
-function Cloud({ skill, onPick }) {
-  const [tab, setTab] = useState("All");
-  const [open, setOpen] = useState(false);
-  const items = TABS.find((t) => t.group === tab).items;
-
+// Groups follow the range of the work: backend, APIs, pipelines, SQL, web, infra.
+// Pick a group on the rail and every skill in it shows at once; nothing is folded away.
+function Cloud({ skill, group, onGroup, onPick }) {
+  const current = GROUPS.find((g) => g.group === group) || GROUPS[0];
   return (
     <div className="cloud-wrap">
-      <div className="tabs" role="group" aria-label="Skill groups">
-        {TABS.map((t) => (
+      <div className="rail" role="group" aria-label="Skill groups">
+        {GROUPS.map((g, i) => (
           <button
-            key={t.group}
+            key={g.group}
             type="button"
-            aria-pressed={tab === t.group}
-            onClick={() => setTab(t.group)}
+            aria-pressed={current.group === g.group}
+            onClick={() => onGroup(g.group)}
+            style={{ "--i": i }}
           >
-            {t.group} <span>{t.items.length}</span>
+            <span className="rail-name">{g.group}</span>
+            <span className="rail-short" aria-hidden="true">{g.short}</span>
+            <span className="rail-n">{g.items.length}</span>
           </button>
         ))}
       </div>
-      <ul className={`cloud${open ? " is-open" : ""}`} id="skill-cloud" aria-label={`${tab} skills`}>
-        {items.map((n) => (
-          <li key={n} className={skill?.name === n ? "is-on" : undefined}>
-            <SkillChip name={n} active={skill?.name === n} onPick={onPick} />
-          </li>
-        ))}
-      </ul>
-      {items.length > 10 && (
-        <button
-          type="button"
-          className="link-btn cloud-more"
-          aria-expanded={open}
-          aria-controls="skill-cloud"
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? "Fold the list" : `Show all ${items.length}`}
-        </button>
-      )}
+      <div className="cloud-pane">
+        <p className="cloud-title">
+          {current.group} <span>{current.items.length} skills</span>
+        </p>
+        <ul className="cloud" key={current.group} aria-label={`${current.group} skills`}>
+          {current.items.map((n, i) => (
+            <li key={n} className={skill?.name === n ? "is-on" : undefined} style={{ "--i": i }}>
+              <SkillChip name={n} active={skill?.name === n} onPick={onPick} />
+            </li>
+          ))}
+        </ul>
+        <p className="cloud-hint">
+          All {SKILLS.length} skills are searchable from anywhere with <kbd>{SHORTCUT}</kbd>.
+        </p>
+      </div>
     </div>
   );
 }
 
-function Finder({ skill, query, onQuery, onPick }) {
+function Finder({ skill, query, onQuery, onPick, group, onGroup }) {
   const status = skill
     ? `${skill.items.length} ${skill.items.length === 1 ? "match" : "matches"} for ${skill.name}: ${countLine(skill)}.`
     : query.trim()
@@ -196,7 +188,7 @@ function Finder({ skill, query, onQuery, onPick }) {
             </div>
           </div>
 
-          <Cloud skill={skill} onPick={onPick} />
+          <Cloud skill={skill} group={group} onGroup={onGroup} onPick={onPick} />
 
           <p className="visually-hidden" role="status" aria-live="polite">
             {status}

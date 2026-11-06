@@ -129,11 +129,8 @@ function Tape({ sel, setSel, isLit }) {
 const FIRST = 2;
 
 function Job({ job, skill, lit, setSel }) {
-  const [open, setOpen] = useState(false);
   const folded = skill && !lit;
-  const extra = job.bullets.length - FIRST;
-  const bullets = open ? job.bullets : job.bullets.slice(0, FIRST);
-  const listId = `bullets-${job.id}`;
+  const extra = job.bullets.slice(FIRST);
   return (
     <li
       className={`job${folded ? " is-folded" : ""}${skill && lit ? " is-match" : ""}`}
@@ -160,15 +157,30 @@ function Job({ job, skill, lit, setSel }) {
         ) : (
           <>
             {job.desc && <p className="job-desc">{job.desc}</p>}
-            <ul className="job-bullets" id={listId}>
-              {bullets.map((b) => (
+            <ul className="job-bullets">
+              {job.bullets.slice(0, FIRST).map((b) => (
                 <li key={b}>{b}</li>
               ))}
             </ul>
-            {extra > 0 && (
-              <button type="button" className="link-btn" aria-expanded={open} aria-controls={listId} onClick={() => setOpen((o) => !o)}>
-                {open ? "Show fewer" : `Show ${extra} more`}
-              </button>
+            {extra.length > 0 && (
+              <details className="job-more">
+                <summary>
+                  <span className="job-more-open">
+                    {extra.length} more {extra.length === 1 ? "highlight" : "highlights"}
+                  </span>
+                  <span className="job-more-close">Hide highlights</span>
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+                    <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </summary>
+                <div className="job-more-body">
+                  <ul className="job-bullets">
+                    {extra.map((b) => (
+                      <li key={b}>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+              </details>
             )}
             <ul className="job-tags" aria-label="Skills used">
               {job.skills.map((t) => (

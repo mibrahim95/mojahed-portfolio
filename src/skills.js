@@ -66,10 +66,10 @@ export const ITEMS = [
   },
 ];
 
-const GROUPS = about.skills.map((g) => ({ group: g.group, items: g.items.map(canon) }));
+const GROUPS = about.skills.map((g) => ({ group: g.group, short: g.short || g.group, items: g.items.map(canon) }));
 const inGroups = new Set(GROUPS.flatMap((g) => g.items));
 const extra = [...new Set(ITEMS.flatMap((i) => i.tags))].filter((t) => !inGroups.has(t)).sort();
-if (extra.length) GROUPS.push({ group: "Also in my work", items: extra, more: true });
+if (extra.length) GROUPS.push({ group: "Also in my work", short: "More", items: extra, more: true });
 export { GROUPS };
 
 const aliasesOf = {};
