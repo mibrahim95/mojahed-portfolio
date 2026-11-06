@@ -1,44 +1,242 @@
-{
-  "code": [
-    {
-      "header": "Turn 14 Distribution",
-      "languages": ["PHP", "Javascript", "HTML", "CSS", "Jquery", "MySQL"],
-      "imgPath": "turn14.png",
-      "desc": "Work on a multitude of pages, features, and improvements to help the company grow",
-      "github": "",
-      "url": "https://turn14.com/"
-    },
-    {
-      "header": "Cousin's Supermarket Inventory",
-      "languages": ["PHP", "Javascript", "HTML", "CSS", "Heroku"],
-      "imgPath": "cousinsInv.png",
-      "desc": "The first steps to advancing the inventory system",
-      "github": "https://github.com/mibrahim95/cousinsinv",
-      "url": "https://cousinsinv.herokuapp.com/"
-    },
-    {
-      "header": "Video Game maintance List",
-      "languages": [
-        "PHP",
-        "Javascript",
-        "HTML",
-        "CSS",
-        "Jquery",
-        "MySQL",
-        "Heroku"
-      ],
-      "imgPath": "gameCheck.png",
-      "desc": "Help pinpoint nonfunctional games as well as pick out highly rated ones",
-      "github": "https://github.com/mibrahim95/romCheck",
-      "url": "https://rom-check.herokuapp.com/"
-    }
-  ],
-  "personal": [
-    {
-      "header": "Modding Arcade1up",
-      "meta": "so great",
-      "imgPath": "arcadeMod.png",
-      "desc": "Personal project as a gift, adding retropie to arcade cabinet"
-    }
-  ]
-}
+[
+  {
+    "header": "Telegram contact API",
+    "kind": "Java service",
+    "year": "2022",
+    "languages": [
+      "Java",
+      "Spring Boot",
+      "Maven",
+      "Telegram Bot API"
+    ],
+    "imgPath": "",
+    "desc": "A Spring Boot REST API, built with Maven, that checks contact-form submissions (name length, email format, message size) and forwards the valid ones to my phone as Telegram messages. It ran this site's contact form while the site was hosted on Heroku.",
+    "github": "https://github.com/mibrahim95/telegramApi",
+    "url": "",
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "REST APIs",
+      "JSON",
+      "Input validation",
+      "Maven",
+      "Telegram Bot API",
+      "Heroku",
+      "Git"
+    ]
+  },
+  {
+    "header": "Heartbeat Frame",
+    "kind": "Raspberry Pi build",
+    "year": "2026",
+    "languages": [
+      "Python",
+      "Flask",
+      "Raspberry Pi",
+      "SPI and I2C",
+      "GitHub Actions"
+    ],
+    "imgPath": "/heartbeatFrame.webp",
+    "desc": "A Raspberry Pi 5 picture frame that runs five devices at once: a 7.3-inch color e-ink panel, a round display, two OLEDs on separate I2C buses, a touch pad and an I2S speaker. The Python app runs as a systemd service. I wrote a direct SPI driver for the round display and share the bus with the e-ink panel under a lock. A small Flask API with bearer-token auth listens only on Tailscale and throttles bad tokens. On every push, GitHub Actions runs about 580 unit tests on two Python versions, plus flake8 and pip-audit. The code lives in a private repo.",
+    "github": "",
+    "url": "",
+    "skills": [
+      "Python",
+      "Flask",
+      "Waitress",
+      "REST APIs",
+      "JSON",
+      "Token authentication",
+      "Rate limiting",
+      "Input validation",
+      "API integration",
+      "Retry handling",
+      "Multithreading",
+      "Monitoring",
+      "Raspberry Pi",
+      "Linux",
+      "Bash",
+      "systemd",
+      "Tailscale",
+      "Security hardening",
+      "SPI",
+      "I2C",
+      "I2S audio",
+      "GPIO",
+      "NumPy",
+      "Pillow",
+      "OpenCV",
+      "Image processing",
+      "YAML",
+      "Twilio API",
+      "Unit testing",
+      "GitHub Actions",
+      "flake8",
+      "pip-audit",
+      "Git",
+      "Hardware"
+    ]
+  },
+  {
+    "header": "Homelab",
+    "kind": "Self-hosted server",
+    "year": "2026",
+    "languages": [
+      "Proxmox",
+      "Docker Compose",
+      "Tailscale",
+      "Pi-hole"
+    ],
+    "imgPath": "",
+    "desc": "A Proxmox server on a mini PC at home. Each service runs in its own unprivileged Linux container, most of them as Docker Compose stacks: Immich backs up my phone's photos, Nextcloud holds my files, and Pi-hole with Nginx Proxy Manager gives each service a short local name. Away from home I reach it only over Tailscale, with access rules limited to the ports I need, and an outside port scan confirmed the router exposes nothing. Pulse watches the containers and posts alerts to a Discord webhook.",
+    "github": "",
+    "url": "",
+    "skills": [
+      "Proxmox",
+      "Linux",
+      "LXC",
+      "Docker",
+      "Docker Compose",
+      "Tailscale",
+      "Pi-hole",
+      "Nginx Proxy Manager",
+      "Immich",
+      "Nextcloud",
+      "Networking",
+      "DNS",
+      "Monitoring",
+      "Webhooks",
+      "cron",
+      "Security hardening",
+      "Self-hosting"
+    ]
+  },
+  {
+    "header": "Turn 14 Distribution",
+    "kind": "Production web apps",
+    "year": "2019–2023",
+    "languages": [
+      "PHP",
+      "MySQL",
+      "JavaScript",
+      "jQuery",
+      "HTML",
+      "CSS"
+    ],
+    "imgPath": "/turn14.webp",
+    "desc": "My job from 2019 to 2023. I built features for the company's B2B e-commerce site and its warehouse management system in PHP and JavaScript, down to the MySQL underneath: a 1,000+ table schema, replication, and the queries that internal teams and B2B clients ran.",
+    "github": "",
+    "url": "https://turn14.com/",
+    "skills": [
+      "PHP",
+      "JavaScript",
+      "jQuery",
+      "AJAX",
+      "MySQL",
+      "SQL",
+      "HTML",
+      "CSS",
+      "Schema design",
+      "Replication"
+    ]
+  },
+  {
+    "header": "This portfolio",
+    "kind": "React site",
+    "year": "2022–2026",
+    "languages": [
+      "React",
+      "Vite",
+      "Netlify Functions",
+      "Node.js"
+    ],
+    "imgPath": "/portfolioPreview.webp",
+    "desc": "The site you're reading. I first built it in 2022 on Create React App and Semantic UI, then rebuilt it in 2026 on Vite with hand-written CSS. A Netlify Function validates each contact message, drops honeypot spam and delivers to Slack or Telegram depending on one environment variable, and Netlify Forms catches anything the function can't send. ESLint and Node's built-in test runner cover the form handler and the skill search.",
+    "github": "https://github.com/mibrahim95/mojahed-portfolio",
+    "url": "",
+    "skills": [
+      "React",
+      "JavaScript",
+      "Vite",
+      "HTML",
+      "CSS",
+      "Semantic UI",
+      "Netlify Functions",
+      "Netlify Forms",
+      "Node.js",
+      "JSON",
+      "Input validation",
+      "Webhooks",
+      "Telegram Bot API",
+      "Unit testing",
+      "ESLint",
+      "SEO",
+      "Web accessibility",
+      "Git"
+    ]
+  },
+  {
+    "header": "Cousin's Supermarket inventory",
+    "kind": "Inventory lookup",
+    "year": "2022",
+    "languages": [
+      "PHP",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "imgPath": "/cousinsInv.webp",
+    "desc": "A searchable product list with prices and UPCs for a local supermarket, built as the first step toward a full inventory system. Customers waited about 20% less for price checks.",
+    "github": "https://github.com/mibrahim95/cousinsinv",
+    "url": "",
+    "skills": [
+      "PHP",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Git"
+    ]
+  },
+  {
+    "header": "Video game maintenance list",
+    "kind": "ROM tracker",
+    "year": "2020",
+    "languages": [
+      "PHP",
+      "MySQL",
+      "JavaScript",
+      "jQuery"
+    ],
+    "imgPath": "/gameCheck.webp",
+    "desc": "Tracks which games in a large collection work and which don't, and picks out the highly rated ones.",
+    "github": "",
+    "url": "",
+    "skills": [
+      "PHP",
+      "MySQL",
+      "SQL",
+      "JavaScript",
+      "jQuery"
+    ]
+  },
+  {
+    "header": "Arcade1Up RetroPie mod",
+    "kind": "Hardware build",
+    "year": "Personal",
+    "languages": [
+      "Raspberry Pi",
+      "RetroPie",
+      "Hardware"
+    ],
+    "imgPath": "/arcadeMod.webp",
+    "desc": "A personal project and a gift. I fitted an Arcade1Up cabinet with a Raspberry Pi running RetroPie, so it plays a full game library instead of the few games it shipped with.",
+    "github": "",
+    "url": "",
+    "skills": [
+      "Raspberry Pi",
+      "Linux",
+      "RetroPie",
+      "Hardware"
+    ]
+  }
+]

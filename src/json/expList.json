@@ -1,50 +1,127 @@
 [
   {
+    "title": "Comcast",
+    "position": "Software Engineer 2",
+    "location": "Philadelphia, PA",
+    "desc": "I build the Java pipelines and API imports that move data between internal systems, and I tune and watch the daily jobs that run over millions of records.",
+    "id": "comcast",
+    "kind": "Full time",
+    "bullets": [
+      "Build Java data-ingestion pipelines that move data between internal systems.",
+      "Automated an API import of another team's data into the reporting database, with retries for rate limits and other failures. Also wired an internal API into the streaming-service report graphs.",
+      "Built failure alerts over Slack, Teams and email, including an end-of-day alert when a report fails to publish. Moved the Slack alerts to OAuth, and made reports wait until their data imports finish.",
+      "Cut more than 6 hours from the total daily run by adding parallel processing to four or five job families, with parallel PL/SQL and CloverDX graphs. Fixed critical runtime failures in the streaming-service reports the same way.",
+      "Rewrote a slow query, added indexes and changed its joins, cutting that job's runtime by over 80%. Took a separate recurring job from four or five hours down to about one.",
+      "Upgraded CloverDX from 6.3.1 to 7.4.2 and updated the graphs and reports that depend on it.",
+      "Take user stories in Jira from development through deployment on Concourse CI/CD, working with product owners and the DevOps team.",
+      "Support about 15 recurring reports that run daily over hundreds of thousands to millions of records. Built two end to end and drove the design of about five more, with validation checks that catch bad data before release.",
+      "Write and maintain the Oracle PL/SQL packages, procedures and migration scripts behind an internal fulfillment-accuracy system.",
+      "Review teammates' code, mentor new contractors on the team, and clean up legacy code when the workload is light."
+    ],
+    "dates": "Feb 2023 – now",
+    "skills": [
+      "Java",
+      "Data-ingestion pipelines",
+      "API integration",
+      "Retry handling",
+      "Rate limiting",
+      "Alerting",
+      "OAuth",
+      "Batch processing",
+      "Parallel processing",
+      "Query and index tuning",
+      "SQL",
+      "CloverDX",
+      "Migrations",
+      "Data validation",
+      "Refactoring",
+      "Go",
+      "Jira",
+      "Maven",
+      "Concourse CI/CD",
+      "Git",
+      "Agile",
+      "Code review",
+      "Mentoring",
+      "Reporting",
+      "Oracle PL/SQL"
+    ]
+  },
+  {
     "title": "Turn 14 Distribution",
     "position": "Web Application Developer",
-    "desc":"Build projects to help the company grow",
+    "location": "Horsham, PA",
+    "desc": "Four years building the company's B2B e-commerce platform and warehouse management system in PHP, JavaScript and MySQL, from the pages down to the schema.",
     "id": "t14",
+    "kind": "Full time",
     "bullets": [
-      "Develop database-driven web applications for internal/external clients." ,
-      "Utilization of MySQL to develop multiple queries and reports",
-      "Work independently to develop, maintain, review, and test code to meet specifications of multiple applications"
+      "Built and maintained database-driven web applications in PHP, MySQL and JavaScript/jQuery for internal teams and outside B2B clients.",
+      "Designed and tuned a MySQL schema of 1,000+ tables averaging 700K+ rows each, and set up replication for read scaling.",
+      "Refactored legacy code across many files and removed more than 10,000 lines, so it was easier to maintain and faster to run.",
+      "Developed, reviewed and tested code on my own for several production applications, working in an Agile team.",
+      "Wrote queries and reports against high-volume tables for internal teams and B2B clients."
     ],
-    "dates":"Jan 2019 - Present"
+    "dates": "Jan 2019 – Feb 2023",
+    "skills": [
+      "PHP",
+      "JavaScript",
+      "jQuery",
+      "AJAX",
+      "MySQL",
+      "SQL",
+      "Redis",
+      "HTML",
+      "CSS",
+      "Refactoring",
+      "Code review",
+      "Agile",
+      "Schema design",
+      "Query and index tuning",
+      "Replication",
+      "Migrations",
+      "Vagrant",
+      "Sass",
+      "gulp",
+      "Bootstrap"
+    ]
   },
   {
     "title": "Temple University",
-    "position": "Management Information Systems ITA ",
-    "desc":"Help prepare upcoming student for their future careers",
+    "position": "MIS Information Technology Assistant",
+    "location": "Philadelphia, PA",
+    "desc": "",
     "id": "temple",
+    "kind": "Part time",
     "bullets": [
-      "Assist students with coursework in the Data-Centric Application Development course.",
-      "Support in developing an easy to learn workload for the semester.",
-      "Understanding of HTML, CSS, PHP, and SQL."
+      "Tutored students in SQL, PHP, HTML and CSS for the Data-Centric Application Development course.",
+      "Helped shape a semester workload that students could learn from at a steady pace."
     ],
-    "dates":"June 2018 - Jan 2019"
+    "dates": "Jun 2018 – Jan 2019",
+    "skills": [
+      "SQL",
+      "PHP",
+      "HTML",
+      "CSS",
+      "Teaching"
+    ]
   },
   {
     "title": "Five Below",
     "position": "Store Operations Analyst Intern",
-    "desc":"Analyze employees time sheets to prepare holiday work schedules",
+    "location": "Philadelphia, PA",
+    "desc": "",
     "id": "5b",
+    "kind": "Internship",
     "bullets": [
-     "Analyzed data to build Labor reporting and Overtime Tracking report.",
-     "Created sample schedules for test locations and holiday season.",
-     "Assisted in organization of teams for the introduction of a new software."
+      "Built weekly and monthly labor and overtime reports in Excel that showed store operations where overtime was piling up.",
+      "Created sample schedules for test locations and for the holiday season.",
+      "Helped organize teams for the rollout of new software."
     ],
-    "dates":"May 2018 – Aug 2018"
-  },
-  {
-    "title": "Cousin’s Supermarket",
-    "position": "Front End Manager",
-    "desc":"Lead a team to effectively to decrease checkout time",
-    "id": "cousins",
-    "bullets": [
-      "Provide optimal leadership and communication to ensure productivity.",
-      "Assist cashiers with daily operations",
-      "Carefully address customer concerns and complaints with accurate solutions"
-    ],
-    "dates":"Sep 2017 - Jan 2019"
+    "dates": "May 2018 – Aug 2018",
+    "skills": [
+      "Excel",
+      "Data analysis",
+      "Reporting"
+    ]
   }
 ]

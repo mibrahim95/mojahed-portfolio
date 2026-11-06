@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mojahed Ibrahim | Backend Developer: Java, APIs, Data Pipelines</title>
+    <meta name="author" content="Mojahed Ibrahim" />
+    <meta
+      name="description"
+      content="Philadelphia backend developer. I build Java data pipelines, REST APIs and system integrations with retries and failure alerts, and I make slow batch jobs fast. Projects, experience and résumé."
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#101416" />
+    <!-- Apply the saved theme (dark or darker) before first paint, so it never flashes. Dark is the default. -->
+    <script>
+      (function () {
+        var t;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "darker") t = "dark";
+        document.documentElement.setAttribute("data-theme", t);
+        if (t === "darker") document.querySelector('meta[name="theme-color"]').setAttribute("content", "#06080f");
+      })();
+    </script>
+    <link rel="canonical" href="https://mojahedsportfolio.com/" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- First-load intro: a fixed layer over the page that never takes clicks, then lifts away.
+         Any key, click, scroll or touch ends it early. Skipped for reduced motion and after the
+         first view this session. The page underneath is already rendered and in the DOM. -->
+    <style>
+      #intro {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+        background: #101416;
+        color: #eef1ee;
+        animation: intro-out 0.5s cubic-bezier(0.7, 0, 0.2, 1) 1.05s forwards;
+      }
+      [data-theme="darker"] #intro { background: #06080f; }
+      #intro.is-skip { animation-duration: 0.22s; animation-delay: 0s; }
+      .intro-in { display: grid; justify-items: center; gap: 18px; padding: 0 24px; text-align: center; }
+      .intro-mark { width: 72px; height: 72px; animation: intro-mark 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+      .intro-dot { opacity: 0; animation: intro-dot 0.32s steps(2, jump-none) 0.38s forwards; }
+      .intro-name {
+        margin: 0;
+        font: 720 clamp(2rem, 6vw, 3.6rem) / 1 "Archivo Variable", system-ui, sans-serif;
+        font-stretch: 116%;
+        letter-spacing: -0.03em;
+        clip-path: inset(0 100% 0 0);
+        animation: intro-wipe 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
+      }
+      .intro-role {
+        margin: 0;
+        opacity: 0;
+        font: 450 0.9rem/1.3 "IBM Plex Mono", ui-monospace, monospace;
+        color: #b2bcbc;
+        animation: intro-fade 0.4s ease-out 0.5s forwards;
+      }
+      @keyframes intro-mark { from { opacity: 0; transform: scale(0.72); } }
+      @keyframes intro-dot { to { opacity: 1; } }
+      @keyframes intro-wipe { to { clip-path: inset(0 0 0 0); } }
+      @keyframes intro-fade { to { opacity: 1; } }
+      @keyframes intro-out { to { clip-path: inset(0 0 100% 0); visibility: hidden; } }
+      @media (prefers-reduced-motion: reduce) { #intro { display: none; } }
+    </style>
+
+    <!-- Open Graph / link previews (image URLs must be absolute). og-image.png: 1200x630, made by design. -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Mojahed Ibrahim" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Mojahed Ibrahim | Backend Developer" />
+    <meta
+      property="og:description"
+      content="Java data pipelines, REST APIs and integrations at Comcast, with retries, alerting and faster batch jobs. Seven years of production code."
+    />
+    <meta property="og:url" content="https://mojahedsportfolio.com/" />
+    <meta property="og:image" content="https://mojahedsportfolio.com/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mojahed Ibrahim, backend developer: Java, APIs, data pipelines and integrations" />
+    <meta property="profile:first_name" content="Mojahed" />
+    <meta property="profile:last_name" content="Ibrahim" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mojahed Ibrahim | Backend Developer" />
+    <meta
+      name="twitter:description"
+      content="Java data pipelines, REST APIs and integrations at Comcast, with retries, alerting and faster batch jobs. Seven years of production code."
+    />
+    <meta name="twitter:image" content="https://mojahedsportfolio.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Mojahed Ibrahim, backend developer: Java, APIs, data pipelines and integrations" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mojahed Ibrahim",
+        "jobTitle": "Backend Software Engineer",
+        "description": "Backend developer who builds Java data-ingestion pipelines, REST APIs and system integrations, with retry handling, failure alerting and performance tuning.",
+        "url": "https://mojahedsportfolio.com/",
+        "image": "https://mojahedsportfolio.com/profile.webp",
+        "worksFor": { "@type": "Organization", "name": "Comcast" },
+        "homeLocation": {
+          "@type": "Place",
+          "address": { "@type": "PostalAddress", "addressLocality": "Philadelphia", "addressRegion": "PA", "addressCountry": "US" }
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Temple University",
+          "department": { "@type": "Organization", "name": "Fox School of Business" },
+          "sameAs": "https://www.temple.edu/"
+        },
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "degree",
+          "name": "Bachelor of Business Administration, Management Information Systems"
+        },
+        "knowsAbout": ["Java", "Spring Boot", "REST APIs", "API integration", "Data-ingestion pipelines", "Parallel processing", "Retry handling", "SQL", "MySQL", "Redis", "OAuth", "Concourse CI/CD", "Linux", "Docker", "Python", "PHP", "JavaScript"],
+        "sameAs": [
+          "https://www.linkedin.com/in/mojahed-ibrahim/",
+          "https://github.com/mibrahim95"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="intro" aria-hidden="true">
+      <div class="intro-in">
+        <svg class="intro-mark" viewBox="0 0 32 32">
+          <rect width="32" height="32" rx="7" fill="#4fd9a4" />
+          <path fill="#07130e" d="M6 23V9h3.8l3.6 7.2L17 9h3.8v14h-3.4v-7.8l-2.8 5.4h-2.4l-2.8-5.4V23zM23.2 13.4h3.4V23h-3.4z" />
+          <path class="intro-dot" fill="#07130e" d="M23.2 9h3.4v3.2h-3.4z" />
+        </svg>
+        <p class="intro-name">Mojahed Ibrahim</p>
+        <p class="intro-role">Backend developer, Philadelphia</p>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var el = document.getElementById("intro");
+        var seen;
+        try { seen = sessionStorage.getItem("intro"); } catch (e) {}
+        if (seen || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) { el.remove(); return; }
+        try { sessionStorage.setItem("intro", "1"); } catch (e) {}
+        var events = ["pointerdown", "keydown", "wheel", "touchstart"];
+        var off = function () { events.forEach(function (n) { removeEventListener(n, skip, true); }); };
+        var done = function () { off(); el.remove(); };
+        var skip = function () { el.classList.add("is-skip"); off(); setTimeout(done, 260); };
+        // The timer is the guarantee: even if animations are throttled, the layer is gone by 1.7s.
+        setTimeout(done, 1700);
+        events.forEach(function (n) { addEventListener(n, skip, { capture: true, passive: true }); });
+        el.addEventListener("animationend", function (e) {
+          if (e.animationName === "intro-out") done();
+        });
+      })();
+    </script>
+    <noscript>You need to enable JavaScript to view this site.</noscript>
+    <div id="root"></div>
+    <!-- Netlify Forms reads this hidden copy at deploy time; the React form posts to it. -->
+    <form name="contact" data-netlify="true" netlify-honeypot="website" hidden>
+      <input type="text" name="fullName" />
+      <input type="email" name="email" />
+      <textarea name="msg"></textarea>
+      <input type="text" name="website" />
+    </form>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

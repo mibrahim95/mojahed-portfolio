@@ -1,70 +1,132 @@
-# Getting Started with Create React App
+# Mojahed Ibrahim: Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Source for [mojahedsportfolio.com](https://mojahedsportfolio.com/): a single-page
+portfolio with my experience, projects, résumé, and a contact form.
 
-## Available Scripts
+![Portfolio preview](public/og-image.jpg)
 
-In the project directory, you can run:
+## Tech stack
 
-### `npm start`
+- [React 18](https://react.dev/) + [Vite](https://vite.dev/)
+- Hand-written CSS (no UI kit), dark theme by default with a light-theme toggle
+- Fonts self-hosted via Fontsource
+- Contact form: a Netlify Function delivers messages to Telegram or Slack, with
+  Netlify Forms as the fallback
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Requires Node.js 20.19+ or 22.12+ (see `.nvmrc`).
 
-### `npm test`
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Script            | What it does                                   |
+| ----------------- | ---------------------------------------------- |
+| `npm run dev`     | Start the dev server with hot reload           |
+| `npm run build`   | Production build into `build/`                 |
+| `npm run preview` | Serve the production build locally             |
+| `npm run lint`    | Run ESLint                                     |
+| `npm test`        | Test the contact function (Node test runner)   |
 
-### `npm run build`
+## Contact form
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The form posts to a Netlify Function, `netlify/functions/contact.js`. The function
+checks the message (name 3 to 99 characters, a valid email, message under 250
+characters, empty honeypot) and sends it to the provider named in `CONTACT_PROVIDER`.
+Tokens and webhook URLs stay on the server.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+If the function is off (`none`), not configured, or fails, the browser posts the
+message to **Netlify Forms** instead, so nothing is lost. The hidden
+`<form name="contact">` in `index.html` is what Netlify detects for that.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Environment variables
 
-### `npm run eject`
+Set these in the Netlify dashboard: **Project configuration** > **Environment variables** >
+**Add a variable** > **Add a single variable**. After changing any of them, go to
+**Deploys** > **Trigger deploy** > **Deploy project** so they take effect.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+| Variable | Where it is read | Value |
+| --- | --- | --- |
+| `CONTACT_PROVIDER` | function (secret side) | `telegram`, `slack` or `none` |
+| `REACT_APP_CONTACT_PROVIDER` | browser (public) | `telegram`, `slack` or `email`. Picks the live preview next to the form; `email` shows none. Set it to match `CONTACT_PROVIDER` (use `email` when that is `none`). |
+| `TELEGRAM_BOT_TOKEN` | function | Telegram only |
+| `TELEGRAM_CHAT_ID` | function | Telegram only |
+| `SLACK_WEBHOOK_URL` | function | Slack only |
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+> Never give a secret a `REACT_APP_` or `VITE_` prefix. Those variables are compiled
+> into the public JavaScript and anyone can read them.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**Telegram**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. In Telegram, message **@BotFather**, send `/newbot`, pick a name and a username.
+   It replies with the bot token.
+2. Open a chat with your new bot and send it any message.
+3. In a browser, open `https://api.telegram.org/bot<TOKEN>/getUpdates` (your token in
+   place of `<TOKEN>`). Copy the number at `"chat":{"id": ...}`. That is the chat ID.
+4. In Netlify add: `CONTACT_PROVIDER` = `telegram`, `TELEGRAM_BOT_TOKEN` = the token,
+   `TELEGRAM_CHAT_ID` = the chat ID, `REACT_APP_CONTACT_PROVIDER` = `telegram`.
+   Tick **Contains secret values** for the token. Redeploy.
 
-## Learn More
+**Slack**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Go to <https://api.slack.com/apps> > **Create New App** > **From scratch**, name it,
+   pick your workspace.
+2. **Incoming Webhooks** > turn on **Activate Incoming Webhooks** > **Add New Webhook
+   to Workspace** > pick the channel > **Allow**. Copy the webhook URL.
+3. In Netlify add: `CONTACT_PROVIDER` = `slack`, `SLACK_WEBHOOK_URL` = the URL
+   (tick **Contains secret values**), `REACT_APP_CONTACT_PROVIDER` = `slack`. Redeploy.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Netlify Forms only (no chat app)**
 
-### Code Splitting
+1. Set `CONTACT_PROVIDER` = `none` and `REACT_APP_CONTACT_PROVIDER` = `email`
+   (or leave both unset). Redeploy.
+2. One-time setup: **Forms** > **Enable form detection**, then redeploy. Then
+   **Project configuration** > **Notifications** > **Emails and webhooks** >
+   **Form submission notifications** > **Add notification** > **Email notification**,
+   form `contact`, your email address.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Do the Forms setup even when Telegram or Slack is on: it is the fallback.
 
-### Analyzing the Bundle Size
+**Old variables to delete:** `REACT_APP_API_HOST` and `REACT_APP_JAVA_API_USERNAME_AND_PASS`
+are no longer read. Remove them, and change that password anywhere you reuse it,
+because it was public in the old bundle.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Adding another provider (Discord, email):** add one entry to `PROVIDERS` in
+`netlify/functions/contact.js` (a `configured` check and a `send` function), add a
+test in `netlify/contact.test.js`, and list its variables here.
 
-### Making a Progressive Web App
+**Testing locally:** `npm run dev` has no functions, so the form falls back to
+Netlify Forms and shows an error. To run the function locally, use the Netlify CLI
+(`npx netlify dev`) with the variables in a git-ignored `.env` file.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Theme
 
-### Advanced Configuration
+The site is dark by default. A small script at the top of `index.html` sets
+`data-theme="light"` or `"dark"` on `<html>` before the page paints: the visitor's saved
+choice first, then their system setting, then dark. The toggle in the nav
+(`src/components/themeToggle.jsx`) flips it and saves the choice in `localStorage`.
+Style light mode in CSS under `:root[data-theme="light"]`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Profile photo
 
-### Deployment
+The photo sits in a fixed frame and is cropped to fill it, so any photo fits.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. Put the new image in `public/` (WebP, at least 600px on the short side).
+2. In `src/json/about.json`, edit `photo`: `src` (for example `/profile.webp`), `alt`
+   (describe the photo), `width` and `height` (the file's real pixel size), and `focal`.
+3. `focal` is the point that stays in view, as `"x% y%"`: `"50% 50%"` is the center,
+   `"50% 30%"` keeps the upper middle (good for a face in a portrait shot), `"30% 40%"`
+   shifts left. Run `npm run dev` and adjust until the face sits well.
 
-### `npm run build` fails to minify
+## Editing content
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+All page content lives in JSON, so most updates need no code changes:
+
+- `src/json/about.json`: headline, intro, photo, Skills highlights and groups,
+  education (major, honors, tutoring job), contact email
+- `src/json/expList.json`: work experience
+- `src/json/projects.json`: project cards (`imgPath`, `github` and `url` are optional)
+
+Images live in `public/`. Keep screenshots around 800px wide (4:3 works best) and in WebP format.
