@@ -823,6 +823,18 @@ kbd {
 /* speedups: [label | bars | values]. Every value sits in its own column, never on a bar. */
 .tile-speed {
   grid-column: 1 / 8;
+  display: flex;
+  flex-direction: column;
+}
+
+.tile-speed .speed {
+  margin-top: auto;
+}
+
+.speed-scale {
+  margin-top: 18px;
+  color: var(--ink-3);
+  font-size: 0.8rem;
 }
 
 .speed-big {
@@ -936,92 +948,135 @@ kbd {
   }
 }
 
-/* education: one wide band, school | degree | notes */
-@media (min-width: 901px) {
-  .tile-edu {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas: "t t t" "s d n" "c d n";
-    column-gap: 40px;
-    align-items: start;
-  }
-
-  .tile-edu .tile-title { grid-area: t; }
-  .tile-edu .edu-school { grid-area: s; }
-  .tile-edu .edu-college { grid-area: c; }
-  .tile-edu .edu-degree { grid-area: d; margin-top: 0; }
-  .tile-edu .edu-notes { grid-area: n; margin-top: 0; }
-}
-
+/* education: a full-width band with real weight. School | degree | honours and teaching. */
 .tile-edu {
   grid-column: 1 / 13;
   grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px 40px;
+  align-items: start;
+  padding: clamp(24px, 3vw, 40px);
   overflow: hidden;
   scroll-margin-top: 90px;
+  background: radial-gradient(80% 120% at 100% 100%, var(--signal-soft), transparent 60%), var(--panel);
+}
+
+.tile-edu > * {
+  position: relative;
+  z-index: 1;
 }
 
 .edu-school {
-  position: relative;
-  font: 680 clamp(2.4rem, 3.6vw, 3.2rem) / 0.95 var(--display);
+  font: 760 clamp(2.6rem, 4.4vw, 4rem) / 0.95 var(--display);
   font-stretch: var(--wide);
-  letter-spacing: -0.025em;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.03em;
 }
 
 .edu-college {
-  position: relative;
-  margin-top: 8px;
-  color: var(--ink-2);
-}
-
-.edu-degree {
-  position: relative;
-  margin-top: 22px;
-  max-width: 24ch;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.edu-degree span {
-  display: block;
-  color: var(--signal-fg);
+  margin-top: 12px;
   font-weight: 500;
 }
 
-.edu-year {
+.edu-summary {
+  margin-top: 14px;
+  max-width: 44ch;
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.edu-degree {
+  align-self: stretch;
+  padding: 22px 24px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  background: color-mix(in oklab, var(--raised) 70%, transparent);
+}
+
+.edu-kind {
+  color: var(--ink-2);
+  font: 500 0.8rem/1.3 var(--mono);
+}
+
+.edu-major {
+  margin-top: 10px;
+  color: var(--signal-fg);
+  font: 700 clamp(1.5rem, 2.2vw, 1.9rem) / 1.08 var(--display);
+  font-stretch: var(--wide);
+  letter-spacing: -0.02em;
+}
+
+.edu-grad {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-weight: 600;
+}
+
+.edu-facts {
+  display: grid;
+  gap: 12px;
+}
+
+.edu-fact {
+  padding: 14px 16px;
+  border-left: 2px solid var(--signal);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  background: color-mix(in oklab, var(--raised) 60%, transparent);
+}
+
+.edu-fact-title {
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.edu-fact-when {
+  margin-top: 3px;
+  color: var(--ink-3);
+  font: 450 0.78rem/1.3 var(--mono);
+}
+
+.edu-fact-text {
+  margin-top: 8px;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.edu-fact-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.85rem;
+}
+
+.tile-edu > .edu-year {
   position: absolute;
-  right: -10px;
-  bottom: -38px;
-  font: 800 9.5rem/1 var(--display);
+  z-index: 0;
+  right: -6px;
+  bottom: -0.22em;
+  font: 800 clamp(8rem, 14vw, 12rem) / 1 var(--display);
   font-stretch: 125%;
   letter-spacing: -0.04em;
   color: transparent;
-  -webkit-text-stroke: 1px var(--line);
+  -webkit-text-stroke: 1.5px color-mix(in oklab, var(--signal) 30%, transparent);
   pointer-events: none;
 }
 
-.edu-notes {
-  position: relative;
-  display: grid;
-  gap: 6px;
-  margin-top: 22px;
-  max-width: 34ch;
-  font-size: 0.85rem;
-  color: var(--ink-2);
+@media (max-width: 1100px) {
+  .tile-edu {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .edu-main {
+    grid-column: 1 / -1;
+  }
 }
 
-.edu-notes li {
-  display: flex;
-  gap: 10px;
-}
-
-.edu-notes li::before {
-  content: "";
-  flex: none;
-  width: 14px;
-  height: 1px;
-  margin-top: 0.75em;
-  background: var(--ink-3);
+@media (max-width: 640px) {
+  .tile-edu {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* what I work on: one row per lane, each opens its group in the finder */
@@ -2673,102 +2728,114 @@ kbd {
 }
 
 .tape-area {
-  min-width: 760px;
-  padding-left: 76px;
+  min-width: 860px;
+  padding-left: 176px;
 }
 
+/* One row per role, oldest at the top. Labels sit in their own column on the left, right
+   aligned against the start of the scale, so every bar is a clean pill with nothing on it. */
 .tape-spans {
   position: relative;
-  height: 190px;
+  height: calc(5 * 34px + 70px);
 }
 
-.tspan {
+.tgrid {
   position: absolute;
-  bottom: calc(10px + var(--lane) * 44px);
+  top: 0;
+  bottom: 0;
   left: var(--l);
-  width: var(--w);
-  height: 36px;
-  border-radius: 8px 8px 2px 2px;
-  background: var(--data-soft);
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--data) 40%, transparent);
-  transform-origin: left bottom;
-  transition: background-color 0.25s var(--ease), opacity 0.35s var(--ease), box-shadow 0.25s var(--ease);
-}
-
-.js .tape-scroll:not([data-in]) .tspan {
-  transform: scaleX(0);
-}
-
-.js .tape-scroll[data-in] .tspan {
-  transform: none;
-  transition: transform 1.2s var(--settle), background-color 0.25s var(--ease), opacity 0.35s var(--ease);
-}
-
-.tspan::before,
-.tspan::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
   width: 1px;
-  height: 10px;
-  background: color-mix(in oklab, var(--data) 60%, transparent);
+  background: var(--line);
 }
 
-.tspan::before {
+.trow {
+  position: absolute;
+  top: calc(var(--row) * 34px);
   left: 0;
-}
-
-.tspan::after {
   right: 0;
+  height: 34px;
+  transition: opacity 0.35s var(--ease);
 }
 
-.tspan a {
+.trow::before {
+  content: "";
   position: absolute;
   top: 50%;
-  left: 10px;
-  color: var(--ink);
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+}
+
+.trow-label {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 16px);
+  width: 160px;
+  color: var(--ink-2);
   font-size: 0.82rem;
   font-weight: 550;
-  white-space: nowrap;
+  line-height: 1.2;
+  text-align: right;
   text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transform: translateY(-50%);
+  transition: color 0.18s var(--ease);
 }
 
-.tspan a::after {
-  content: "";
-  position: absolute;
-  inset: -12px -10px;
-}
-
-.tspan-5b a,
-.tspan-temple a {
-  left: calc(100% + 10px);
-}
-
-.tspan-school {
-  background: linear-gradient(90deg, transparent, var(--data-soft) 60%);
-  box-shadow: inset 0 -1px 0 color-mix(in oklab, var(--data) 50%, transparent), inset -1px 0 0 color-mix(in oklab, var(--data) 50%, transparent);
-}
-
-.tspan-school a {
-  left: 30px;
+.trow-label:hover,
+.trow.is-hover .trow-label {
   color: var(--ink);
 }
 
-.tspan-school::before {
-  display: none;
+.tbar {
+  position: absolute;
+  top: 7px;
+  left: var(--l);
+  width: var(--w);
+  height: 20px;
+  border-radius: 6px;
+  background: var(--data-soft);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--data) 45%, transparent);
+  transform-origin: left center;
+  transition: background-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 
-.tspan-comcast {
-  box-shadow: inset 0 0 0 1px var(--signal-fg);
+/* School started before the scale does, so its bar fades in from the left edge. */
+.trow-school .tbar {
+  border-radius: 0 6px 6px 0;
+  background: linear-gradient(90deg, transparent, var(--data-soft) 30%);
+  box-shadow: inset 0 -1px 0 color-mix(in oklab, var(--data) 45%, transparent), inset -1px 0 0 color-mix(in oklab, var(--data) 45%, transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--data) 45%, transparent);
 }
 
-.tspan.is-hover {
-  background: color-mix(in oklab, var(--data) 28%, transparent);
+.trow-comcast .tbar {
+  background: var(--signal-soft);
+  box-shadow: inset 0 0 0 1px var(--signal);
 }
 
-.tspan.is-dim {
+.trow.is-hover .tbar {
+  background: color-mix(in oklab, var(--data) 30%, transparent);
+}
+
+.trow-comcast.is-hover .tbar {
+  background: color-mix(in oklab, var(--signal) 30%, transparent);
+}
+
+.trow.is-dim {
   opacity: 0.3;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .tape-scroll:not([data-in]) .tbar {
+    transform: scaleX(0);
+  }
+
+  .js .tape-scroll[data-in] .tbar {
+    transition: transform 1s var(--settle) calc(var(--row) * 90ms), background-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
 }
 
 .tape {
@@ -3798,9 +3865,6 @@ kbd {
     transform: none;
   }
 
-  .js .tape-scroll:not([data-in]) .tspan {
-    transform: none;
-  }
 }
 
 /* ---------- Philadelphia skyline band ----------
@@ -3951,8 +4015,8 @@ html {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  box-shadow: inset -10px 7px 0 0 var(--sk-moon);
-  transform: rotate(-12deg);
+  /* a waxing crescent: lit on the right, horns pointing left, upright */
+  box-shadow: inset -10px 0 0 0 var(--sk-moon);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -4123,138 +4187,7 @@ html {
   padding-top: clamp(56px, 7vw, 96px);
 }
 
-/* ---------- the stroller on the waterfront ---------- */
-.stroller {
-  --walk: 46s;
-  position: absolute;
-  left: 0;
-  bottom: calc(var(--sky-h) * 40 / 420 - 2px);
-  z-index: 2;
-  width: 100%;
-  pointer-events: none;
-}
 
-.stroller-btn {
-  position: relative;
-  display: block;
-  width: 36px;
-  height: 48px;
-  padding: 0;
-  border: 0;
-  background: none;
-  pointer-events: auto;
-}
-
-.stroller-walk {
-  position: relative;
-  width: 36px;
-  transform: translateX(14vw);
-}
-
-.stroller-flip {
-  position: absolute;
-  inset: 0;
-}
-
-.stroller .pix {
-  position: absolute;
-  inset: 0;
-}
-
-.stroller .st-a,
-.stroller .st-b {
-  visibility: hidden;
-}
-
-.stroller-say {
-  position: absolute;
-  bottom: 58px;
-  left: 0;
-  padding: 6px 10px;
-  border: 1px solid var(--line-2);
-  border-radius: 10px 10px 10px 2px;
-  background: var(--raised);
-  color: var(--ink);
-  font: 500 0.75rem/1.2 var(--mono);
-  white-space: nowrap;
-  opacity: 0;
-  transform: translate(18px, 6px);
-  transition: opacity 0.18s var(--ease), transform 0.3s var(--settle);
-}
-
-.stroller.is-hi .stroller-say {
-  opacity: 1;
-  transform: translate(18px, 0);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .stroller-walk {
-    animation: stroll var(--walk) linear infinite;
-  }
-
-  .stroller-flip {
-    animation: stroll-face var(--walk) steps(1) infinite;
-  }
-
-  .stroller .st-idle {
-    visibility: hidden;
-  }
-
-  .stroller .st-a {
-    animation: frame-a 0.5s steps(1) infinite;
-  }
-
-  .stroller .st-b {
-    animation: frame-a 0.5s steps(1) infinite reverse;
-  }
-
-  /* A click: he stops, faces you and hops. */
-  .stroller.is-hi .stroller-walk,
-  .stroller.is-hi .stroller-flip,
-  .stroller.is-hi .pix {
-    animation-play-state: paused;
-  }
-
-  .stroller.is-hi .st-a,
-  .stroller.is-hi .st-b {
-    visibility: hidden !important;
-  }
-
-  .stroller.is-hi .st-idle {
-    visibility: visible;
-    animation: hop 0.5s var(--settle) 2;
-  }
-
-  .skyline.is-paused .stroller * {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes stroll {
-  0% { transform: translateX(6vw); }
-  50% { transform: translateX(calc(100vw - 6vw - 36px)); }
-  100% { transform: translateX(6vw); }
-}
-
-@keyframes stroll-face {
-  0% { transform: none; }
-  50% { transform: scaleX(-1); }
-}
-
-@keyframes frame-a {
-  0% { visibility: visible; }
-  50% { visibility: hidden; }
-}
-
-@keyframes hop {
-  40% { transform: translateY(-10px); }
-}
-
-.stroller-btn:focus-visible {
-  outline: 2px solid var(--signal);
-  outline-offset: 4px;
-  border-radius: 6px;
-}
 
 /* ---------- pixel sprites ---------- */
 .pix {
@@ -4272,24 +4205,23 @@ html {
 /* ---------- the walker on the tape ---------- */
 .tape-track {
   position: relative;
-  /* the walker layer is translated; clip it so it never widens the scroller */
-  overflow-x: clip;
 }
 
-.tape-spans {
-  height: 244px;
-}
 
-.tspan {
-  bottom: calc(64px + var(--lane) * 44px);
-}
-
+/* A zero-width marker moved by `left`, so it never widens the scroller and the label
+   column to the left of the track stays visible. */
 .walker {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--x) * 1%);
+  width: 0;
   pointer-events: none;
-  transform: translateX(calc(var(--x) * 1%));
-  transition: transform var(--dur, 0ms) cubic-bezier(0.45, 0.05, 0.3, 1);
+  transition: left var(--dur, 0ms) cubic-bezier(0.45, 0.05, 0.3, 1);
+}
+
+.walker-sprite .pix {
+  max-width: none;
 }
 
 .walker-sprite {
@@ -4383,7 +4315,7 @@ html {
     right: 6%;
     width: 30px;
     height: 30px;
-    box-shadow: inset -8px 5px 0 0 var(--sk-moon);
+    box-shadow: inset -8px 0 0 0 var(--sk-moon);
   }
 }
 

@@ -25,8 +25,8 @@ export function PixelHeart() {
 // Before and after for the two speedups. Each row is drawn to its own scale (before = the
 // full track), and every value sits in the column on the right, never on a bar.
 const SPEEDUPS = [
-  { title: "One slow job", how: "Rewrote its query, added indexes and changed its joins.", before: "100%", after: "−80%", w: 20, range: 0, sr: "One slow job now runs in 80% less time." },
-  { title: "A recurring job", how: "Four or five hours down to about one.", before: "4 to 5 h", after: "~1 h", w: 20, range: 20, sr: "A recurring job went from four or five hours to about one." },
+  { title: "Reporting query tuning", how: "Rewrote the query, added indexes and restructured the joins.", before: "100%", after: "−80%", w: 20, range: 0, sr: "A slow reporting job runs in over 80% less time after query and index tuning." },
+  { title: "Scheduled batch job", how: "Runtime cut from four or five hours to about one.", before: "4 to 5 h", after: "~1 h", w: 20, range: 20, sr: "A scheduled batch job went from four or five hours to about one." },
 ];
 
 function Speedups() {
@@ -109,27 +109,45 @@ function Hero({ onGroup, onSearch }) {
             <span>{about.highlights[0].value}</span> taken off the daily batch run by running job families in parallel.
           </p>
           <Speedups />
+          <p className="speed-scale">Each job is drawn on its own scale: before is the full bar.</p>
         </div>
 
         <div className="tile tile-edu" id="education" data-reveal style={{ "--i": 1 }}>
-          <h2 className="tile-title">Education</h2>
-          <p className="edu-school">{edu.school}</p>
-          <p className="edu-college">{edu.college}</p>
-          <p className="edu-degree">
-            {edu.degree}
-            <span>{edu.major}</span>
-          </p>
-          <p className="edu-year" aria-label={`Graduated ${edu.graduated}`}>
-            <span aria-hidden="true">{edu.year}</span>
-          </p>
-          <ul className="edu-notes">
-            {edu.honors.map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-            <li>
-              {edu.teaching.role}, {edu.teaching.course}
+          <div className="edu-main">
+            <h2 className="tile-title">Education</h2>
+            <p className="edu-school">{edu.school}</p>
+            <p className="edu-college">
+              {edu.college}, {edu.location}
+            </p>
+            <p className="edu-summary">{edu.summary}</p>
+          </div>
+          <div className="edu-degree">
+            <p className="edu-kind">{edu.degree}</p>
+            <p className="edu-major">{edu.major}</p>
+            <p className="edu-grad">Graduated {edu.graduated}</p>
+          </div>
+          <ul className="edu-facts">
+            {edu.honors.map((h) => {
+              const [what, when] = h.split(/,\s*/);
+              return (
+                <li key={h} className="edu-fact">
+                  <p className="edu-fact-title">{what}</p>
+                  <p className="edu-fact-when">{when}</p>
+                </li>
+              );
+            })}
+            <li className="edu-fact">
+              <p className="edu-fact-title">{edu.teaching.role}</p>
+              <p className="edu-fact-when">{edu.teaching.dates}</p>
+              <p className="edu-fact-text">{edu.teaching.text}</p>
+              <a className="link edu-fact-link" href="#job-temple">
+                See the role
+              </a>
             </li>
           </ul>
+          <p className="edu-year" aria-hidden="true">
+            {edu.year}
+          </p>
         </div>
 
         <div className="tile tile-stack" data-reveal style={{ "--i": 2 }}>

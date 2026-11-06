@@ -11,8 +11,18 @@ import { SKIP_KEYS, reducedMotion } from "../motion";
 
 const s = scale(2016);
 const edu = about.education;
-// Turn 14 and Comcast run back to back on one line; the internship and tutoring job overlapped, so each gets its own.
-const LANE = { temple: 2, "5b": 3 };
+// One row each, oldest at the top, so the bars step down towards today and the tape.
+const GRAD = toMonth(edu.graduated);
+const ROWS = [
+  { id: "school", key: "education", label: edu.school, l: 0, w: s.at(GRAD), sr: `${edu.short} ${edu.major}, graduated ${edu.graduated}` },
+  ...experiences
+    .slice()
+    .sort((a, b) => range(a.dates)[0] - range(b.dates)[0])
+    .map((j) => {
+      const [a, b] = range(j.dates);
+      return { id: j.id, key: `job-${j.id}`, job: true, label: SHORT[j.id], l: s.at(a), w: s.at(b) - s.at(a), sr: `${j.position}, ${dash(j.dates)}` };
+    }),
+];
 // Oldest first, for the arrow keys.
 const ORDER = experiences.slice().sort((a, b) => range(a.dates)[0] - range(b.dates)[0]).map((j) => j.id);
 const mid = (j) => {
@@ -69,7 +79,6 @@ function Walker({ to }) {
 
 // A tape measure pulled out from 2016 to today. One tick per month, a numeral per year.
 function Tape({ sel, setSel, isLit }) {
-  const grad = toMonth(edu.graduated);
   const ref = useRef(null);
   // On narrow screens the tape scrolls; start at today, the end that matters most.
   useEffect(() => {
@@ -80,29 +89,24 @@ function Tape({ sel, setSel, isLit }) {
       <div className="tape-area">
         <div className="tape-track">
           <div className="tape-spans" role="list" aria-label="Timeline of school and work">
-            <div className={`tspan tspan-school${isLit("education") ? "" : " is-dim"}`} role="listitem" style={{ "--l": "0%", "--w": `${s.at(grad)}%`, "--lane": 0 }}>
-              <a href="#education">
-                {edu.school}, {edu.short} {edu.major}, to {edu.year}
-                <span className="visually-hidden">, graduated {edu.graduated}</span>
-              </a>
-            </div>
-            {experiences.map((j) => {
-              const [a, b] = range(j.dates);
-              return (
-                <div
-                  key={j.id}
-                  role="listitem"
-                  className={`tspan tspan-${j.id}${sel === j.id ? " is-hover" : ""}${isLit(`job-${j.id}`) ? "" : " is-dim"}`}
-                  style={{ "--l": `${s.at(a)}%`, "--w": `${s.at(b) - s.at(a)}%`, "--lane": LANE[j.id] || 1 }}
-                  onMouseEnter={() => setSel(j.id)}
-                >
-                  <a href={`#job-${j.id}`} onFocus={() => setSel(j.id)}>
-                    {SHORT[j.id]}
-                    <span className="visually-hidden">: {j.position}, {dash(j.dates)}</span>
-                  </a>
-                </div>
-              );
-            })}
+            {s.years.map((y) => (
+              <span key={y} className="tgrid" style={{ "--l": `${s.at(y * 12)}%` }} aria-hidden="true" />
+            ))}
+            {ROWS.map((r, i) => (
+              <div
+                key={r.id}
+                role="listitem"
+                className={`trow trow-${r.id}${sel === r.id ? " is-hover" : ""}${isLit(r.key) ? "" : " is-dim"}`}
+                style={{ "--row": i, "--l": `${r.l}%`, "--w": `${r.w}%` }}
+                onMouseEnter={r.job ? () => setSel(r.id) : undefined}
+              >
+                <a className="trow-label" href={`#${r.key}`} onFocus={r.job ? () => setSel(r.id) : undefined}>
+                  {r.label}
+                  <span className="visually-hidden">: {r.sr}</span>
+                </a>
+                <span className="tbar" aria-hidden="true" />
+              </div>
+            ))}
           </div>
           <Walker to={sel} />
         </div>
