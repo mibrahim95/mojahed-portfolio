@@ -1,12 +1,20 @@
+import { useState } from "react";
 import about from "../json/about.json";
 
-// Any photo fits: the frame keeps its aspect ratio (CSS), the image covers it, and
-// about.json `photo.focal` ("x% y%") picks which part of the photo stays in view.
+// The whole photo, never cropped. The frame takes the photo's own aspect ratio: first
+// from about.json `photo.width/height` (so the space is reserved before it loads), then
+// from the real file once it loads, in case a replacement photo has a different shape.
+// `object-fit: contain` is the backstop, so even a wrong ratio letterboxes, never cuts.
 function Portrait({ className = "" }) {
-  const { src, alt, width, height, focal = "50% 50%" } = about.photo;
+  const { src, alt, width, height } = about.photo;
+  const [ratio, setRatio] = useState(`${width} / ${height}`);
+  const onLoad = (e) => {
+    const { naturalWidth: w, naturalHeight: h } = e.currentTarget;
+    if (w && h) setRatio(`${w} / ${h}`);
+  };
   return (
-    <div className={`portrait ${className}`.trim()}>
-      <img src={src} alt={alt} width={width} height={height} style={{ objectPosition: focal }} fetchpriority="high" />
+    <div className={`portrait ${className}`.trim()} style={{ "--ratio": ratio }}>
+      <img src={src} alt={alt} width={width} height={height} onLoad={onLoad} fetchpriority="high" />
     </div>
   );
 }

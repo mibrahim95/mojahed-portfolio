@@ -3,7 +3,7 @@
   "role": "Software Engineer 2 (backend)",
   "company": "Comcast",
   "location": "Philadelphia, PA",
-  "headline": "I build Java data pipelines and API integrations, and I keep them running on time when the data gets big or a dependency fails.",
+  "headline": "Backend engineer building Java services, APIs and the pipelines that connect them.",
   "lede": "I've written production code for seven years, and since 2023 that has meant backend work at Comcast. I build the Java pipelines and API imports that move data between internal systems. The imports retry when they hit a rate limit, and a failed report sends an alert over Slack, Teams and email. Adding parallel processing to four or five job families took more than six hours off the daily run. Before Comcast I spent four years at Turn 14 Distribution on the PHP and MySQL behind a B2B e-commerce site and a warehouse management system.",
   "photo": {
     "src": "/profile.webp",
@@ -136,7 +136,10 @@
         "React",
         "Vite",
         "SEO",
-        "Web accessibility"
+        "Web accessibility",
+        "Sass",
+        "gulp",
+        "Bootstrap"
       ]
     },
     {
@@ -161,6 +164,17 @@
         "Data analysis",
         "Reporting",
         "Teaching"
+      ]
+    },
+    {
+      "group": "Familiar with",
+      "items": [
+        "AWS",
+        "Azure",
+        "Django",
+        "SQL Server",
+        "Grafana",
+        "Kibana"
       ]
     }
   ],
@@ -331,6 +345,26 @@
     "wsgi": "Waitress",
     "yml": "YAML",
     "pip audit": "pip-audit",
-    "dependency audit": "pip-audit"
+    "dependency audit": "pip-audit",
+    "amazon web services": "AWS",
+    "aws": "AWS",
+    "microsoft azure": "Azure",
+    "azure": "Azure",
+    "django": "Django",
+    "sql server": "SQL Server",
+    "mssql": "SQL Server",
+    "ms sql": "SQL Server",
+    "microsoft sql server": "SQL Server",
+    "t-sql": "SQL Server",
+    "tsql": "SQL Server",
+    "grafana": "Grafana",
+    "kibana": "Kibana",
+    "sass": "Sass",
+    "scss": "Sass",
+    "gulp": "gulp",
+    "gulpjs": "gulp",
+    "gulp.js": "gulp",
+    "bootstrap": "Bootstrap",
+    "twitter bootstrap": "Bootstrap"
   }
 }

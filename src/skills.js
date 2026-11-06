@@ -1,7 +1,6 @@
 import about from "./json/about.json";
 import projects from "./json/projects.json";
 import experiences from "./json/expList.json";
-import brands from "./assets/logos/brands.json";
 
 // Simple Icons (CC0) copied into src/assets/logos. Each file is one <path>.
 const files = import.meta.glob("./assets/logos/*.svg", { query: "?raw", import: "default", eager: true });
@@ -17,9 +16,11 @@ const LOGO = {
   "Concourse CI/CD": "concourse", Proxmox: "proxmox", Tailscale: "tailscale", Go: "go", Vite: "vite",
   "Netlify Functions": "netlify", Flask: "flask", NumPy: "numpy", "Telegram Bot API": "telegram",
   RetroPie: "retropie", Redis: "redis", JSON: "json", Vagrant: "vagrant", Heroku: "heroku",
+  AWS: "amazonwebservices", Django: "django", Grafana: "grafana", Kibana: "kibana", Sass: "sass",
+  gulp: "gulp", Bootstrap: "bootstrap",
 };
 
-export const logoBySlug = (slug) => (PATHS[slug] ? { d: PATHS[slug], hex: brands[slug] } : null);
+export const logoBySlug = (slug) => (PATHS[slug] ? { d: PATHS[slug] } : null);
 export const logoFor = (name) => logoBySlug(LOGO[name]);
 
 // The skills list in about.json uses a few long labels; fold them onto the tag the items use.
@@ -161,8 +162,8 @@ const NEAR = {
   typescript: ["JavaScript", "React"], ts: ["JavaScript", "React"], node: ["JavaScript", "REST APIs"],
   nodejs: ["JavaScript", "REST APIs"], vue: ["React", "JavaScript"], angular: ["React", "JavaScript"],
   laravel: ["PHP", "MySQL"], symfony: ["PHP", "MySQL"], wordpress: ["PHP", "MySQL"],
-  postgres: ["MySQL", "SQL"], postgresql: ["MySQL", "SQL"], mssql: ["SQL", "Oracle PL/SQL"], tsql: ["SQL", "Oracle PL/SQL"],
-  kubernetes: ["Docker", "Proxmox"], k8s: ["Docker", "Proxmox"], aws: ["Linux", "Docker"], azure: ["Linux", "Docker"],
+  postgres: ["MySQL", "SQL"], postgresql: ["MySQL", "SQL"],
+  kubernetes: ["Docker", "Proxmox"], k8s: ["Docker", "Proxmox"],
   cloud: ["Docker", "Linux"], kotlin: ["Java", "Spring Boot"], "c#": ["Java", "Spring Boot"], net: ["Java", "Spring Boot"],
   tableau: ["Excel", "Reporting"], powerbi: ["Excel", "Reporting"], "power bi": ["Excel", "Reporting"],
   etl: ["CloverDX", "Data-ingestion pipelines"], bash: ["Linux", "Git"], shell: ["Linux", "Git"],
@@ -185,6 +186,11 @@ export function parseSql(text) {
 
 // Dates in the JSON use en dashes; the page shows a plain "to".
 export const dash = (s) => s.replace(/\s*[–—]\s*/g, " to ");
+
+// What a chip with nothing tagged on this page says instead of an empty result.
+export const FAMILIAR = "Familiar with";
+export const noteFor = (skill) =>
+  skill.group === FAMILIAR ? "Used outside the work shown here" : "On my résumé; nothing on this page is tagged with it yet";
 
 export function countLine(skill) {
   const n = (t) => skill.items.filter((i) => i.type === t).length;

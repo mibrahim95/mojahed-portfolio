@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import projects from "../json/projects.json";
+import about from "../json/about.json";
 import { external } from "../sections";
 import { dash, logoFor, slug } from "../skills";
 import { OPEN_PROJECT, transition } from "../motion";
@@ -7,23 +8,20 @@ import { ArrowUpRight, ChevronLeft, ChevronRight, Close, Lock } from "./icons";
 import { SkillLogo } from "./logo";
 import { ProjectMedia } from "./media";
 
-const CATEGORY = {
-  "Turn 14 Distribution": "work",
-  "Telegram contact API": "web",
-  "Cousin's Supermarket inventory": "web",
-  "Video game maintenance list": "web",
-  "This portfolio": "web",
-  "Heartbeat Frame": "hardware",
-  Homelab: "hardware",
-  "Arcade1Up RetroPie mod": "hardware",
-};
-const FILTERS = [
-  ["all", "All"],
-  ["work", "Day job"],
-  ["web", "Web and APIs"],
-  ["hardware", "Hardware and home lab"],
-];
-const ALL = projects.map((p) => ({ ...p, key: `p-${slug(p.header)}`, cat: CATEGORY[p.header] || "web" }));
+// Three projects get a full case study; the rest go in a compact index. Day job first,
+// then the backend service, then the hardware build (see options/projects-research.md).
+const FEATURED = ["Turn 14 Distribution", "Telegram contact API", "Heartbeat Frame"];
+const ALL = projects.map((p) => ({ ...p, key: `p-${slug(p.header)}` }));
+const LEAD = FEATURED.map((h) => ALL.find((p) => p.header === h)).filter(Boolean);
+const REST = ALL.filter((p) => !FEATURED.includes(p.header));
+// Long stacks show their first few here; the detail dialog lists them all.
+const STACK_MAX = 12;
+
+// A description's first sentence says what the thing is; the rest says how it works.
+function split(desc) {
+  const [first, ...rest] = desc.split(/(?<=\.)\s+/);
+  return [first, rest.join(" ")];
+}
 
 // Projects whose code exists but is not public. projects.json says so in the description.
 const PRIVATE = new Set(["Heartbeat Frame"]);
@@ -55,7 +53,7 @@ function Links({ p, small }) {
   );
 }
 
-const media = (key) => document.getElementById(key)?.querySelector(".card-media");
+const media = (key) => document.getElementById(key)?.querySelector(".case-media");
 
 function Detail({ project, onClose, onStep }) {
   const ref = useRef(null);
@@ -121,54 +119,118 @@ function Detail({ project, onClose, onStep }) {
   );
 }
 
-function Card({ p, folded, matched, wide, onOpen }) {
+// One case study: big picture, what it is, how it works, what it is built with, where to see it.
+// `problem` and `outcome` show when projects.json has them.
+function Case({ p, n, lit, dim, onOpen }) {
+  const [what, how] = split(p.desc);
   return (
-    <li
+    <article
       id={p.key}
-      className={`card${wide ? " is-wide" : ""}${folded ? " is-folded" : ""}${matched ? " is-match" : ""}`}
-      style={{ viewTransitionName: `card-${p.key}` }}
+      className={`case case-${n}${lit ? " is-match" : ""}${dim ? " is-dim" : ""}`}
+      aria-labelledby={`${p.key}-t`}
+      data-reveal
     >
-      <div className="card-media">
-        <ProjectMedia project={p} sizes={wide ? "(min-width: 1100px) 720px, 100vw" : "(min-width: 1100px) 600px, 100vw"} />
+      <div className="case-frame">
+        <button type="button" className="case-media" onClick={() => onOpen(p)} aria-haspopup="dialog">
+          <ProjectMedia project={p} sizes={n === 0 ? "(min-width: 1100px) 760px, 100vw" : "(min-width: 1100px) 600px, 100vw"} />
+          <span className="visually-hidden">Open {p.header}</span>
+        </button>
       </div>
-      <div className="card-body">
-        <p className="card-kind">
-          <span>{p.kind}</span> <span>{dash(p.year)}</span>
+      <div className="case-body">
+        <p className="case-kind">
+          <span>{p.kind}</span>
+          <span>{dash(p.year)}</span>
         </p>
-        <h3>{p.header}</h3>
-        <p className="card-desc">{p.desc}</p>
-        <ul className="card-logos" aria-label="Built with">
-          {p.languages.map((l) => (
-            <li key={l}>
-              <SkillLogo logo={logoFor(l)} name={l} size={15} />
-              <span>{l}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="card-foot">
-          <Links p={p} small />
-          <button type="button" className="link-btn card-more" onClick={() => onOpen(p)} aria-haspopup="dialog">
-            Details<span className="visually-hidden">: {p.header}</span>
-          </button>
-        </div>
+        <h3 id={`${p.key}-t`}>{p.header}</h3>
+        <p className="case-what">{what}</p>
+        <dl className="case-facts">
+          {p.problem && (
+            <div>
+              <dt>The problem</dt>
+              <dd>{p.problem}</dd>
+            </div>
+          )}
+          {how && (
+            <div>
+              <dt>How it works</dt>
+              <dd>{how}</dd>
+            </div>
+          )}
+          {p.outcome && (
+            <div>
+              <dt>Outcome</dt>
+              <dd>{p.outcome}</dd>
+            </div>
+          )}
+          <div>
+            <dt>Stack</dt>
+            <dd>
+              <ul className="case-stack">
+                {p.skills.slice(0, STACK_MAX).map((s) => (
+                  <li key={s}>
+                    <SkillLogo logo={logoFor(s)} name={s} size={14} />
+                    {s}
+                  </li>
+                ))}
+                {p.skills.length > STACK_MAX && (
+                  <li className="case-stack-more">
+                    <button type="button" className="link-btn" onClick={() => onOpen(p)} aria-haspopup="dialog">
+                      {p.skills.length - STACK_MAX} more<span className="visually-hidden"> skills used in {p.header}</span>
+                    </button>
+                  </li>
+                )}
+              </ul>
+            </dd>
+          </div>
+        </dl>
+        <Links p={p} />
       </div>
-    </li>
+    </article>
   );
 }
 
-// The grid is three across. The first n % 3 projects get full-width rows, so the rest fill
-// whole rows and none is left on its own.
-const isWide = (i, n) => i < n % 3;
+// The index: one row per project in big type. On desktop a preview of the hovered project
+// follows the pointer; the position goes straight into CSS variables, not React state.
+function Index({ items, isLit, skill, onOpen }) {
+  const ref = useRef(null);
+  const move = (e) => {
+    if (e.pointerType !== "mouse") return;
+    const r = ref.current.getBoundingClientRect();
+    ref.current.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    ref.current.style.setProperty("--my", `${e.clientY - r.top}px`);
+  };
+  return (
+    <ol className="index" ref={ref} onPointerMove={move} data-reveal>
+      {items.map((p) => {
+        const lit = skill && isLit(p);
+        return (
+          <li key={p.key} id={p.key} className={`row${lit ? " is-match" : ""}${skill && !lit ? " is-dim" : ""}`}>
+            <button type="button" className="row-btn proj-open" onClick={() => onOpen(p)} aria-haspopup="dialog">
+              <span className="row-year">{dash(p.year)}</span>
+              <span className="row-title">{p.header}</span>
+              <span className="row-kind">{p.kind}</span>
+              <span className="row-stack" aria-hidden="true">
+                {p.languages.slice(0, 4).map((l) => (
+                  <SkillLogo key={l} logo={logoFor(l)} name={l} size={16} />
+                ))}
+              </span>
+              <ArrowUpRight className="row-arrow" />
+            </button>
+            <div className="row-peek" aria-hidden="true">
+              <ProjectMedia project={p} sizes="320px" />
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
 
 function Projects({ skill, onPick }) {
-  const [cat, setCat] = useState("all");
   const [detail, setDetail] = useState(null);
 
-  const inCat = ALL.filter((p) => cat === "all" || p.cat === cat);
-  const matches = (p) => !skill || skill.items.some((i) => i.key === p.key);
-  // Matches move to the front; the rest fold up behind them.
-  const shown = skill ? [...inCat.filter(matches), ...inCat.filter((p) => !matches(p))] : inCat;
-  const lit = inCat.filter(matches).length;
+  const isLit = (p) => !skill || skill.items.some((i) => i.key === p.key);
+  const lit = ALL.filter(isLit).length;
 
   const open = (p) => {
     const m = media(p.key);
@@ -190,7 +252,7 @@ function Projects({ skill, onPick }) {
     const done = () => m && (m.style.viewTransitionName = "");
     if (vt) vt.finished.finally(done);
     else done();
-    document.getElementById(detail.key)?.querySelector(".card-more")?.focus({ preventScroll: true });
+    document.getElementById(detail.key)?.querySelector(".case-media, .proj-open")?.focus({ preventScroll: true });
   };
 
   const step = (d) => {
@@ -207,35 +269,18 @@ function Projects({ skill, onPick }) {
     return () => window.removeEventListener(OPEN_PROJECT, onOpen);
   });
 
-  const pickCat = (c) => {
-    transition(() => setCat(c));
-  };
-
   return (
     <section className="projects" id="projects" aria-labelledby="projects-title">
       <div className="wrap">
         <div className="section-head" data-reveal>
           <h2 id="projects-title">Projects</h2>
-          <p>Code from my Turn&nbsp;14 years and from my own time, from a Spring Boot API to a Raspberry&nbsp;Pi picture frame.</p>
-        </div>
-
-        <div className="proj-bar" data-reveal>
-          <div className="segmented" role="group" aria-label="Filter projects">
-            {FILTERS.map(([id, label]) => {
-              const n = id === "all" ? ALL.length : ALL.filter((p) => p.cat === id).length;
-              return (
-                <button key={id} type="button" aria-pressed={cat === id} onClick={() => pickCat(id)}>
-                  {label} <span>{n}</span>
-                </button>
-              );
-            })}
-          </div>
+          <p>{about.sections.projects}</p>
           {skill && (
             <p className="proj-note" role="status">
               <SkillLogo logo={logoFor(skill.name)} name={skill.name} size={16} />
               <span>
-                <b>{lit}</b> of {inCat.length} use {skill.name}
-                {lit < inCat.length && ". The rest are folded at the end"}.
+                <b>{lit}</b> of {ALL.length} use {skill.name}
+                {lit < ALL.length && ". The others are dimmed"}.
               </span>
               <button type="button" className="link-btn" onClick={() => onPick(null)}>
                 Show all
@@ -244,23 +289,17 @@ function Projects({ skill, onPick }) {
           )}
         </div>
 
-        <ul className="gallery">
-          {shown.filter(matches).map((p, i, list) => (
-            <Card key={p.key} p={p} matched={!!skill} wide={isWide(i, list.length)} onOpen={open} />
+        <div className="cases">
+          {LEAD.map((p, n) => (
+            <Case key={p.key} p={p} n={n} lit={skill && isLit(p)} dim={skill && !isLit(p)} onOpen={open} />
           ))}
-        </ul>
-        {skill && lit < inCat.length && (
-          <>
-            <h3 className="folded-title">No {skill.name} in these</h3>
-            <ul className="gallery gallery-folded">
-              {shown
-                .filter((p) => !matches(p))
-                .map((p) => (
-                  <Card key={p.key} p={p} folded onOpen={open} />
-                ))}
-            </ul>
-          </>
-        )}
+        </div>
+
+        <div className="index-head" data-reveal>
+          <h3>More builds</h3>
+          <p>From small PHP and MySQL tools to the server I run at home. Open one for the full write-up.</p>
+        </div>
+        <Index items={REST} isLit={isLit} skill={skill} onOpen={open} />
       </div>
       <Detail project={detail} onClose={close} onStep={step} />
     </section>

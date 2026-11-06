@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import about from "../json/about.json";
 import { RESUME } from "../sections";
-import { SKILLS, countLine, logoFor, parseSql, resolveSkill, searchSkills, suggestFor } from "../skills";
+import { SKILLS, countLine, logoFor, parseSql, resolveSkill, searchSkills, suggestFor, noteFor } from "../skills";
 import { ArrowRight, Search } from "./icons";
 import { SkillLogo } from "./logo";
 
@@ -47,7 +47,7 @@ function Palette({ open, onClose, onPick }) {
   }, [open]);
 
   const choose = (row) => {
-    if (!row || (row.kind === "skill" && !row.skill.items.length)) return;
+    if (!row) return;
     if (row.kind === "skill") {
       onPick(row.skill.name);
       onClose();
@@ -121,7 +121,6 @@ function Palette({ open, onClose, onPick }) {
               id={`pal-${r.id}`}
               role="option"
               aria-selected={i === sel}
-              aria-disabled={r.kind === "skill" && !r.skill.items.length ? "true" : undefined}
               className={`palette-row${i === sel ? " is-active" : ""}`}
               onMouseMove={() => i !== sel && setActive(i)}
               onClick={() => choose(r)}
@@ -132,7 +131,7 @@ function Palette({ open, onClose, onPick }) {
                     <SkillLogo logo={logoFor(r.skill.name)} name={r.skill.name} size={18} />
                   </span>
                   <span className="palette-name">{r.skill.name}</span>
-                  <span className="palette-meta">{r.skill.items.length ? countLine(r.skill) : "résumé only, nothing here yet"}</span>
+                  <span className="palette-meta">{r.skill.items.length ? countLine(r.skill) : noteFor(r.skill)}</span>
                 </>
               ) : (
                 <>

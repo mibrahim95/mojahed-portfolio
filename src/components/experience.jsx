@@ -212,8 +212,8 @@ function Experience({ skill }) {
         <div className="section-head" data-reveal>
           <h2 id="experience-title">Experience</h2>
           <p>
-            Java pipelines and API integrations at Comcast today. Before that, four years of PHP and MySQL at
-            Turn&nbsp;14, and in college a tutoring job and an internship. <a className="link" href={RESUME} {...external}>Full résumé (PDF)</a>
+            {about.sections.experience}{" "}
+            <a className="link" href={RESUME} {...external}>Full résumé (PDF)</a>
           </p>
           {skill && (
             <p className="proj-note" role="status">

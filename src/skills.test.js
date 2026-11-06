@@ -38,3 +38,12 @@ test("SQL easter egg", () => {
   assert.equal(m.parseSql("SELECT * FROM work WHERE skill = 'php';"), "php");
   assert.equal(m.parseSql("php"), null);
 });
+
+test("familiar skills resolve and explain themselves instead of an empty result", () => {
+  const aws = m.resolveSkill("amazon web services");
+  assert.equal(aws.name, "AWS");
+  assert.equal(aws.items.length, 0);
+  assert.equal(m.noteFor(aws), "Used outside the work shown here");
+  assert.equal(m.resolveSkill("mssql").name, "SQL Server");
+  assert.ok(m.resolveSkill("scss").items.some((i) => i.title === "Turn 14 Distribution"));
+});

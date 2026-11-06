@@ -20,4 +20,4 @@ const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigat
 export const SHORTCUT = isMac ? "⌘K" : "Ctrl K";
 
 // Page-wide arrow keys leave these alone: typing, dialogs and widgets with their own arrow handling.
-export const SKIP_KEYS = "input, textarea, select, dialog, [contenteditable], [role='tablist'], [role='listbox'], .segmented";
+export const SKIP_KEYS = "input, textarea, select, dialog, [contenteditable], [role='tablist'], [role='listbox'], .tabs";

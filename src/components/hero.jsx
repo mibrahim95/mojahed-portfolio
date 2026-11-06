@@ -14,6 +14,8 @@ const STACK = ["Java", "Spring Boot", "REST APIs", "SQL", "MySQL", "Redis", "Git
 const current = experiences[0];
 const building = projects.find((p) => p.header === "Heartbeat Frame");
 const edu = about.education;
+// The first sentence of a description, for short blurbs.
+const lead = (text) => text.split(/(?<=\.)\s+/)[0];
 
 // A two-frame pixel heart, the same one the frame shows when a heart arrives.
 export function PixelHeart() {
@@ -88,15 +90,26 @@ function CareerStrip() {
 function Hero({ onPick, onSearch }) {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
-      <div className="wrap bento">
-        <div className="tile tile-id" data-load style={{ "--d": 0 }}>
-          <p className="id-place">
+      <div className="wrap intro">
+        <div className="intro-copy">
+          <p className="id-place" data-load style={{ "--d": 0 }}>
             {about.role} at {about.company} · {about.location}
           </p>
-          <h1 id="hero-title">Mojahed Ibrahim</h1>
-          <p className="id-headline">{about.headline}</p>
-          <p className="id-lede">{about.lede}</p>
-          <div className="id-actions">
+          <h1 id="hero-title" className="id-name">
+            <span className="id-line" style={{ "--d": 0 }}>
+              <span>Mojahed</span>
+            </span>
+            <span className="id-line" style={{ "--d": 1 }}>
+              <span>Ibrahim</span>
+            </span>
+          </h1>
+          <p className="id-headline" data-load style={{ "--d": 3 }}>
+            {about.headline}
+          </p>
+          <p className="id-lede" data-load style={{ "--d": 4 }}>
+            {about.lede}
+          </p>
+          <div className="id-actions" data-load style={{ "--d": 5 }}>
             <a className="btn btn-primary" href="#projects">
               See projects <ArrowRight />
             </a>
@@ -107,35 +120,41 @@ function Hero({ onPick, onSearch }) {
               <Download /> Résumé PDF
             </a>
           </div>
-          <p className="id-social">
+          <p className="id-social" data-load style={{ "--d": 6 }}>
             <a className="link" href={SOCIAL.linkedin} {...external}>LinkedIn</a>
             <a className="link" href={SOCIAL.github} {...external}>GitHub</a>
             <a className="link" href={`mailto:${about.email}`}>{about.email}</a>
           </p>
         </div>
 
-        <div className="tile tile-role" data-load style={{ "--d": 1 }}>
-          <Portrait className="role-photo" />
-          <div className="role-body">
-            <h2 className="tile-title">Current role</h2>
-            <p className="role-title">{current.position}</p>
-            <p className="role-co">{current.title}</p>
-            <p className="role-meta">
+        <figure className="badge">
+          <div className="badge-shell">
+            <Portrait className="badge-photo" />
+          </div>
+          <figcaption className="badge-body">
+            <p className="badge-now">
+              <span className="badge-light" aria-hidden="true" /> Current role
+            </p>
+            <p className="badge-title">{current.position}</p>
+            <p className="badge-co">{current.title}</p>
+            <p className="badge-meta">
               Since {current.dates.split(/\s*–/)[0]} · {tenure(current.dates)}
             </p>
-            <p className="role-desc">{current.desc}</p>
-          </div>
-        </div>
+            <p className="badge-desc">{current.desc}</p>
+          </figcaption>
+        </figure>
+      </div>
 
-        <div className="tile tile-speed" data-load style={{ "--d": 2 }}>
-          <h2 className="tile-title">Making slow jobs fast</h2>
+      <div className="wrap bento">
+        <div className="tile tile-speed" data-reveal>
+          <h2 className="tile-title">{about.sections.speedTitle}</h2>
           <p className="speed-big">
             <span>{about.highlights[0].value}</span> {about.highlights[0].label}.
           </p>
           <Speedups />
         </div>
 
-        <div className="tile tile-edu" id="education" data-load style={{ "--d": 3 }}>
+        <div className="tile tile-edu" id="education" data-reveal style={{ "--i": 1 }}>
           <h2 className="tile-title">Education</h2>
           <p className="edu-school">{edu.school}</p>
           <p className="edu-college">{edu.college}</p>
@@ -156,7 +175,7 @@ function Hero({ onPick, onSearch }) {
           </ul>
         </div>
 
-        <div className="tile tile-stack" data-load style={{ "--d": 4 }}>
+        <div className="tile tile-stack" data-reveal style={{ "--i": 2 }}>
           <h2 className="tile-title">Stack</h2>
           <ul className="stack">
             {STACK.map((name, i) => {
@@ -180,7 +199,7 @@ function Hero({ onPick, onSearch }) {
           </button>
         </div>
 
-        <div className="tile tile-build" data-load style={{ "--d": 5 }}>
+        <div className="tile tile-build" data-reveal style={{ "--i": 3 }}>
           <div className="build-media">
             <img src={building.imgPath} alt="The Heartbeat Frame build" width="800" height="480" loading="lazy" />
             <PixelHeart />
@@ -188,17 +207,14 @@ function Hero({ onPick, onSearch }) {
           <div className="build-body">
             <h2 className="tile-title">Building now</h2>
             <p className="build-name">{building.header}</p>
-            <p className="build-desc">
-              A Raspberry Pi 5 gift frame with a color e-ink panel, a round display, two OLEDs, a touch pad and a
-              speaker. My Python app drives all of it, and a phone shortcut sends it a heart.
-            </p>
+            <p className="build-desc">{lead(building.desc)}</p>
             <button type="button" className="link-btn" onClick={() => openProject(`p-${slug(building.header)}`)}>
               Open the project <ArrowRight />
             </button>
           </div>
         </div>
 
-        <div className="tile tile-career" data-load style={{ "--d": 6 }}>
+        <div className="tile tile-career" data-reveal style={{ "--i": 4 }}>
           <h2 className="tile-title">
             Career <a className="link tile-link" href="#experience">Full history</a>
           </h2>

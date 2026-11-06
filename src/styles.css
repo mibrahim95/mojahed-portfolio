@@ -1,61 +1,53 @@
 /* Night shift: a résumé laid out as a control desk.
-   Cool graphite, like a server room with the lights down, and one accent: signal yellow,
-   the colour of a lit window and of a highlighter. Yellow is always a fill (buttons, the
-   mark, a match); where it has to be text or a thin line, --signal-fg carries it, and in
-   the light theme that is a dark ochre so it still passes AA. Steel blue is the quiet
-   second voice for data (bars, focus, timelines). No coral, no periwinkle, no purple. */
+   Cool graphite, like a server room with the lights down. One accent: jade, the green of a
+   passing check and a healthy service, which is what retries and failure alerts protect.
+   It is a blue-leaning green kept below neon, so it sits with the graphite instead of
+   glowing on it. Jade is a fill (buttons, the mark, a match) and, because it clears AA on
+   every surface here, also text and thin lines. Ice blue is the quiet second voice for
+   data (bars, timelines, focus). No yellow, orange, coral, periwinkle or purple.
+   Two themes: "dark" (graphite, the default) and "darker" (near-black for OLED screens
+   and dark rooms, where panels give way to hairlines). */
 
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0e1113;
-  --panel: #151a1d;
-  --raised: #1b2125;
-  --sunk: #0b0e10;
+  --bg: #0d1012;
+  --panel: #13181b;
+  --raised: #1a2024;
+  --sunk: #0a0d0f;
   --line: rgb(214 230 236 / 0.08);
   --line-2: rgb(214 230 236 / 0.16);
-  --ink: #eef0ec;
-  --ink-2: #b4bcbd;
-  --ink-3: #8b9496;
-  --signal: #ecd34f;
-  --signal-fg: #ecd34f;
-  --signal-ink: #121516;
-  --signal-soft: rgb(236 211 79 / 0.12);
-  --danger: #ff9a85;
-  --data: #8fb3c4;
-  --data-2: #5f8798;
-  --data-soft: rgb(143 179 196 / 0.12);
-  --tape: #e6e9e4;
-  --tape-ink: #1b1f21;
+  --ink: #eef1ee;
+  --ink-2: #b2bcbc;
+  --ink-3: #8a9596;
+  --signal: #4fd9a4;
+  --signal-fg: #5fe0ae;
+  --signal-ink: #07130e;
+  --signal-soft: rgb(79 217 164 / 0.12);
+  --danger: #ff8a98;
+  --data: #8fb8cc;
+  --data-2: #5d889b;
+  --data-soft: rgb(143 184 204 / 0.12);
+  --tape: #e6ebe8;
+  --tape-ink: #1a1f21;
   --shadow: 0 1px 0 rgb(255 255 255 / 0.035) inset, 0 24px 48px -28px rgb(2 6 8 / 0.75);
   --pop: 0 30px 80px -20px rgb(2 6 8 / 0.8);
-  --is-light: 0;
 }
 
-[data-theme="light"] {
-  color-scheme: light;
-  --bg: #e8ebea;
-  --panel: #f8faf9;
-  --raised: #f0f3f2;
-  --sunk: #dfe4e2;
-  --line: rgb(17 21 23 / 0.1);
-  --line-2: rgb(17 21 23 / 0.2);
-  --ink: #111517;
-  --ink-2: #3f484b;
-  --ink-3: #566064;
-  --signal: #e8cc3c;
-  --signal-fg: #6b5800;
-  --signal-ink: #111517;
-  --signal-soft: rgb(232 204 60 / 0.22);
-  --danger: #a8281b;
-  --data: #2f5d70;
-  --data-2: #5b8597;
-  --data-soft: rgb(47 93 112 / 0.09);
-  --tape: #1b2023;
-  --tape-ink: #eef0ec;
-  --shadow: 0 1px 2px rgb(17 30 36 / 0.05), 0 20px 40px -30px rgb(17 30 36 / 0.28);
-  --pop: 0 30px 80px -24px rgb(17 30 36 / 0.35);
-  --is-light: 1;
+[data-theme="darker"] {
+  --bg: #020303;
+  --panel: #070909;
+  --raised: #0e1112;
+  --sunk: #000;
+  --line: rgb(214 230 236 / 0.11);
+  --line-2: rgb(214 230 236 / 0.2);
+  --ink: #f3f5f2;
+  --ink-2: #aab3b4;
+  --ink-3: #838d8f;
+  --signal-soft: rgb(79 217 164 / 0.1);
+  --tape: #d9dfdc;
+  --shadow: 0 0 0 1px rgb(214 230 236 / 0.02) inset;
+  --pop: 0 30px 80px -20px rgb(0 0 0 / 0.9);
 }
 
 :root {
@@ -89,6 +81,7 @@ html {
 body {
   margin: 0;
   background: var(--bg);
+  transition: background-color 0.45s var(--ease);
   color: var(--ink);
   font: 400 1rem/1.6 var(--sans);
   font-optical-sizing: auto;
@@ -317,28 +310,28 @@ kbd {
   flex: none;
 }
 
-/* Fixed colours in both themes so the mark always matches the favicon and app icons. */
+/* Fixed colours in every theme so the mark always matches the favicon and app icons. */
 .mark-tile {
-  fill: #ecd34f;
+  fill: #4fd9a4;
 }
 
 .mark-px {
-  fill: #121516;
+  fill: #07130e;
 }
 
+/* Tool logos are drawn in one ink tone, not brand colours: brand yellows and oranges
+   (JavaScript, HTML, Git, Grafana...) would break the palette, and one tone keeps a
+   cloud of 100 chips calm. Hover and selection light them in jade. */
 .slogo {
   flex: none;
   width: var(--s, auto);
-  fill: var(--brand);
-}
-
-[data-theme="dark"] .slogo.is-darkbrand {
-  fill: var(--ink);
+  fill: var(--ink-2);
+  transition: fill 0.25s var(--ease);
 }
 
 .slogo-glyph {
   fill: none;
-  stroke: var(--data);
+  stroke: var(--ink-2);
   stroke-width: 1.7;
   stroke-linejoin: round;
 }
@@ -436,20 +429,69 @@ kbd {
 }
 
 .theme-toggle {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 8px 0 11px;
   border: 1px solid var(--line-2);
-  border-radius: 50%;
+  border-radius: 999px;
   background: var(--panel);
-  color: var(--ink);
-  transition: transform 0.5s var(--settle), border-color 0.2s var(--ease);
+  color: var(--ink-2);
+  font-size: 0.84rem;
+  font-weight: 500;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .theme-toggle:hover {
   border-color: var(--ink-3);
-  transform: rotate(20deg);
+  color: var(--ink);
+}
+
+.tt-disc {
+  fill: var(--ink);
+}
+
+/* The shadow disc slides across the moon: a crescent when off, a sliver of light when on. */
+.tt-shade {
+  fill: var(--panel);
+  transform: translateX(5px);
+  transition: transform 0.6s var(--settle), fill 0.3s var(--ease);
+}
+
+.theme-toggle[aria-pressed="true"] .tt-shade {
+  transform: translateX(1.6px);
+}
+
+.tt-track {
+  position: relative;
+  width: 28px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--raised);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background-color 0.3s var(--ease);
+}
+
+.tt-track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink-3);
+  transition: transform 0.5s var(--settle), background-color 0.3s var(--ease);
+}
+
+.theme-toggle[aria-pressed="true"] .tt-track {
+  background: var(--signal);
+}
+
+.theme-toggle[aria-pressed="true"] .tt-track::after {
+  background: var(--signal-ink);
+  transform: translateX(12px);
 }
 
 /* ---------- entrance motion ---------- */
@@ -464,7 +506,7 @@ kbd {
   transition: opacity 0.7s var(--ease), transform 0.9s var(--settle);
 }
 
-.js [data-reveal].is-in {
+.js [data-reveal][data-in] {
   opacity: 1;
   transform: none;
 }
@@ -476,15 +518,240 @@ kbd {
   }
 }
 
-/* ---------- hero bento ---------- */
+/* ---------- hero ---------- */
 .hero {
-  padding-block: 28px 24px;
+  position: relative;
+  padding-block: clamp(36px, 6vw, 84px) 24px;
+  isolation: isolate;
+}
+
+/* One flat wash of jade light behind the name, like a lit room seen from the street. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -64px 0 auto;
+  z-index: -1;
+  height: 900px;
+  background:
+    radial-gradient(48% 52% at 74% 30%, color-mix(in oklab, var(--signal) 9%, transparent), transparent 72%),
+    radial-gradient(40% 40% at 10% 0%, var(--data-soft), transparent 70%);
+  pointer-events: none;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: end;
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+
+.intro-copy {
+  min-width: 0;
+}
+
+.id-place {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-2);
+  font: 450 0.82rem/1.3 var(--mono);
+}
+
+.id-name {
+  display: grid;
+  margin-top: clamp(20px, 2.6vw, 34px);
+  font: 740 clamp(3.2rem, 8.6vw, 8rem) / 0.9 var(--display);
+  font-stretch: 125%;
+  letter-spacing: -0.035em;
+}
+
+/* Each line rises out of its own slot, the one authored moment on load. */
+.id-line {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.id-line > span {
+  display: block;
+}
+
+.js .id-line > span {
+  animation: line-up 1.1s var(--settle) both;
+  animation-delay: calc(var(--d) * 90ms + 80ms);
+}
+
+.id-line:last-child > span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+  transition: color 0.6s var(--ease);
+}
+
+.id-name:hover .id-line:last-child > span {
+  color: var(--ink);
+}
+
+@keyframes line-up {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+.id-headline {
+  margin-top: clamp(22px, 2.6vw, 34px);
+  max-width: 34ch;
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  font-weight: 560;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.id-lede {
+  margin-top: 16px;
+  max-width: 62ch;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.id-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.id-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: 18px;
+  font-size: 0.9rem;
+}
+
+.id-social .link {
+  color: var(--ink-2);
+}
+
+/* The portrait as a staff badge: the whole photo at its own ratio in a machined tray,
+   the role printed underneath. */
+.badge {
+  position: relative;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: color-mix(in oklab, var(--panel) 80%, transparent);
+  box-shadow: var(--pop);
+}
+
+.badge-shell {
+  overflow: hidden;
+  border-radius: 19px;
+  background: var(--sunk);
+  box-shadow: 0 0 0 1px var(--line) inset;
+}
+
+.portrait {
+  aspect-ratio: var(--ratio, 1 / 1);
+  overflow: hidden;
+  background: var(--sunk);
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* The photo develops: it starts soft and grey and resolves as the frame opens. */
+.js .badge-photo img {
+  animation: develop 1.4s var(--settle) 0.35s both;
+}
+
+.js .badge {
+  animation: rise 1s var(--settle) 0.2s both;
+}
+
+@keyframes develop {
+  from {
+    clip-path: inset(100% 0 0 0);
+    filter: grayscale(1) blur(6px);
+    transform: scale(1.08);
+  }
+
+  60% {
+    filter: grayscale(0.4) blur(0);
+  }
+}
+
+.badge-body {
+  padding: 18px 14px 10px;
+}
+
+.badge-now {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--signal-fg);
+  font: 500 0.78rem/1.2 var(--mono);
+}
+
+/* A real status: he works here now. */
+.badge-light {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px var(--signal-soft);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .badge-light {
+    animation: breathe 3.2s ease-in-out infinite;
+  }
+}
+
+@keyframes breathe {
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+.badge-title {
+  margin-top: 12px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.badge-co {
+  margin-top: 2px;
+  font: 700 2rem/1 var(--display);
+  font-stretch: var(--wide);
+  letter-spacing: -0.025em;
+}
+
+.badge-meta {
+  margin-top: 10px;
+  color: var(--data);
+  font: 450 0.8rem/1.3 var(--mono);
+}
+
+.badge-desc {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .bento {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-flow: dense;
   gap: 14px;
 }
 
@@ -496,6 +763,10 @@ kbd {
   border-radius: var(--r);
   background: var(--panel);
   box-shadow: var(--shadow);
+}
+
+.js .bento [data-reveal] {
+  transition-delay: calc(var(--i, 0) * 70ms);
 }
 
 .tile-title {
@@ -515,135 +786,14 @@ kbd {
   text-transform: none;
 }
 
-.tile-id {
-  grid-column: 1 / 8;
-  grid-row: 1 / 3;
-  display: flex;
-  flex-direction: column;
-  padding: clamp(26px, 3.4vw, 44px);
-}
-
-.id-place {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--ink-2);
-  font: 450 0.82rem/1.3 var(--mono);
-}
-
-.tile-id h1 {
-  margin-top: clamp(24px, 3vw, 40px);
-  font: 720 clamp(3rem, 6.4vw, 5.6rem) / 0.94 var(--display);
-  font-stretch: var(--wide);
-  letter-spacing: -0.03em;
-}
-
-.id-headline {
-  margin-top: 18px;
-  max-width: 26ch;
-  font-size: clamp(1.3rem, 2vw, 1.7rem);
-  font-weight: 560;
-  line-height: 1.24;
-  letter-spacing: -0.005em;
-  text-wrap: balance;
-}
-
-.id-lede {
-  margin-top: 16px;
-  max-width: 60ch;
-  color: var(--ink-2);
-  text-wrap: pretty;
-}
-
-.id-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: auto;
-  padding-top: 30px;
-}
-
-.id-social {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  margin-top: 18px;
-  font-size: 0.9rem;
-}
-
-.id-social .link {
-  color: var(--ink-2);
-}
-
-/* current role */
-.tile-role {
-  grid-column: 8 / 13;
-  display: grid;
-  grid-template-columns: 38% 1fr;
-  gap: 20px;
-  padding: 14px 22px 14px 14px;
-}
-
-.portrait {
-  overflow: hidden;
-  border-radius: 14px;
-  background: var(--sunk);
-}
-
-.portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.role-photo,
 .build-media {
   min-width: 0;
   min-height: 100%;
 }
 
-.role-body {
-  display: flex;
-  flex-direction: column;
-  padding-block: 12px 6px;
-}
-
-.role-body .tile-title {
-  margin-bottom: 12px;
-}
-
-.role-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-}
-
-.role-co {
-  margin-top: 4px;
-  font: 680 1.9rem/1 var(--display);
-  font-stretch: var(--wide);
-  letter-spacing: -0.025em;
-  letter-spacing: -0.01em;
-}
-
-.role-meta {
-  margin-top: 10px;
-  color: var(--data);
-  font: 450 0.8rem/1.3 var(--mono);
-}
-
-.role-desc {
-  margin-top: auto;
-  padding-top: 14px;
-  color: var(--ink-2);
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
 /* speedups */
 .tile-speed {
-  grid-column: 8 / 13;
+  grid-column: 1 / 8;
 }
 
 .speed-big {
@@ -710,7 +860,7 @@ kbd {
 
 /* education */
 .tile-edu {
-  grid-column: 1 / 6;
+  grid-column: 8 / 13;
   overflow: hidden;
   scroll-margin-top: 90px;
 }
@@ -782,6 +932,7 @@ kbd {
 /* daily stack */
 .tile-stack {
   grid-column: 6 / 13;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
 }
@@ -827,7 +978,20 @@ kbd {
 }
 
 .stack-btn:hover .slogo {
+  fill: var(--signal-fg);
   transform: scale(1.12) rotate(-4deg);
+}
+
+.chip:hover .slogo,
+.case-stack li:hover .slogo,
+.row-btn:hover .slogo {
+  fill: var(--signal-fg);
+}
+
+.stack-btn:hover .slogo-glyph,
+.chip:hover .slogo-glyph {
+  fill: none;
+  stroke: var(--signal-fg);
 }
 
 .stack-name {
@@ -863,6 +1027,7 @@ kbd {
 /* currently building */
 .tile-build {
   grid-column: 1 / 6;
+  grid-row: 2;
   display: grid;
   grid-template-columns: 44% 1fr;
   gap: 20px;
@@ -936,7 +1101,7 @@ kbd {
 
 /* career strip */
 .tile-career {
-  grid-column: 6 / 13;
+  grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
 }
@@ -1069,24 +1234,137 @@ kbd {
   padding-block: clamp(56px, 6.4vw, 84px) 0;
 }
 
-/* ---------- skill finder ---------- */
+/* ---------- skill finder ----------
+   Search on the left, every skill on the right as one folded cloud with group tabs. */
 .finder-panel {
-  padding: clamp(22px, 3.4vw, 44px);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 20px clamp(28px, 4vw, 56px);
+  align-items: start;
+  padding: clamp(22px, 3vw, 36px);
   border: 1px solid var(--line);
   border-radius: calc(var(--r) + 6px);
   background: var(--panel);
   box-shadow: var(--shadow);
 }
 
+.finder-side {
+  min-width: 0;
+}
+
 .finder-head {
   display: grid;
   justify-items: start;
-  gap: 14px;
+  gap: 12px;
+}
+
+.finder-head h2 {
+  font-size: clamp(2rem, 3.4vw, 2.9rem);
 }
 
 .finder-head p {
-  max-width: 74ch;
+  max-width: 52ch;
   color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
+.finder-panel > .results {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.cloud-wrap {
+  min-width: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--sunk);
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs button {
+  flex: none;
+  min-height: 34px;
+  padding: 5px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.25s var(--ease), color 0.2s var(--ease);
+}
+
+.tabs button span {
+  margin-left: 3px;
+  color: var(--ink-3);
+  font: 450 0.72rem/1 var(--mono);
+}
+
+.tabs button:hover {
+  color: var(--ink);
+}
+
+.tabs button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.tabs button[aria-pressed="true"] span {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.cloud > li {
+  animation: rise 0.45s var(--settle) both;
+}
+
+/* Folded: about two rows. The chip filtering the page always stays. */
+.cloud:not(.is-open) > li:nth-child(n + 15):not(.is-on) {
+  display: none;
+}
+
+.cloud.is-open {
+  max-height: min(46vh, 420px);
+  padding: 2px 6px 18px 2px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+}
+
+.cloud-more {
+  margin-top: 12px;
+  font-size: 0.88rem;
+}
+
+.chip.is-resume {
+  border-style: dashed;
+  color: var(--ink-2);
+}
+
+.chip.is-resume .chip-count {
+  opacity: 0.7;
 }
 
 .finder-box {
@@ -1094,7 +1372,7 @@ kbd {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 22px;
   padding: 0 10px 0 20px;
   border: 1px solid var(--line-2);
   border-radius: 16px;
@@ -1117,7 +1395,7 @@ kbd {
 .finder-box input {
   flex: 1;
   min-width: 0;
-  min-height: 64px;
+  min-height: 58px;
   border: 0;
   background: none;
   font-size: clamp(1.1rem, 2vw, 1.35rem);
@@ -1315,26 +1593,6 @@ kbd {
   font: 450 0.72rem/1 var(--mono);
 }
 
-.groups {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px 32px;
-  margin-top: 32px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line);
-}
-
-.group h3 {
-  margin-bottom: 10px;
-  color: var(--ink-3);
-  font: 500 0.8rem/1.2 var(--mono);
-}
-
-.groups-more {
-  margin-top: 24px;
-  font-size: 0.9rem;
-}
-
 /* sticky filter status */
 .filterbar {
   position: fixed;
@@ -1392,57 +1650,8 @@ kbd {
   }
 }
 
-/* ---------- projects ---------- */
-.proj-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 20px;
-  margin-bottom: 20px;
-}
-
-.segmented {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 2px;
-  padding: 4px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--panel);
-}
-
-.segmented button {
-  min-height: 38px;
-  padding: 6px 14px;
-  border: 0;
-  border-radius: 999px;
-  background: none;
-  color: var(--ink-2);
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: background-color 0.25s var(--ease), color 0.2s var(--ease);
-}
-
-.segmented button span {
-  margin-left: 4px;
-  color: var(--ink-3);
-  font: 450 0.75rem/1 var(--mono);
-}
-
-.segmented button:hover {
-  color: var(--ink);
-}
-
-.segmented button[aria-pressed="true"] {
-  background: var(--ink);
-  color: var(--bg);
-}
-
-.segmented button[aria-pressed="true"] span {
-  color: inherit;
-  opacity: 0.7;
-}
-
+/* ---------- projects ----------
+   Three case studies (one wide, two side by side), then an index of the rest. */
 .proj-note {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1460,157 +1669,176 @@ kbd {
   color: var(--signal-fg);
 }
 
-/* Two columns of project cards; the lead project (and an odd one out at the end) gets a
-   full-width row with the picture beside the text. Every card shows its picture, what it
-   is, what it is built with and where to see it, without opening anything. */
-.gallery {
+.cases {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(56px, 6vw, 88px) clamp(24px, 3vw, 44px);
 }
 
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+.case {
+  display: grid;
+  align-content: start;
+  gap: 26px;
   min-width: 0;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: var(--panel);
-  transition: border-color 0.3s var(--ease), opacity 0.4s var(--ease);
+  scroll-margin-top: 100px;
+  transition: opacity 0.5s var(--ease), filter 0.5s var(--ease);
 }
 
-.card:hover,
-.card:focus-within {
-  border-color: var(--line-2);
-}
-
-.card.is-match {
-  border-color: color-mix(in oklab, var(--signal-fg) 60%, transparent);
-}
-
-.card.is-wide {
+.case-0 {
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
 }
 
-/* A second wide row mirrors the first, picture on the right. */
-.card.is-wide + .card.is-wide .card-media {
-  order: 2;
-  border-right: 0;
-  border-left: 1px solid var(--line);
+/* The picture sits in a machined tray: an outer shell and an inner, concentric screen. */
+.case-frame {
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  transition: border-color 0.4s var(--ease);
 }
 
-.card-media {
+.case-media {
   position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  padding: 0;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 19px;
   background: var(--sunk);
-  border-bottom: 1px solid var(--line);
+  box-shadow: 0 0 0 1px var(--line) inset;
+  text-align: left;
+  cursor: zoom-in;
 }
 
-.card.is-wide .card-media {
-  aspect-ratio: auto;
-  min-height: 100%;
-  border-bottom: 0;
-  border-right: 1px solid var(--line);
-}
-
-.card-media img {
+.case-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  transition: transform 0.9s var(--ease);
+  transition: transform 1.1s var(--settle);
 }
 
-.card.is-wide .card-media img {
-  position: absolute;
-  inset: 0;
+.case-media:hover img {
+  transform: scale(1.035);
 }
 
-.card:hover .card-media img {
-  transform: scale(1.025);
+.case-media .gen {
+  transition: transform 1.1s var(--settle);
 }
 
-.card-body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 20px 22px;
+.case-media:hover .gen {
+  transform: scale(1.02);
 }
 
-.card.is-wide .card-body {
-  padding: clamp(24px, 3vw, 40px);
+.case-body {
+  min-width: 0;
 }
 
-.card-kind {
+.case-kind {
   display: flex;
   justify-content: space-between;
   gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
   color: var(--ink-3);
-  font: 450 0.78rem/1.3 var(--mono);
+  font: 450 0.8rem/1.3 var(--mono);
 }
 
-.card h3 {
-  margin-top: 8px;
-  font: 680 1.35rem/1.15 var(--display);
+.case h3 {
+  margin-top: 18px;
+  font: 720 clamp(1.9rem, 3vw, 2.6rem) / 1 var(--display);
   font-stretch: var(--wide);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   text-wrap: balance;
 }
 
-.card.is-wide h3 {
-  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+.case-0 h3 {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
 }
 
-.card-desc {
-  display: -webkit-box;
-  margin-top: 10px;
-  overflow: hidden;
+.case-what {
+  margin-top: 14px;
+  max-width: 46ch;
+  font-size: 1.12rem;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+
+.case-facts {
+  display: grid;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.case-facts dt {
+  margin-bottom: 6px;
+  color: var(--ink-3);
+  font: 500 0.76rem/1.2 var(--mono);
+}
+
+.case-facts dd {
+  margin: 0;
+  max-width: 64ch;
   color: var(--ink-2);
-  font-size: 0.94rem;
-  line-height: 1.55;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-wrap: pretty;
 }
 
-.card.is-wide .card-desc {
-  display: block;
-  max-width: 62ch;
-  font-size: 1rem;
-}
-
-.card-logos {
+.case-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
+  gap: 6px;
 }
 
-.card-logos li {
+.case-stack li {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  min-height: 30px;
-  padding: 4px 10px;
+  gap: 6px;
+  min-height: 28px;
+  padding: 3px 9px;
   border-radius: 8px;
   background: var(--raised);
   color: var(--ink-2);
   font-size: 0.8rem;
 }
 
-.card-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px 16px;
-  margin-top: auto;
-  padding-top: 16px;
+.case-stack .case-stack-more {
+  padding: 3px 4px;
+  background: none;
+}
+
+.case-stack-more .link-btn {
+  font-size: 0.8rem;
+}
+
+.case .proj-links {
+  margin-top: 24px;
+}
+
+.case.is-match .case-frame {
+  border-color: color-mix(in oklab, var(--signal-fg) 55%, transparent);
+}
+
+.case.is-dim,
+.row.is-dim {
+  opacity: 0.36;
+  filter: grayscale(0.7);
+}
+
+.case.is-dim:hover,
+.case.is-dim:focus-within,
+.row.is-dim:hover,
+.row.is-dim:focus-within {
+  opacity: 0.85;
 }
 
 .proj-links {
@@ -1632,83 +1860,197 @@ kbd {
   font: 500 0.8rem/1 var(--mono);
 }
 
-.card-more {
-  margin-left: auto;
+/* the index */
+.index-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: clamp(72px, 8vw, 112px);
+  padding-bottom: 16px;
 }
 
-/* A skill filter folds the cards that do not use it. */
-.folded-title {
-  margin: 28px 0 12px;
+.index-head h3 {
+  font: 700 clamp(1.5rem, 2.4vw, 2rem) / 1 var(--display);
+  font-stretch: var(--wide);
+  letter-spacing: -0.025em;
+}
+
+.index-head p {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
+.index {
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  border-top: 1px solid var(--line-2);
+  counter-reset: row;
+}
+
+.row {
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 110px;
+  transition: opacity 0.5s var(--ease), filter 0.5s var(--ease);
+}
+
+.row-btn {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr) minmax(0, 14rem) 6.5rem 24px;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  min-height: 84px;
+  padding: 18px 8px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  text-align: left;
+}
+
+.row-year {
   color: var(--ink-3);
-  font: 500 0.78rem/1.2 var(--mono);
+  font: 450 0.8rem/1.3 var(--mono);
 }
 
-.gallery-folded {
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+.row-title {
+  font: 680 clamp(1.3rem, 2.4vw, 2rem) / 1.08 var(--display);
+  font-stretch: var(--wide);
+  letter-spacing: -0.025em;
+  transition: transform 0.55s var(--settle), color 0.3s var(--ease);
+}
+
+.row-kind {
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
+.row-stack {
+  display: flex;
   gap: 10px;
+  justify-content: flex-end;
 }
 
-.card.is-folded {
-  opacity: 0.62;
+.row-arrow {
+  color: var(--ink-3);
+  transition: transform 0.5s var(--settle), color 0.3s var(--ease);
 }
 
-.card.is-folded .card-body {
-  padding: 14px 18px;
+.row-btn:hover .row-title,
+.row-btn:focus-visible .row-title {
+  color: var(--signal-fg);
+  transform: translateX(10px);
 }
 
-.card.is-folded h3 {
-  margin-top: 2px;
-  font-size: 1rem;
+.row-btn:hover .row-arrow,
+.row-btn:focus-visible .row-arrow {
+  color: var(--ink);
+  transform: translate(3px, -3px);
 }
 
-.card.is-folded .card-media,
-.card.is-folded .card-desc,
-.card.is-folded .card-logos,
-.card.is-folded .proj-links {
-  display: none;
+.row.is-match .row-year {
+  color: var(--signal-fg);
 }
 
-.card.is-folded .card-foot {
-  padding-top: 8px;
+/* The pointer-following preview. Mouse only; touch screens open the dialog instead. */
+.row-peek {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  width: 300px;
+  aspect-ratio: 5 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
+  background: var(--sunk);
+  box-shadow: var(--pop);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(calc(var(--mx) + 28px), calc(var(--my) - 50%)) scale(0.92) rotate(-2deg);
+  transition: opacity 0.25s var(--ease), transform 0.5s var(--settle);
 }
 
-.card.is-folded:hover,
-.card.is-folded:focus-within {
-  opacity: 1;
+.row-peek img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
 }
 
-@media (max-width: 1150px) {
-  .gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.row-peek .gen-api,
+.row-peek .gen-rack {
+  font-size: 0.5rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .row:hover .row-peek {
+    opacity: 1;
+    transform: translate(calc(var(--mx) + 28px), calc(var(--my) - 50%)) scale(1) rotate(0deg);
+  }
+}
+
+@media (max-width: 1100px) {
+  .row-btn {
+    grid-template-columns: 6rem minmax(0, 1fr) 6.5rem 24px;
+  }
+
+  .row-kind {
+    display: none;
   }
 }
 
 @media (max-width: 900px) {
-  .gallery {
+  .cases {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .card.is-wide {
-    display: flex;
+  .case-0 {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .card.is-wide .card-media {
-    aspect-ratio: 16 / 10;
-    min-height: 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
+  .row-peek {
+    display: none;
   }
 
-  .card.is-wide .card-media img {
-    position: static;
+  /* The drawn pictures need their full height on narrow screens. */
+  .case-media:has(.gen) {
+    aspect-ratio: auto;
   }
 
-  .card.is-wide + .card.is-wide .card-media {
-    order: 0;
-    border-left: 0;
+  .row-btn {
+    grid-template-columns: minmax(0, 1fr) 24px;
+    gap: 4px 12px;
+    padding-inline: 2px;
+  }
+
+  .row-year {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .row-title {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .row-kind {
+    display: block;
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .row-stack {
+    display: none;
+  }
+
+  .row-arrow {
+    grid-column: 2;
+    grid-row: 1 / 4;
   }
 }
-
 
 ::view-transition-group(*) {
   animation-duration: 0.55s;
@@ -2032,11 +2374,11 @@ kbd {
   transition: background-color 0.25s var(--ease), opacity 0.35s var(--ease), box-shadow 0.25s var(--ease);
 }
 
-.js .tape-scroll:not(.is-in) .tspan {
+.js .tape-scroll:not([data-in]) .tspan {
   transform: scaleX(0);
 }
 
-.js .tape-scroll.is-in .tspan {
+.js .tape-scroll[data-in] .tspan {
   transform: none;
   transition: transform 1.2s var(--settle), background-color 0.25s var(--ease), opacity 0.35s var(--ease);
 }
@@ -2482,8 +2824,8 @@ kbd {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #ecd34f;
-  color: #121516;
+  background: var(--signal);
+  color: var(--signal-ink);
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -2511,11 +2853,6 @@ kbd {
   font-size: 0.68rem;
 }
 
-.chat--telegram {
-  background: #dfe5ee;
-  color: #0f1419;
-}
-
 .chat--telegram .chat__header {
   background: #3d6a97;
   color: #fff;
@@ -2540,26 +2877,21 @@ kbd {
   color: #5b6b7d;
 }
 
-[data-theme="dark"] .chat--telegram {
+.chat--telegram {
   background: #0e1621;
   color: #f5f5f5;
 }
 
-[data-theme="dark"] .chat--telegram .chat__header {
+.chat--telegram .chat__header {
   background: #17212b;
 }
 
-[data-theme="dark"] .chat--telegram .chat__bubble {
+.chat--telegram .chat__bubble {
   background: #182533;
 }
 
-[data-theme="dark"] .chat--telegram .chat__time {
+.chat--telegram .chat__time {
   color: #8b9bab;
-}
-
-.chat--slack {
-  background: #fff;
-  color: #1d1c1d;
 }
 
 .chat--slack .chat__header {
@@ -2592,22 +2924,22 @@ kbd {
   color: #616061;
 }
 
-[data-theme="dark"] .chat--slack {
+.chat--slack {
   background: #1a1d21;
   color: #d1d2d3;
 }
 
-[data-theme="dark"] .chat--slack .chat__header {
+.chat--slack .chat__header {
   background: #19171d;
   border-bottom: 1px solid #35373b;
 }
 
-[data-theme="dark"] .chat--slack .chat__tag {
+.chat--slack .chat__tag {
   background: #35373b;
   color: #ababad;
 }
 
-[data-theme="dark"] .chat--slack .chat__time {
+.chat--slack .chat__time {
   color: #ababad;
 }
 
@@ -2890,26 +3222,19 @@ kbd {
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
-  .tile-id {
-    grid-column: 1 / -1;
-    grid-row: auto;
+  .intro {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
   }
 
-  .tile-role,
-  .tile-speed {
-    grid-column: span 6;
-  }
-
-  .tile-edu,
+  .tile-speed,
   .tile-build {
     grid-column: 1 / 7;
   }
 
-  .tile-stack,
-  .tile-career {
+  .tile-edu,
+  .tile-stack {
     grid-column: 7 / 13;
   }
-
 }
 
 @media (max-width: 900px) {
@@ -2927,10 +3252,23 @@ kbd {
 
   .bento > .tile {
     grid-column: 1 / -1;
+    grid-row: auto;
   }
 
-  .section-head,
-  .finder-head {
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .badge {
+    display: grid;
+    grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+    gap: 4px 12px;
+    align-items: center;
+    max-width: 560px;
+  }
+
+  .finder-panel {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -2986,40 +3324,51 @@ kbd {
     padding: 20px;
   }
 
-  .tile-role,
   .tile-build {
     grid-template-columns: 112px 1fr;
     gap: 16px;
     padding: 12px 16px 12px 12px;
   }
 
-  .role-photo,
   .build-media {
     min-height: 0;
     align-self: start;
-  }
-
-  .role-photo {
-    aspect-ratio: 4 / 5;
-  }
-
-  .build-media {
     aspect-ratio: 1;
   }
 
-  .role-desc,
   .build-desc {
     display: none;
   }
 
-  .tile-role .role-desc {
-    display: block;
-    grid-column: 1 / -1;
-  }
-
-  .role-co,
   .build-name {
     font-size: 1.6rem;
+  }
+
+  .badge {
+    grid-template-columns: minmax(0, 132px) minmax(0, 1fr);
+  }
+
+  .badge-body {
+    padding: 4px 6px;
+  }
+
+  .badge-co {
+    font-size: 1.6rem;
+  }
+
+  .badge-desc {
+    grid-column: 1 / -1;
+    margin: 6px 6px 4px;
+  }
+
+  /* Hidden visually, still the switch's accessible name. */
+  .tt-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .edu-year {
@@ -3039,33 +3388,8 @@ kbd {
     display: none;
   }
 
-  .groups {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
-  }
-
-  /* One swipeable row per group keeps the long skill list short on phones. */
-  .group .chips {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin-inline: -20px;
-    padding: 2px 20px 6px;
-    scrollbar-width: none;
-  }
-
-  .group .chip {
-    flex: none;
-  }
-
-  .segmented {
-    flex-wrap: nowrap;
-    max-width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .segmented button {
-    flex: none;
+  .cloud:not(.is-open) > li:nth-child(n + 9):not(.is-on) {
+    display: none;
   }
 
   .palette-hint {
@@ -3098,7 +3422,7 @@ kbd {
     transform: none;
   }
 
-  .js .tape-scroll:not(.is-in) .tspan {
+  .js .tape-scroll:not([data-in]) .tspan {
     transform: none;
   }
 }
@@ -3108,54 +3432,46 @@ kbd {
    the dashboard and the skill finder; the finder panel docks on its waterline. */
 :root,
 [data-theme="dark"] {
-  --sky-2: #0f151a;
-  --sky-3: #172129;
-  --sky-glow: rgb(236 211 79 / 0.07);
+  --sky-2: #0e1519;
+  --sky-3: #152127;
+  --sky-glow: rgb(79 217 164 / 0.07);
   --sk-star: #dfe9ec;
-  --sk-moon: #eef0e6;
-  --sk-far: #18222a;
-  --sk-mid: #131b21;
-  --sk-near: #0e1418;
-  --sk-mark: #0a0f12;
-  --sk-hall: #10171b;
-  --sk-dark: #1b252c;
-  --sk-warm: #f1dd94;
-  --sk-ice: #cfe0e6;
-  /* The two Comcast crowns: lit glass in the site's own yellow, warmed toward white. */
-  --sk-crown: #f6e9a8;
-  --sk-lantern: #f6e9a8;
-  --sk-beacon: #ecd34f;
-  --sk-water: #0e1113;
-  --sk-bridge: #1d272e;
-  --sk-cable: #3a4a54;
+  --sk-moon: #eef1ee;
+  --sk-far: #172228;
+  --sk-mid: #121b20;
+  --sk-near: #0d1417;
+  --sk-mark: #090f11;
+  --sk-hall: #0f171a;
+  --sk-dark: #1a252b;
+  /* Lit windows are office fluorescents: white with a little jade in it. */
+  --sk-warm: #d3eee2;
+  --sk-ice: #cfe2ea;
+  /* The two Comcast crowns: lit glass in the site's jade, washed toward white. */
+  --sk-crown: #b8f0d8;
+  --sk-lantern: #b8f0d8;
+  /* Aircraft warning lights are red on real towers. */
+  --sk-beacon: #ff6b7d;
+  --sk-water: #0d1012;
+  --sk-bridge: #1c272d;
+  --sk-cable: #384a53;
   --sk-bulb: #eef3f1;
-  --sk-house: #f1e2b2;
-  --gold: #f0c75a;
+  --sk-house: #c9e9db;
+  --gold: #a9d8ff;
 }
 
-[data-theme="light"] {
-  --sky-2: #d9e1e3;
-  --sky-3: #e9ece6;
-  --sky-glow: rgb(232 204 60 / 0.16);
-  --sk-star: transparent;
-  --sk-moon: #ffffff;
-  --sk-far: #c8d2d5;
-  --sk-mid: #a9b6bb;
-  --sk-near: #8796a0;
-  --sk-mark: #63727b;
-  --sk-hall: #71818a;
-  --sk-dark: rgb(255 255 255 / 0.18);
-  --sk-warm: rgb(255 255 255 / 0.75);
-  --sk-ice: rgb(238 246 248 / 0.85);
-  --sk-crown: #f3dc61;
-  --sk-lantern: #f3dc61;
-  --sk-beacon: #a8281b;
-  --sk-water: #e8ebea;
-  --sk-bridge: #63727b;
-  --sk-cable: #63727b;
-  --sk-bulb: #ffffff;
-  --sk-house: #ffffff;
-  --gold: #c99a1e;
+[data-theme="darker"] {
+  --sky-2: #04080a;
+  --sky-3: #0a1216;
+  --sky-glow: rgb(79 217 164 / 0.05);
+  --sk-far: #0f171b;
+  --sk-mid: #0b1215;
+  --sk-near: #070c0e;
+  --sk-mark: #040708;
+  --sk-hall: #080d0f;
+  --sk-dark: #121b20;
+  --sk-water: #020303;
+  --sk-bridge: #131c21;
+  --sk-cable: #2c3b43;
 }
 
 :root {
@@ -3228,12 +3544,7 @@ html {
 .sk-bulb { fill: var(--sk-bulb); opacity: 0.85; transition: fill 0.4s var(--ease); }
 .sk-house { fill: none; stroke: var(--sk-house); stroke-width: 1.6; stroke-dasharray: 1.6 2.2; }
 
-[data-theme="light"] .sk-house,
-[data-theme="light"] .sk-bulb {
-  opacity: 0.7;
-}
-
-/* A crescent: the shadow is the moon, the box is the dark side. In light mode it is a pale sun. */
+/* A crescent: the shadow is the moon, the box is the dark side. */
 .sk-moon {
   position: absolute;
   top: 14%;
@@ -3243,13 +3554,6 @@ html {
   border-radius: 50%;
   box-shadow: inset -10px 7px 0 0 var(--sk-moon);
   transform: rotate(-12deg);
-}
-
-[data-theme="light"] .sk-moon {
-  width: 52px;
-  height: 52px;
-  background: #fbfaf2;
-  box-shadow: 0 0 0 10px rgb(255 255 255 / 0.3);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -3338,7 +3642,7 @@ html {
   to { transform: translate(1680px, 50px); }
 }
 
-/* Konami: every window on, the bridge lights go yellow, fireworks over the city. */
+/* Konami: every window on, the bridge lights go jade, fireworks over the city. */
 .skyline.is-cheat .sk-win-dark { fill: var(--sk-warm); }
 .skyline.is-cheat .sk-bulb { fill: var(--signal); }
 
@@ -3396,7 +3700,7 @@ html {
 .px-w { fill: #f1efe9; }
 .px-n { fill: #3a4789; }
 .px-d { fill: #283266; }
-.px-r { fill: #ecd34f; }
+.px-r { fill: #4fd9a4; }
 
 /* ---------- the walker on the tape ---------- */
 .tape-track {
@@ -3450,12 +3754,6 @@ html {
     opacity: 0;
     transform: translate(-50%, -14px);
   }
-}
-
-.groups-untagged {
-  margin-top: 22px;
-  color: var(--ink-3);
-  font-size: 0.86rem;
 }
 
 .palette-row[aria-disabled="true"] {

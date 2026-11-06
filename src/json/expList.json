@@ -79,7 +79,10 @@
       "Query and index tuning",
       "Replication",
       "Migrations",
-      "Vagrant"
+      "Vagrant",
+      "Sass",
+      "gulp",
+      "Bootstrap"
     ]
   },
   {
