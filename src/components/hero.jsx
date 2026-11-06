@@ -93,7 +93,7 @@ function Hero({ onGroup, onSearch }) {
             <p className="badge-title">{current.position}</p>
             <p className="badge-co">{current.title}</p>
             <p className="badge-meta">
-              Since {current.dates.split(/\s*–/)[0]} · {tenure(current.dates)}
+              Since {current.dates.split(/\s*–/)[0]}, {tenure(current.dates)}
             </p>
             <p className="badge-desc">{current.desc}</p>
           </figcaption>
