@@ -68,7 +68,7 @@ function validate({ fullName, email, msg }) {
   if (!name) errors.fullName = "Please enter your name.";
   else if (name.length < NAME_MIN) errors.fullName = `Please enter at least ${NAME_MIN} characters.`;
   else if (name.length > NAME_MAX) errors.fullName = `Please keep your name under ${NAME_MAX + 1} characters.`;
-  if (email.trim().length > EMAIL_MAX || !EMAIL_PATTERN.test(email.trim())) errors.email = "Please enter a valid email address, like jane@company.com.";
+  if (email.trim().length > EMAIL_MAX || !EMAIL_PATTERN.test(email.trim())) errors.email = "Please enter a valid email address, like you@company.com.";
   if (!msg.trim()) errors.msg = "Please write a short message.";
   else if (msg.trim().length > MSG_MAX) errors.msg = `Please shorten your message to ${MSG_MAX} characters.`;
   return errors;
@@ -163,7 +163,7 @@ ${form.email.trim()}`;
                     id="contact-name"
                     name="fullName"
                     autoComplete="name"
-                    placeholder="Priya Raman"
+                    placeholder="Your name"
                     value={form.fullName}
                     onChange={handleChange}
                     aria-invalid={!!errors.fullName}
@@ -183,7 +183,7 @@ ${form.email.trim()}`;
                     name="email"
                     type="email"
                     autoComplete="email"
-                    placeholder="priya@company.com"
+                    placeholder="you@company.com"
                     value={form.email}
                     onChange={handleChange}
                     aria-invalid={!!errors.email}
@@ -204,7 +204,7 @@ ${form.email.trim()}`;
                   id="contact-message"
                   name="msg"
                   rows={6}
-                  placeholder="What are you working on?"
+                  placeholder="A role, a project, or a question"
                   value={form.msg}
                   onChange={handleChange}
                   aria-invalid={!!errors.msg}
