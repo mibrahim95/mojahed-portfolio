@@ -119,7 +119,6 @@ function Hero({ onGroup, onSearch }) {
             <p className="edu-college">
               {edu.college}, {edu.location}
             </p>
-            <p className="edu-summary">{edu.summary}</p>
           </div>
           <div className="edu-degree">
             <p className="edu-kind">{edu.degree}</p>
@@ -132,16 +131,15 @@ function Hero({ onGroup, onSearch }) {
               return (
                 <li key={h} className="edu-fact">
                   <p className="edu-fact-title">{what}</p>
-                  <p className="edu-fact-when">{when}</p>
+                  {when && <p className="edu-fact-when">{when}</p>}
                 </li>
               );
             })}
             <li className="edu-fact">
               <p className="edu-fact-title">{edu.teaching.role}</p>
               <p className="edu-fact-when">{edu.teaching.dates}</p>
-              <p className="edu-fact-text">{edu.teaching.text}</p>
               <a className="link edu-fact-link" href="#job-temple">
-                See the role
+                See the role in Experience
               </a>
             </li>
           </ul>

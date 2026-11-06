@@ -1,5 +1,6 @@
+import { useState } from "react";
 import about from "../json/about.json";
-import { GROUPS, SKILLS, countLine, dash, findSkill, logoFor, noteFor, searchSkills, suggestFor } from "../skills";
+import { ALL, GROUPS, SKILLS, countLine, dash, findSkill, logoFor, noteFor, searchSkills, suggestFor } from "../skills";
 import { Close, Search } from "./icons";
 import { SkillLogo } from "./logo";
 import { SHORTCUT } from "../motion";
@@ -107,14 +108,21 @@ function Results({ skill, query, onPick }) {
   return null;
 }
 
-// Groups follow the range of the work: backend, APIs, pipelines, SQL, web, infra.
-// Pick a group on the rail and every skill in it shows at once; nothing is folded away.
+// "All" first, then the groups that follow the range of the work. All shows the first
+// FIRST skills with a plain "showing N of M" line and a chip that reveals the rest; a
+// group shows every skill in it. The chip filtering the page always stays in view.
+const TABS = [{ group: ALL, short: "All", items: SKILLS.map((x) => x.name) }, ...GROUPS];
+const FIRST = 24;
+
 function Cloud({ skill, group, onGroup, onPick }) {
-  const current = GROUPS.find((g) => g.group === group) || GROUPS[0];
+  const [open, setOpen] = useState(false);
+  const current = TABS.find((g) => g.group === group) || TABS[0];
+  const fold = current.group === ALL && !open && current.items.length > FIRST;
+  const shown = fold ? current.items.filter((n, i) => i < FIRST || n === skill?.name) : current.items;
   return (
     <div className="cloud-wrap">
       <div className="rail" role="group" aria-label="Skill groups">
-        {GROUPS.map((g, i) => (
+        {TABS.map((g, i) => (
           <button
             key={g.group}
             type="button"
@@ -130,17 +138,28 @@ function Cloud({ skill, group, onGroup, onPick }) {
       </div>
       <div className="cloud-pane">
         <p className="cloud-title">
-          {current.group} <span>{current.items.length} skills</span>
+          {current.group}
+          <span>
+            {fold ? `Showing ${shown.length} of ${current.items.length}` : `${current.items.length} skills`}
+          </span>
         </p>
-        <ul className="cloud" key={current.group} aria-label={`${current.group} skills`}>
-          {current.items.map((n, i) => (
+        <ul className="cloud" id="skill-cloud" key={current.group} aria-label={`${current.group}`}>
+          {shown.map((n, i) => (
             <li key={n} className={skill?.name === n ? "is-on" : undefined} style={{ "--i": i }}>
               <SkillChip name={n} active={skill?.name === n} onPick={onPick} />
             </li>
           ))}
+          {current.group === ALL && current.items.length > FIRST && (
+            <li>
+              <button type="button" className="chip chip-more" aria-expanded={open} aria-controls="skill-cloud" onClick={() => setOpen((o) => !o)}>
+                {open ? "Show fewer" : `+${current.items.length - shown.length} more`}
+              </button>
+            </li>
+          )}
         </ul>
         <p className="cloud-hint">
-          All {SKILLS.length} skills are searchable from anywhere with <kbd>{SHORTCUT}</kbd>.
+          {current.group === ALL ? "Or pick a group on the left." : `One of ${GROUPS.length} groups.`} Search every skill from anywhere with{" "}
+          <kbd>{SHORTCUT}</kbd>.
         </p>
       </div>
     </div>

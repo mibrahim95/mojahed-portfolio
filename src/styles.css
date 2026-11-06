@@ -1534,6 +1534,17 @@ kbd {
   animation-delay: calc(var(--i) * 18ms);
 }
 
+.cloud .chip-more {
+  border-style: dashed;
+  border-color: var(--signal);
+  color: var(--signal-fg);
+  font-weight: 600;
+}
+
+.cloud .chip-more:hover {
+  background: var(--signal-soft);
+}
+
 .cloud-hint {
   margin-top: 18px;
   color: var(--ink-3);
@@ -1559,6 +1570,8 @@ kbd {
     overflow-x: auto;
     scrollbar-width: none;
     scroll-snap-type: x proximity;
+    /* the fade says the row keeps going */
+    mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
   }
 
   .rail::-webkit-scrollbar {

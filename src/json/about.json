@@ -34,7 +34,7 @@
     "speedTitle": "Performance work",
     "skills": "Pick a skill or type one, and the projects and jobs where I used it move to the front.",
     "projects": "Production PHP and MySQL, a Java API, a Raspberry Pi frame with its own Flask API, and the Proxmox server I run at home. Pick a card for the full write-up.",
-    "experience": "Java pipelines and API integrations at Comcast since 2023. Four years of PHP and MySQL at Turn 14 before that, and in college I tutored SQL and PHP and interned at Five Below."
+    "experience": "Java pipelines and API integrations at Comcast since 2023, and four years of PHP and MySQL at Turn 14 before that. The two short roles are from college."
   },
   "skills": [
     {
@@ -203,6 +203,7 @@
     "graduated": "May 2019",
     "year": "2019",
     "honors": [
+      "3.5 GPA in the major (MIS)",
       "Dean's List, Fall 2016"
     ],
     "summary": "I earned a business degree in Management Information Systems at Temple's Fox School of Business, and tutored SQL and PHP for the department before I graduated.",

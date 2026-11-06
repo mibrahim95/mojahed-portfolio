@@ -71,6 +71,8 @@ const inGroups = new Set(GROUPS.flatMap((g) => g.items));
 const extra = [...new Set(ITEMS.flatMap((i) => i.tags))].filter((t) => !inGroups.has(t)).sort();
 if (extra.length) GROUPS.push({ group: "Also in my work", short: "More", items: extra, more: true });
 export { GROUPS };
+// The finder's first tab: every skill.
+export const ALL = "All skills";
 
 const aliasesOf = {};
 for (const [alias, name] of Object.entries(about.skillAliases)) (aliasesOf[canon(name)] ||= []).push(alias);

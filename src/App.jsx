@@ -10,7 +10,7 @@ import Palette from "./components/palette";
 import { SkillLogo } from "./components/logo";
 import { Close } from "./components/icons";
 import useReveal from "./hooks/useReveal";
-import { GROUPS, countLine, findSkill, logoFor, parseSql, resolveSkill } from "./skills";
+import { ALL, GROUPS, countLine, findSkill, logoFor, parseSql, resolveSkill } from "./skills";
 import { transition } from "./motion";
 
 // While a skill filter is on and the search box has scrolled away, a pill under the nav
@@ -48,7 +48,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [skill, setSkill] = useState(null);
   const [palette, setPalette] = useState(false);
-  const [group, setGroup] = useState(GROUPS[0].group);
+  const [group, setGroup] = useState(ALL);
 
   const apply = (next) => {
     if (next?.name === skill?.name) return;
@@ -58,8 +58,9 @@ function App() {
   // A chip, tile or palette row: an exact skill name, or null to reset.
   const pick = (name) => {
     setQuery(name || "");
+    // Keep "All" if it is on; otherwise jump to the picked skill's group so its chip shows.
     const home = name && GROUPS.find((g) => g.items.includes(name));
-    if (home) setGroup(home.group);
+    if (home) setGroup((g) => (g === ALL ? g : home.group));
     apply(name ? findSkill(name) : null);
   };
 
