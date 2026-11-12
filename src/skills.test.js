@@ -47,3 +47,9 @@ test("familiar skills resolve and explain themselves instead of an empty result"
   assert.equal(m.resolveSkill("mssql").name, "SQL Server");
   assert.ok(m.resolveSkill("scss").items.some((i) => i.title === "Turn 14 Distribution"));
 });
+
+test("countLine leaves out zero counts", () => {
+  const items = [{ type: "project" }, { type: "school" }];
+  assert.equal(m.countLine({ items }), "1 project, education");
+  assert.equal(m.countLine({ items: [{ type: "job" }, { type: "job" }] }), "2 jobs");
+});
