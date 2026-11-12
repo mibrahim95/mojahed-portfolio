@@ -2142,12 +2142,11 @@ kbd {
 }
 
 /* the index */
+/* Heading, then its one line of explanation, stacked: a paragraph floated to the far
+   right of a heading reads as unattached. */
 .index-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px 24px;
+  display: grid;
+  gap: 10px;
   margin-top: clamp(72px, 8vw, 112px);
   padding-bottom: 16px;
 }
@@ -2159,6 +2158,7 @@ kbd {
 }
 
 .index-head p {
+  max-width: 62ch;
   color: var(--ink-2);
   font-size: 0.95rem;
 }
@@ -4388,5 +4388,28 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .sk-layer {
     transform: none;
+  }
+}
+
+/* ---------- touch targets ----------
+   On phones and other touch screens the small controls grow to 44px, the size a thumb
+   can hit without zooming. Mouse layouts keep their tighter sizes. */
+@media (pointer: coarse), (max-width: 720px) {
+  .nav-links a,
+  .kbtn,
+  .theme-toggle,
+  .chip,
+  .stack-more {
+    min-height: 44px;
+  }
+
+  .nav-links a,
+  .chip {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .kbtn {
+    min-width: 44px;
   }
 }

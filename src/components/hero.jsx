@@ -77,7 +77,7 @@ function Hero({ onGroup, onSearch }) {
               See projects
             </a>
             <a className="btn btn-ghost" href="#contact">
-              Get in touch
+              Contact me
             </a>
           </div>
         </div>
@@ -145,7 +145,7 @@ function Hero({ onGroup, onSearch }) {
             })}
             <li className="edu-fact">
               <p className="edu-fact-title">{edu.teaching.role}</p>
-              <p className="edu-fact-when">{edu.teaching.dates}</p>
+              <p className="edu-fact-when">{edu.teaching.dates.replace(/\s*[–—]\s*/g, " to ")}</p>
               <a className="link edu-fact-link" href="#job-temple">
                 See the role in Experience
               </a>
