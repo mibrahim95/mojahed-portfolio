@@ -199,7 +199,9 @@ export function countLine(skill) {
   const parts = [
     [n("project"), "project", "projects"],
     [n("job"), "job", "jobs"],
-  ].map(([c, one, many]) => `${c} ${c === 1 ? one : many}`);
+  ]
+    .filter(([c]) => c > 0)
+    .map(([c, one, many]) => `${c} ${c === 1 ? one : many}`);
   if (n("school")) parts.push("education");
   return parts.join(", ");
 }

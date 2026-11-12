@@ -100,7 +100,7 @@ function Palette({ open, onClose, onPick }) {
               setActive(0);
             }}
             onKeyDown={onKeyDown}
-            placeholder="Search a skill, or jump to a section"
+            placeholder="Search skills or sections"
             role="combobox"
             aria-expanded={rows.length > 0}
             aria-controls="palette-list"
