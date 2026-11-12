@@ -23,7 +23,8 @@ export function scale(firstYear) {
 
 export function tenure(dates) {
   const [a, b] = range(dates);
-  const total = b - a;
+  // Both end months count, as on LinkedIn: Feb to Mar is 2 mo.
+  const total = b - a + 1;
   const y = Math.floor(total / 12);
   const m = total % 12;
   return [y && `${y} yr${y > 1 ? "s" : ""}`, m && `${m} mo`].filter(Boolean).join(" ");

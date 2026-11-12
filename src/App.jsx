@@ -71,10 +71,6 @@ function App() {
   };
 
   const show = () => document.getElementById("skills")?.scrollIntoView({ block: "start" });
-  const pickAndShow = (name) => {
-    pick(name);
-    show();
-  };
   // The hero's range tiles open their group in the finder.
   const groupAndShow = (g) => {
     transition(() => setGroup(g));
@@ -102,7 +98,7 @@ function App() {
       </a>
       <Nav onSearch={() => setPalette(true)} />
       <main id="main">
-        <Hero onPick={pickAndShow} onGroup={groupAndShow} onSearch={() => setPalette(true)} />
+        <Hero onGroup={groupAndShow} onSearch={() => setPalette(true)} />
         <Finder skill={skill} query={query} onQuery={type} onPick={pick} group={group} onGroup={(g) => transition(() => setGroup(g))} />
         <Projects skill={skill} onPick={pick} />
         <Experience skill={skill} />

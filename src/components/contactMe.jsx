@@ -151,8 +151,11 @@ ${form.email.trim()}`;
 
           {status.state === "sent" ? (
             <div className="sent" role="status">
-              <h3>Thanks, {status.name}. Your message is on its way to me.</h3>
+              <h3 tabIndex={-1} ref={(el) => el?.focus()}>Thanks, {status.name}. Your message is on its way to me.</h3>
               <p>I&rsquo;ll reply to the email address you gave me.</p>
+              <button type="button" className="link" onClick={() => setStatus({ state: "idle" })}>
+                Send another message
+              </button>
             </div>
           ) : (
             <form className="form" onSubmit={handleSubmit} noValidate aria-busy={sending} data-reveal style={{ "--i": 2 }}>

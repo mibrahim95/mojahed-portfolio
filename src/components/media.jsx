@@ -67,7 +67,7 @@ export function ProjectMedia({ project, sizes }) {
     );
   }
   if (project.imgPath) {
-    return <img src={project.imgPath} alt={`Screenshot of ${project.header}`} width="800" height="480" loading="lazy" sizes={sizes} />;
+    return <img src={project.imgPath} alt={`${/build/i.test(project.kind) ? "Photo" : "Screenshot"} of ${project.header}`} width="800" height="480" loading="lazy" sizes={sizes} />;
   }
   return project.header === "Homelab" ? <RackMedia /> : <ApiMedia />;
 }
