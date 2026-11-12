@@ -9,9 +9,10 @@ const CHROME = { dark: "#0e131f", darker: "#06080f" };
 
 function ThemeToggle() {
   const [theme, setTheme] = useState(() => (document.documentElement.dataset.theme === "darker" ? "darker" : "dark"));
-  const next = theme === "dark" ? "darker" : "dark";
 
+  // Read the live theme, not the rendered state: a second click can land before React re-renders.
   const apply = () => {
+    const next = document.documentElement.dataset.theme === "darker" ? "dark" : "darker";
     document.documentElement.dataset.theme = next;
     document.querySelector('meta[name="theme-color"]')?.setAttribute("content", CHROME[next]);
     try {
@@ -31,10 +32,9 @@ function ThemeToggle() {
     root.style.setProperty("--ty", `${r.top + r.height / 2}px`);
     root.classList.add("theme-flip");
     // A second click mid-wipe skips this transition and rejects `finished`; that is fine.
-    document
-      .startViewTransition(apply)
-      .finished.catch(() => {})
-      .finally(() => root.classList.remove("theme-flip"));
+    const t = document.startViewTransition(apply);
+    t.ready.catch(() => {});
+    t.finished.catch(() => {}).finally(() => root.classList.remove("theme-flip"));
   };
 
   // A switch named "Darker": off is the navy theme, on is near-black. The moon's dark
