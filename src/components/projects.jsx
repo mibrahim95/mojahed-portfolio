@@ -131,9 +131,8 @@ function Case({ p, n, lit, dim, onOpen }) {
       data-reveal
     >
       <div className="case-frame">
-        <button type="button" className="case-media" onClick={() => onOpen(p)} aria-haspopup="dialog">
+        <button type="button" className="case-media" onClick={() => onOpen(p)} aria-haspopup="dialog" aria-label={`Open ${p.header}`}>
           <ProjectMedia project={p} sizes={n === 0 ? "(min-width: 1100px) 760px, 100vw" : "(min-width: 1100px) 600px, 100vw"} />
-          <span className="visually-hidden">Open {p.header}</span>
         </button>
       </div>
       <div className="case-body">
