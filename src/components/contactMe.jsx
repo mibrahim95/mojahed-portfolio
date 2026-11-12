@@ -79,6 +79,17 @@ function ContactMe() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState({ state: "idle" });
   const [typing, setTyping] = useState(0);
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(about.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard blocked (permissions, insecure origin): the address is on screen to select
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -267,7 +278,15 @@ ${form.email.trim()}`;
           <aside className="contact-alt" data-reveal style={{ "--i": 3 }} aria-labelledby="contact-alt-title">
             <h3 id="contact-alt-title">Or reach me directly</h3>
             <ul>
-              <li><span>Email</span><a className="link" href={`mailto:${about.email}`}>{about.email}</a></li>
+              <li>
+                <span>Email</span>
+                <div className="alt-val">
+                  <a className="link" href={`mailto:${about.email}`}>{about.email}</a>
+                  <button type="button" className="link-btn alt-copy" onClick={copyEmail} aria-live="polite">
+                    {copied ? "Copied" : "Copy"}
+                  </button>
+                </div>
+              </li>
               <li><span>LinkedIn</span><a className="link" href={SOCIAL.linkedin} {...external}>in/mojahed-ibrahim</a></li>
               <li><span>GitHub</span><a className="link" href={SOCIAL.github} {...external}>mibrahim95</a></li>
               <li><span>Résumé</span><a className="link" href={RESUME} {...external}>PDF, 2 pages</a></li>

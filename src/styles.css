@@ -3558,6 +3558,18 @@ kbd {
   overflow-wrap: anywhere;
 }
 
+.alt-val {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+}
+
+.alt-copy {
+  color: var(--ink-2);
+  font-size: inherit;
+}
+
 /* ---------- footer ---------- */
 .footer {
   margin-top: clamp(40px, 5vw, 56px);

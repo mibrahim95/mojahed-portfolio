@@ -1,0 +1,47 @@
+/* Standalone 404 page. A file, not inline styles, because the CSP allows style-src 'self' only.
+   Colours match the Blue Hour theme in src/styles.css. */
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: #0e131f;
+  color: #eceff6;
+  font: 400 1rem/1.6 ui-sans-serif, system-ui, sans-serif;
+}
+
+main {
+  max-width: 34rem;
+  padding: 24px;
+}
+
+h1 {
+  margin: 24px 0 8px;
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+p {
+  margin: 0 0 28px;
+  color: #aab2c5;
+}
+
+a {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: #7ea6ff;
+  color: #071026;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+a:hover {
+  background: #94b6ff;
+}
+
+a:focus-visible {
+  outline: 2px solid #eceff6;
+  outline-offset: 3px;
+}
