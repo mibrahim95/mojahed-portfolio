@@ -24,8 +24,9 @@ function buildRows(text) {
   const lower = q.trim().toLowerCase();
   const places = PLACES.filter(([n]) => !lower || n.toLowerCase().startsWith(lower));
   rows.push(...places.map(([label, href]) => ({ kind: "place", id: `g-${href}`, label, href })));
-  if (!lower || "resume résumé pdf cv".includes(lower)) rows.push({ kind: "link", id: "resume", label: "Open the résumé (PDF)", href: RESUME });
-  if (!lower || "email mail contact".includes(lower)) rows.push({ kind: "link", id: "mail", label: `Email ${about.email}`, href: `mailto:${about.email}` });
+  const hits = (words) => !lower || words.some((w) => w.startsWith(lower));
+  if (hits(["resume", "résumé", "pdf", "cv"])) rows.push({ kind: "link", id: "resume", label: "Open the résumé (PDF)", href: RESUME });
+  if (hits(["email", "mail"])) rows.push({ kind: "link", id: "mail", label: `Email ${about.email}`, href: `mailto:${about.email}` });
   return rows;
 }
 
@@ -42,6 +43,8 @@ function Palette({ open, onClose, onPick }) {
     const d = dialog.current;
     if (open && !d.open) {
       d.showModal();
+      setText("");
+      setActive(0);
       input.current?.focus();
     } else if (!open && d.open) d.close();
   }, [open]);
@@ -66,6 +69,7 @@ function Palette({ open, onClose, onPick }) {
   const onKeyDown = (e) => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
+      if (!rows.length) return;
       const step = e.key === "ArrowDown" ? 1 : -1;
       setActive((sel + step + rows.length) % rows.length);
     } else if (e.key === "Enter") {
@@ -98,7 +102,7 @@ function Palette({ open, onClose, onPick }) {
             onKeyDown={onKeyDown}
             placeholder="Search a skill, or jump to a section"
             role="combobox"
-            aria-expanded="true"
+            aria-expanded={rows.length > 0}
             aria-controls="palette-list"
             aria-activedescendant={rows[sel] ? `pal-${rows[sel].id}` : undefined}
             aria-autocomplete="list"

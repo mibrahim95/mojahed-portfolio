@@ -131,9 +131,8 @@ function Case({ p, n, lit, dim, onOpen }) {
       data-reveal
     >
       <div className="case-frame">
-        <button type="button" className="case-media" onClick={() => onOpen(p)} aria-haspopup="dialog">
+        <button type="button" className="case-media" onClick={() => onOpen(p)} aria-haspopup="dialog" aria-label={`Open ${p.header}`}>
           <ProjectMedia project={p} sizes={n === 0 ? "(min-width: 1100px) 760px, 100vw" : "(min-width: 1100px) 600px, 100vw"} />
-          <span className="visually-hidden">Open {p.header}</span>
         </button>
       </div>
       <div className="case-body">
@@ -279,7 +278,7 @@ function Projects({ skill, onPick }) {
           <h2 id="projects-title">Projects</h2>
           <p>{about.sections.projects}</p>
           {skill && (
-            <p className="proj-note" role="status">
+            <p className="proj-note">
               <SkillLogo logo={logoFor(skill.name)} name={skill.name} size={16} />
               <span>
                 <b>{lit}</b> of {ALL.length} use {skill.name}

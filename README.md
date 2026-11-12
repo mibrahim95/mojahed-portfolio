@@ -8,7 +8,7 @@ portfolio with my experience, projects, résumé, and a contact form.
 ## Tech stack
 
 - [React 18](https://react.dev/) + [Vite](https://vite.dev/)
-- Hand-written CSS (no UI kit), dark theme by default with a light-theme toggle
+- Hand-written CSS (no UI kit), two dark themes: Blue Hour (default) and Midnight, with a toggle
 - Fonts self-hosted via Fontsource
 - Contact form: a Netlify Function delivers messages to Discord, Slack or Telegram, with
   Netlify Forms as the fallback
@@ -28,7 +28,7 @@ npm run dev        # http://localhost:3000
 | `npm run build`   | Production build into `build/`                 |
 | `npm run preview` | Serve the production build locally             |
 | `npm run lint`    | Run ESLint                                     |
-| `npm test`        | Test the contact function (Node test runner)   |
+| `npm test`        | Contact function, headers and skills tests     |
 
 ## Contact form
 

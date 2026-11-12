@@ -17,9 +17,11 @@ const EMAIL_MAX = 254;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const BODY_MAX = 4096; // bytes; a full form is well under 1 KB
 // Control and invisible formatting characters (bidi overrides, zero-width) let a sender fake
-// extra "Email:" lines or reorder text. Names may not contain them; messages lose them, except
-// newlines and tabs.
-const NAME_BAD = /[\p{Cc}\p{Cf}]/u;
+// extra "Email:" lines or reorder text. Names and messages lose the invisible ones (rejecting
+// them would turn away Arabic, Persian and Indic names, which use zero-width joiners); a name
+// with a control character is refused. Messages keep newlines and tabs.
+const NAME_BAD = /\p{Cc}/u;
+const NAME_STRIP = /\p{Cf}/gu;
 const MSG_STRIP = /(?![\n\t])[\p{Cc}\p{Cf}]/gu;
 
 // shortcut: in-memory, per function instance, so it resets on cold starts and is not shared
@@ -99,7 +101,7 @@ export const escapeDiscord = (text) => text.replace(/[\\*_~`|>#[\]]/g, "\\$&");
 
 export function validate(body) {
   const str = (v) => (typeof v === "string" ? v.trim() : "");
-  const data = { fullName: str(body?.fullName), email: str(body?.email), msg: str(body?.msg).replace(MSG_STRIP, "").trim() };
+  const data = { fullName: str(body?.fullName).replace(NAME_STRIP, ""), email: str(body?.email), msg: str(body?.msg).replace(MSG_STRIP, "").trim() };
   const errors = {};
   if (data.fullName.length < NAME_MIN || data.fullName.length > NAME_MAX || NAME_BAD.test(data.fullName)) errors.fullName = "length";
   if (data.email.length > EMAIL_MAX || !EMAIL_PATTERN.test(data.email)) errors.email = "format";

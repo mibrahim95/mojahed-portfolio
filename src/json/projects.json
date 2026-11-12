@@ -37,7 +37,7 @@
       "GitHub Actions"
     ],
     "imgPath": "/heartbeatFrame.webp",
-    "desc": "A Raspberry Pi 5 picture frame that runs five devices at once: a 7.3-inch color e-ink panel, a round display, two OLEDs on separate I2C buses, a touch pad and an I2S speaker. The Python app runs as a systemd service. I wrote a direct SPI driver for the round display and share the bus with the e-ink panel under a lock. A small Flask API with bearer-token auth listens only on Tailscale and throttles bad tokens. On every push, GitHub Actions runs about 580 unit tests on two Python versions, plus flake8 and pip-audit. The code lives in a private repo.",
+    "desc": "A Raspberry Pi 5 picture frame that runs six devices at once: a 7.3-inch color e-ink panel, a round display, two OLEDs on separate I2C buses, a touch pad and an I2S speaker. The Python app runs as a systemd service. I wrote a direct SPI driver for the round display and share the bus with the e-ink panel under a lock. A small Flask API with bearer-token auth listens only on Tailscale and throttles bad tokens. On every push, GitHub Actions runs about 580 unit tests on two Python versions, plus flake8 and pip-audit. The code lives in a private repo.",
     "github": "",
     "url": "",
     "skills": [

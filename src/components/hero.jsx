@@ -77,7 +77,7 @@ function Hero({ onGroup, onSearch }) {
               See projects
             </a>
             <a className="btn btn-ghost" href="#contact">
-              Get in touch
+              Contact me
             </a>
           </div>
         </div>
@@ -108,6 +108,14 @@ function Hero({ onGroup, onSearch }) {
           <p className="speed-big">
             <span>{about.highlights[0].value}</span> taken off the daily batch run by running job families in parallel.
           </p>
+          <dl className="speed-more">
+            {[about.highlights[1], about.highlights[3]].map((h) => (
+              <div key={h.value}>
+                <dt>{h.value}</dt>
+                <dd>{h.label}</dd>
+              </div>
+            ))}
+          </dl>
           <Speedups />
           <p className="speed-scale">Each job is drawn on its own scale: before is the full bar.</p>
         </div>
@@ -137,7 +145,7 @@ function Hero({ onGroup, onSearch }) {
             })}
             <li className="edu-fact">
               <p className="edu-fact-title">{edu.teaching.role}</p>
-              <p className="edu-fact-when">{edu.teaching.dates}</p>
+              <p className="edu-fact-when">{edu.teaching.dates.replace(/\s*[–—]\s*/g, " to ")}</p>
               <a className="link edu-fact-link" href="#job-temple">
                 See the role in Experience
               </a>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { RESUME, external } from "../sections";
 import { Mark } from "./logo";
 import ThemeToggle from "./themeToggle";
@@ -13,7 +14,31 @@ const LINKS = [
   ["#contact", "Contact"],
 ];
 
+// The section crossing the middle of the screen; its nav link is marked as the current location.
+function useCurrent() {
+  const [current, setCurrent] = useState(null);
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return undefined;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setCurrent(`#${e.target.id}`);
+          else setCurrent((c) => (c === `#${e.target.id}` ? null : c));
+        }
+      },
+      { rootMargin: "-50% 0px -50% 0px" }
+    );
+    for (const [href] of LINKS) {
+      const el = document.querySelector(href);
+      if (el) io.observe(el);
+    }
+    return () => io.disconnect();
+  }, []);
+  return current;
+}
+
 function Nav({ onSearch }) {
+  const current = useCurrent();
   return (
     <header className="nav">
       <div className="wrap nav-inner">
@@ -25,7 +50,7 @@ function Nav({ onSearch }) {
         </a>
         <nav className="nav-links" aria-label="Main">
           {LINKS.map(([href, label]) => (
-            <a key={href} href={href}>
+            <a key={href} href={href} aria-current={current === href ? "location" : undefined}>
               {label}
             </a>
           ))}

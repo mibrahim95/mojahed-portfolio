@@ -42,6 +42,7 @@ function Walker({ to }) {
 
   // Breathe and walk only while the tape is on screen; offscreen the timer stops.
   useEffect(() => {
+    if (!("IntersectionObserver" in window)) return undefined;
     const io = new IntersectionObserver(([e]) => setSeen(e.isIntersecting));
     io.observe(el.current);
     return () => io.disconnect();
@@ -232,7 +233,7 @@ function Experience({ skill }) {
             <a className="link" href={RESUME} {...external}>Full résumé (PDF)</a>
           </p>
           {skill && (
-            <p className="proj-note" role="status">
+            <p className="proj-note">
               <SkillLogo logo={logoFor(skill.name)} name={skill.name} size={16} />
               <span>
                 <b>{lit}</b> of {experiences.length} jobs use {skill.name}.

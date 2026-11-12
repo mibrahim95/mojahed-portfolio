@@ -14,7 +14,6 @@ export function transition(update) {
 }
 
 export const OPEN_PROJECT = "portfolio:open-project";
-export const openProject = (key) => window.dispatchEvent(new CustomEvent(OPEN_PROJECT, { detail: key }));
 
 const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 export const SHORTCUT = isMac ? "⌘K" : "Ctrl K";
