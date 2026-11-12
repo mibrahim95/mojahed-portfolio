@@ -3817,7 +3817,6 @@ kbd {
     grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
     gap: 4px 12px;
     align-items: center;
-    max-width: 560px;
   }
 
   .finder-panel {
@@ -4498,6 +4497,11 @@ html {
 
   .kbtn {
     min-width: 44px;
+  }
+
+  .detail-nav .icon-btn {
+    width: 44px;
+    height: 44px;
   }
 
   .footer-links {
