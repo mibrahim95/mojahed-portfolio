@@ -108,6 +108,14 @@ function Hero({ onGroup, onSearch }) {
           <p className="speed-big">
             <span>{about.highlights[0].value}</span> taken off the daily batch run by running job families in parallel.
           </p>
+          <dl className="speed-more">
+            {[about.highlights[1], about.highlights[3]].map((h) => (
+              <div key={h.value}>
+                <dt>{h.value}</dt>
+                <dd>{h.label}</dd>
+              </div>
+            ))}
+          </dl>
           <Speedups />
           <p className="speed-scale">Each job is drawn on its own scale: before is the full bar.</p>
         </div>

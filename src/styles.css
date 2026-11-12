@@ -856,6 +856,31 @@ kbd {
   letter-spacing: -0.03em;
 }
 
+/* Two quieter numbers under the headline one. */
+.speed-more {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin: 26px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.speed-more dt {
+  color: var(--ink);
+  font: 720 1.55rem/1.1 var(--display);
+  font-stretch: var(--wide);
+  letter-spacing: -0.02em;
+}
+
+.speed-more dd {
+  margin: 6px 0 0;
+  max-width: 30ch;
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
 .speed {
   display: grid;
   gap: 22px;
