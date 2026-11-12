@@ -1,38 +1,77 @@
 /* Night shift: a résumé laid out as a control desk.
-   Cool graphite, like a server room with the lights down. One accent: jade, the green of a
-   passing check and a healthy service, which is what retries and failure alerts protect.
-   It is a blue-leaning green kept below neon, so it sits with the graphite instead of
-   glowing on it. Jade is a fill (buttons, the mark, a match) and, because it clears AA on
-   every surface here, also text and thin lines. Ice blue is the quiet second voice for
-   data (bars, timelines, focus). No yellow, orange, coral, periwinkle or purple.
-   Two themes: "dark" (graphite, the default) and "darker" (near-black for OLED screens
-   and dark rooms, where panels give way to hairlines). */
+   Two themes, one family. "dark" (Blue Hour, the default) is the sky twenty minutes after
+   sunset: navy slate panels, a cobalt accent, and rose for data, the last light on the
+   horizon. "darker" (Midnight) is the same sky hours later: blue-ink black for OLED
+   screens and dark rooms, where panels give way to hairlines and the accent cools to ice.
+   Cobalt is a fill (buttons, the mark, a match) and, because it clears AA on every surface
+   here, also text and thin lines. No yellow, orange or green. */
 
 :root,
 [data-theme="dark"] {
-  /* Evening: graphite, filled panels with soft shadows, jade accent. */
+  /* Blue Hour: navy slate, filled panels with soft shadows, cobalt accent, rose data. */
   color-scheme: dark;
-  --bg: #101416;
-  --panel: #161b1e;
-  --raised: #1d2427;
-  --sunk: #0c0f11;
-  --line: rgb(220 232 228 / 0.09);
-  --line-2: rgb(220 232 228 / 0.17);
-  --ink: #ecefec;
-  --ink-2: #aab4b2;
-  --ink-3: #8b9694;
-  --signal: #4fd9a4;
-  --signal-fg: #5fe0ae;
-  --signal-ink: #06130d;
-  --signal-soft: rgb(79 217 164 / 0.12);
+  --bg: #0e131f;
+  --panel: #151b2a;
+  --raised: #1d2437;
+  --sunk: #0a0e17;
+  --line: rgb(200 215 255 / 0.09);
+  --line-2: rgb(200 215 255 / 0.17);
+  --ink: #eceff6;
+  --ink-2: #aab2c5;
+  --ink-3: #8a93a8;
+  --signal: #7ea6ff;
+  --signal-fg: #94b6ff;
+  --signal-ink: #071026;
+  --signal-soft: rgb(126 166 255 / 0.13);
   --danger: #ff8a98;
-  --data: #8fb8cc;
-  --data-2: #5d889b;
-  --data-soft: rgb(143 184 204 / 0.12);
-  --tape: #e6ebe8;
-  --tape-ink: #1a1f21;
-  --shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 48px -28px rgb(2 8 6 / 0.7);
-  --pop: 0 30px 80px -20px rgb(2 6 8 / 0.8);
+  --data: #f0a3c0;
+  --data-2: #b0688a;
+  --data-soft: rgb(240 163 192 / 0.12);
+  --tape: #e4e8f2;
+  --tape-ink: #161b28;
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 48px -28px rgb(2 4 12 / 0.7);
+  --pop: 0 30px 80px -20px rgb(2 4 10 / 0.8);
+}
+
+/* PALETTE CANDIDATES (review only): ?p=b or ?p=c in dev. Delete the two blocks that lose. */
+[data-theme="dark"][data-p="b"] {
+  /* Dusk Rose: plum ink, rose accent, periwinkle data. */
+  --bg: #15121b;
+  --panel: #1c1824;
+  --raised: #251f30;
+  --sunk: #0f0c14;
+  --line: rgb(235 215 245 / 0.09);
+  --line-2: rgb(235 215 245 / 0.17);
+  --ink: #f1ecf3;
+  --ink-2: #b7adbd;
+  --ink-3: #968c9d;
+  --signal: #f28db2;
+  --signal-fg: #f7a3c2;
+  --signal-ink: #2a0716;
+  --signal-soft: rgb(242 141 178 / 0.13);
+  --data: #9db5ff;
+  --data-2: #6a80c4;
+  --data-soft: rgb(157 181 255 / 0.12);
+}
+
+[data-theme="dark"][data-p="c"] {
+  /* Violet Ink: indigo black, violet accent, cyan data. */
+  --bg: #100f1c;
+  --panel: #171628;
+  --raised: #201e36;
+  --sunk: #0a0914;
+  --line: rgb(205 200 255 / 0.09);
+  --line-2: rgb(205 200 255 / 0.17);
+  --ink: #eeedf7;
+  --ink-2: #afadc4;
+  --ink-3: #8f8ca8;
+  --signal: #a79bff;
+  --signal-fg: #b9afff;
+  --signal-ink: #0e0a2c;
+  --signal-soft: rgb(167 155 255 / 0.13);
+  --data: #6fd0e8;
+  --data-2: #3f93aa;
+  --data-soft: rgb(111 208 232 / 0.12);
 }
 
 [data-theme="darker"] {
@@ -341,16 +380,16 @@ kbd {
 
 /* Fixed colours in every theme so the mark always matches the favicon and app icons. */
 .mark-tile {
-  fill: #4fd9a4;
+  fill: #7ea6ff;
 }
 
 .mark-px {
-  fill: #07130e;
+  fill: #071026;
 }
 
 /* Tool logos are drawn in one ink tone, not brand colours: brand yellows and oranges
    (JavaScript, HTML, Git, Grafana...) would break the palette, and one tone keeps a
-   cloud of 100 chips calm. Hover and selection light them in jade. */
+   cloud of 100 chips calm. Hover and selection light them in the accent. */
 .slogo {
   flex: none;
   width: var(--s, auto);
@@ -554,7 +593,7 @@ kbd {
   isolation: isolate;
 }
 
-/* One flat wash of jade light behind the name, like a lit room seen from the street. */
+/* One flat wash of accent light behind the name, like a lit room seen from the street. */
 .hero::before {
   content: "";
   position: absolute;
@@ -3909,31 +3948,32 @@ kbd {
    the dashboard and the skill finder; the finder panel docks on its waterline. */
 :root,
 [data-theme="dark"] {
-  --sky-2: #0e1519;
-  --sky-3: #152127;
-  --sky-glow: rgb(79 217 164 / 0.07);
-  --sk-star: #dfe9ec;
-  --sk-moon: #eef1ee;
-  --sk-far: #172228;
-  --sk-mid: #121b20;
-  --sk-near: #0d1417;
-  --sk-mark: #090f11;
-  --sk-hall: #0f171a;
-  --sk-dark: #1a252b;
-  /* Lit windows are office fluorescents: white with a little jade in it. */
-  --sk-warm: #d3eee2;
-  --sk-ice: #cfe2ea;
-  /* The two Comcast crowns: lit glass in the site's jade, washed toward white. */
-  --sk-crown: #b8f0d8;
-  --sk-lantern: #b8f0d8;
+  /* Derived from the theme tokens, so the skyline follows the palette. */
+  --sky-2: color-mix(in oklab, var(--bg) 93%, var(--signal));
+  --sky-3: color-mix(in oklab, var(--bg) 84%, var(--signal));
+  --sky-glow: color-mix(in srgb, var(--data) 10%, transparent);
+  --sk-star: color-mix(in oklab, white 88%, var(--signal));
+  --sk-moon: color-mix(in oklab, white 92%, var(--signal));
+  --sk-far: color-mix(in oklab, var(--bg) 86%, var(--signal));
+  --sk-mid: color-mix(in oklab, var(--bg) 93%, var(--signal));
+  --sk-near: color-mix(in oklab, var(--bg) 82%, black);
+  --sk-mark: color-mix(in oklab, var(--bg) 58%, black);
+  --sk-hall: color-mix(in oklab, var(--bg) 90%, black);
+  --sk-dark: color-mix(in oklab, var(--bg) 82%, var(--signal));
+  /* Lit windows are office fluorescents: white with a little of the accent in it. */
+  --sk-warm: color-mix(in oklab, white 78%, var(--signal));
+  --sk-ice: color-mix(in oklab, white 78%, var(--data));
+  /* The two Comcast crowns: lit glass in the accent, washed toward white. */
+  --sk-crown: color-mix(in oklab, white 45%, var(--signal));
+  --sk-lantern: color-mix(in oklab, white 45%, var(--signal));
   /* Aircraft warning lights are red on real towers. */
   --sk-beacon: #ff6b7d;
-  --sk-water: #101416;
-  --sk-bridge: #1c272d;
-  --sk-cable: #384a53;
-  --sk-bulb: #eef3f1;
-  --sk-house: #c9e9db;
-  --sk-crown-2: #a9d8ff;
+  --sk-water: var(--bg);
+  --sk-bridge: color-mix(in oklab, var(--bg) 80%, var(--signal));
+  --sk-cable: color-mix(in oklab, var(--bg) 58%, var(--signal));
+  --sk-bulb: color-mix(in oklab, white 92%, var(--signal));
+  --sk-house: color-mix(in oklab, white 70%, var(--signal));
+  --sk-crown-2: color-mix(in oklab, white 35%, var(--data));
 }
 
 /* Midnight: later and colder. Fewer offices lit, more stars, a full moon, and the two
@@ -4142,7 +4182,7 @@ html {
   to { transform: translate(1680px, 50px); }
 }
 
-/* Konami: every window on, the bridge lights go jade, fireworks over the city. */
+/* Konami: every window on, the bridge lights go accent, fireworks over the city. */
 .skyline.is-cheat .sk-win-dark { fill: var(--sk-warm); }
 .skyline.is-cheat .sk-bulb { fill: var(--signal); }
 
@@ -4237,7 +4277,7 @@ html {
 .px-w { fill: #f1efe9; }
 .px-n { fill: #3a4789; }
 .px-d { fill: #283266; }
-.px-r { fill: #4fd9a4; }
+.px-r { fill: var(--signal); }
 
 /* ---------- the walker on the tape ---------- */
 .tape-track {

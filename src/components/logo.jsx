@@ -1,4 +1,4 @@
-// The mark: a lowercase "Mi" cut from a jade tile. The dot of the i is a lit
+// The mark: a lowercase "Mi" cut from an accent tile. The dot of the i is a lit
 // window, the same square that lights up across the skyline. Same drawing as
 // public/favicon.svg and the PNG app icons; keep them in step.
 const MARK_M = "M6 23V9h3.8l3.6 7.2L17 9h3.8v14h-3.4v-7.8l-2.8 5.4h-2.4l-2.8-5.4V23z";
