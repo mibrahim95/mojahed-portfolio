@@ -30,7 +30,11 @@ function ThemeToggle() {
     root.style.setProperty("--tx", `${r.left + r.width / 2}px`);
     root.style.setProperty("--ty", `${r.top + r.height / 2}px`);
     root.classList.add("theme-flip");
-    document.startViewTransition(apply).finished.finally(() => root.classList.remove("theme-flip"));
+    // A second click mid-wipe skips this transition and rejects `finished`; that is fine.
+    document
+      .startViewTransition(apply)
+      .finished.catch(() => {})
+      .finally(() => root.classList.remove("theme-flip"));
   };
 
   // A switch named "Darker": off is the navy theme, on is near-black. The moon's dark

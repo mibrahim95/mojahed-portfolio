@@ -26,7 +26,7 @@ function FilterBar({ skill, onReset }) {
   }, []);
   if (!skill || !away) return null;
   return (
-    <div className="filterbar" role="status">
+    <div className="filterbar">
       <SkillLogo logo={logoFor(skill.name)} name={skill.name} size={16} />
       <span className="filterbar-text">
         <b>{skill.name}</b>
@@ -55,19 +55,25 @@ function App() {
     transition(() => setSkill(next));
   };
 
+  // Keep "All" if it is on; otherwise jump to the skill's group so its chip shows.
+  const showGroup = (name) => {
+    const home = name && GROUPS.find((g) => g.items.includes(name));
+    if (home) setGroup((g) => (g === ALL ? g : home.group));
+  };
+
   // A chip, tile or palette row: an exact skill name, or null to reset.
   const pick = (name) => {
     setQuery(name || "");
-    // Keep "All" if it is on; otherwise jump to the picked skill's group so its chip shows.
-    const home = name && GROUPS.find((g) => g.items.includes(name));
-    if (home) setGroup((g) => (g === ALL ? g : home.group));
+    showGroup(name);
     apply(name ? findSkill(name) : null);
   };
 
   // Typing filters live by the best match; SQL works too.
   const type = (text) => {
     setQuery(text);
-    apply(resolveSkill(parseSql(text) ?? text));
+    const hit = resolveSkill(parseSql(text) ?? text);
+    showGroup(hit?.name);
+    apply(hit);
   };
 
   const show = () => document.getElementById("skills")?.scrollIntoView({ block: "start" });

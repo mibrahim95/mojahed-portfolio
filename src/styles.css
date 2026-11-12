@@ -430,6 +430,11 @@ kbd {
   background: var(--raised);
 }
 
+.nav-links a[aria-current] {
+  color: var(--ink);
+  background: var(--signal-soft);
+}
+
 .nav-actions {
   display: flex;
   align-items: center;

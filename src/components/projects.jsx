@@ -279,7 +279,7 @@ function Projects({ skill, onPick }) {
           <h2 id="projects-title">Projects</h2>
           <p>{about.sections.projects}</p>
           {skill && (
-            <p className="proj-note" role="status">
+            <p className="proj-note">
               <SkillLogo logo={logoFor(skill.name)} name={skill.name} size={16} />
               <span>
                 <b>{lit}</b> of {ALL.length} use {skill.name}

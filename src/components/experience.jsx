@@ -233,7 +233,7 @@ function Experience({ skill }) {
             <a className="link" href={RESUME} {...external}>Full résumé (PDF)</a>
           </p>
           {skill && (
-            <p className="proj-note" role="status">
+            <p className="proj-note">
               <SkillLogo logo={logoFor(skill.name)} name={skill.name} size={16} />
               <span>
                 <b>{lit}</b> of {experiences.length} jobs use {skill.name}.
