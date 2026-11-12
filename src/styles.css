@@ -453,6 +453,8 @@ kbd {
   color: var(--ink-2);
   font-size: 0.875rem;
   transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+  flex: none;
+  white-space: nowrap;
 }
 
 .kbtn:hover {
@@ -3827,6 +3829,28 @@ kbd {
   .detail-media:has(.gen-rack) {
     aspect-ratio: auto;
     padding-top: 52px;
+  }
+}
+
+/* Links are visible here but the full search button does not fit beside them. */
+@media (min-width: 901px) and (max-width: 1120px) {
+  .nav-inner {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    padding-inline: 8px;
+  }
+
+  .kbtn-label,
+  .kbtn kbd {
+    display: none;
+  }
+
+  .kbtn {
+    width: 38px;
+    padding: 0;
+    justify-content: center;
   }
 }
 
