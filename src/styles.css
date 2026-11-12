@@ -2796,6 +2796,8 @@ kbd {
   top: calc(var(--row) * 34px);
   left: 0;
   right: 0;
+  display: flex;
+  align-items: center;
   height: 34px;
   transition: opacity 0.35s var(--ease);
 }
@@ -2810,11 +2812,14 @@ kbd {
   background: var(--line);
 }
 
+/* Sticky, so the names stay in view when the tape scrolls sideways on narrow screens. */
 .trow-label {
-  position: absolute;
-  top: 50%;
-  right: calc(100% + 16px);
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  flex: none;
   width: 160px;
+  margin-left: -176px;
   color: var(--ink-2);
   font-size: 0.82rem;
   font-weight: 550;
@@ -2824,8 +2829,20 @@ kbd {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transform: translateY(-50%);
   transition: color 0.18s var(--ease);
+}
+
+/* Below this width the tape scrolls and the names ride over the bars, so they need a backing. */
+@media (max-width: 1180px) {
+  .trow-label {
+    left: -14px;
+    width: auto;
+    max-width: 160px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--panel) 88%, transparent);
+    text-align: left;
+  }
 }
 
 .trow-label:hover,
@@ -3572,6 +3589,15 @@ kbd {
   font-size: inherit;
 }
 
+/* On a phone the address does not fit beside its label, so each label sits above its value. */
+@media (max-width: 480px) {
+  .contact-alt li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+    padding-block: 10px;
+  }
+}
+
 /* ---------- footer ---------- */
 .footer {
   margin-top: clamp(40px, 5vw, 56px);
@@ -3896,17 +3922,37 @@ kbd {
     grid-template-columns: minmax(0, 132px) minmax(0, 1fr);
   }
 
+  /* The caption's lines join the badge grid, so the description can run full width under the photo. */
   .badge-body {
-    padding: 4px 6px;
+    display: contents;
+  }
+
+  .badge-shell {
+    grid-row: 1 / span 4;
+    align-self: center;
+  }
+
+  .badge-body > p {
+    grid-column: 2;
+    padding-right: 6px;
+  }
+
+  .badge-now {
+    align-self: end;
+  }
+
+  .badge-meta {
+    align-self: start;
   }
 
   .badge-co {
     font-size: 1.6rem;
   }
 
-  .badge-desc {
+  .badge-body > .badge-desc {
     grid-column: 1 / -1;
-    margin: 6px 6px 4px;
+    margin: 8px 6px 4px;
+    padding-right: 0;
   }
 
   /* Hidden visually, still the switch's accessible name. */
@@ -3919,9 +3965,14 @@ kbd {
     white-space: nowrap;
   }
 
-  .edu-year {
-    font-size: 7rem;
-    bottom: -26px;
+  /* Room under the facts, so the outlined year does not run through the last one. */
+  .tile-edu {
+    padding-bottom: 84px;
+  }
+
+  .tile-edu > .edu-year {
+    font-size: min(6.5rem, 25vw);
+    bottom: -0.2em;
   }
 
   .strip {
@@ -4447,5 +4498,24 @@ html {
 
   .kbtn {
     min-width: 44px;
+  }
+
+  .footer-links {
+    row-gap: 22px;
+  }
+
+  /* Small standalone text links get a taller hit area without moving the text. */
+  .edu-fact-link,
+  .footer-links a,
+  .link-btn:not(.alt-copy) {
+    position: relative;
+  }
+
+  .edu-fact-link::after,
+  .footer-links a::after,
+  .link-btn:not(.alt-copy)::after {
+    content: "";
+    position: absolute;
+    inset: -11px -6px;
   }
 }
