@@ -33,47 +33,6 @@
   --pop: 0 30px 80px -20px rgb(2 4 10 / 0.8);
 }
 
-/* PALETTE CANDIDATES (review only): ?p=b or ?p=c in dev. Delete the two blocks that lose. */
-[data-theme="dark"][data-p="b"] {
-  /* Dusk Rose: plum ink, rose accent, periwinkle data. */
-  --bg: #15121b;
-  --panel: #1c1824;
-  --raised: #251f30;
-  --sunk: #0f0c14;
-  --line: rgb(235 215 245 / 0.09);
-  --line-2: rgb(235 215 245 / 0.17);
-  --ink: #f1ecf3;
-  --ink-2: #b7adbd;
-  --ink-3: #968c9d;
-  --signal: #f28db2;
-  --signal-fg: #f7a3c2;
-  --signal-ink: #2a0716;
-  --signal-soft: rgb(242 141 178 / 0.13);
-  --data: #9db5ff;
-  --data-2: #6a80c4;
-  --data-soft: rgb(157 181 255 / 0.12);
-}
-
-[data-theme="dark"][data-p="c"] {
-  /* Violet Ink: indigo black, violet accent, cyan data. */
-  --bg: #100f1c;
-  --panel: #171628;
-  --raised: #201e36;
-  --sunk: #0a0914;
-  --line: rgb(205 200 255 / 0.09);
-  --line-2: rgb(205 200 255 / 0.17);
-  --ink: #eeedf7;
-  --ink-2: #afadc4;
-  --ink-3: #8f8ca8;
-  --signal: #a79bff;
-  --signal-fg: #b9afff;
-  --signal-ink: #0e0a2c;
-  --signal-soft: rgb(167 155 255 / 0.13);
-  --data: #6fd0e8;
-  --data-2: #3f93aa;
-  --data-soft: rgb(111 208 232 / 0.12);
-}
-
 [data-theme="darker"] {
   /* Midnight: blue-ink black, panels give way to hairlines, moonlight ice accent. */
   --bg: #06080f;

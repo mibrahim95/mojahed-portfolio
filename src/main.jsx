@@ -11,12 +11,6 @@ import App from "./App";
 // only where the observer that reveals them exists (otherwise nothing hides).
 if ("IntersectionObserver" in window) document.documentElement.classList.add("js");
 
-// Review only: ?p=b or ?p=c previews the palette candidates in styles.css. Remove with them.
-if (import.meta.env.DEV) {
-  const p = new URLSearchParams(location.search).get("p");
-  if (p) document.documentElement.dataset.p = p;
-}
-
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
